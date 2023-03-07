@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3MMCC236VW"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-3MMCC236VW');
+		</script>
+
+		<title>Noo Tab</title>
+		<link rel="stylesheet" href="index.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript" src="index.js"></script>
+		<div id="popup" class="popup">
+			<span class="close" id="close-popup">&times;</span>
+			<p>Set this tab as your homepage!</p>
+			<button type="button" class="collapsible" id="collapsible-first">Google Chrome</button>
+			<div class="content">
+				<p>Click on <b>&#x22EE;</b> in the top right of your browser</p>
+				<p>Select <b>Settings</b> from the dropdown menu</p>
+				<p>Go to <b>Appearance</b> on the left</p>
+				<p>Enable <b>Show Home button</b></p>
+				<p>Enter <b>thisurl.com</b> in the custom web address field</p>
+			</div>
+			<button type="button" class="collapsible">Firefox</button>
+			<div class="content">
+				<p>Click on &nbsp;<b>&#x2261;</b>&nbsp; in the top right of your browser</p>
+				<p>Select <b>Settings</b> from the dropdown menu</p>
+				<p>Go to <b>Home</b> on the left</p>
+				<p>Select <b>Custom URLs...</b> from the dropdown menu</p>
+				<p>Enter <b>thisurl.com</b> in the Homepage field</p>
+			</div>
+		</div>
+		<div class="search-bar">
+			<form action="https://www.google.com/search" method="GET">
+				<input type="text" name="q" placeholder="Search Google">
+				<button type="submit">Search</button>
+			</form>
+		</div>
+		<div class="colour-picker">
+			<button class="colour-picker-button"></button>
+		</div>
+		<div class="darkmode">
+			<button id="darkmode-button"></button>
+		</div>
+		<div id="calWrapper">
+			<div id="calDate">
+				<select id="sMonth"></select><select id="sYear"></select><input id="btnShow" type="button" value="Show"/>
+			</div>
+			<div id="calContainer">
+				<!-- calendar view -->
+			</div>
+			<div id="calEvent"></div>
+			<!-- event panel view -->
+		</div>
+	</body>
+</html>
