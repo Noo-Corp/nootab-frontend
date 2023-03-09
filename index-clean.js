@@ -290,12 +290,15 @@ window.addEventListener("load", function () {
 
 
   const darkmode_button = document.querySelector('#darkmode-button');
+  const logo = document.querySelector('#logo img');
 
   if (localStorage.getItem("colour-mode-back") == '#424242') {
     darkmode_button.style.backgroundImage = 'url("light-mode.png")';
+    logo.src = "logo-asleep.png";
     document.documentElement.style.setProperty('--bodyback', "#363636");
   } else {
     darkmode_button.style.backgroundImage = 'url("dark-mode.png")';
+    logo.src = "logo-awake.png";
     document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
   }
 
@@ -371,11 +374,13 @@ function getTextColor(hexCode) {
 
 function toggleDarkMode() {
   const darkmode_button = document.querySelector('#darkmode-button');
+  const logo = document.querySelector('#logo img');
   var light = '#F5F5F5';
   var dark = '#424242';
 
   if (darkmode_button.style.backgroundImage === 'url("light-mode.png")') {
     darkmode_button.style.backgroundImage = 'url("dark-mode.png")';
+    logo.src = "logo-awake.png";
     document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
     document.documentElement.style.setProperty('--modeback', light);
     document.documentElement.style.setProperty('--modetext', dark);
@@ -383,6 +388,7 @@ function toggleDarkMode() {
     localStorage.setItem('colour-mode-text', dark);
   } else {
     darkmode_button.style.backgroundImage = 'url("light-mode.png")';
+    logo.src = "logo-asleep.png";
     document.documentElement.style.setProperty('--bodyback', "#363636");
     document.documentElement.style.setProperty('--modeback', dark);
     document.documentElement.style.setProperty('--modetext', light);

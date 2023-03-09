@@ -215,7 +215,6 @@ th {
 	position: absolute;
 	top: 0;
 	right: 10px;
-	text-align: center;
 }
 
 .colour-picker-button {
@@ -261,29 +260,10 @@ th {
 }
 
 @keyframes bounce {
-	0% {
-		transform: translateY(0);
-	}
-
-	30% {
-		transform: translateY(-10px);
-	}
-
-	50% {
-		transform: translateY(0);
-	}
-
-	70% {
-		transform: translateY(-5px);
-	}
-
-	90% {
-		transform: translateY(0);
-	}
-
-	100% {
-		transform: translateY(0);
-	}
+	from, to { transform: scale(1, 1); }
+	25% { transform: scale(0.9, 1.1); }
+	50% { transform: scale(1.1, 0.9); }
+	75% { transform: scale(0.95, 1.05); }
 }
 
 /* Search Bar CSS */
@@ -441,3 +421,161 @@ th {
 	content: "\2212";
 	/* Unicode character for "minus" sign (-) */
 }
+
+/*Logo Styling*/
+#logo {
+	position: absolute;
+	top: 0;
+	left: 10px;
+	cursor: pointer;
+}
+
+#logo img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 40px;
+	width: 40px;
+	border: none;
+	margin: 15px;
+}
+
+#logo.animate img {
+	animation: wobble 0.75s ease;
+}
+
+@keyframes wobble {
+    0%, 100% {
+        -webkit-transform: translateX(0%);
+        transform: translateX(0%);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+
+    15% {
+        -webkit-transform: translateX(-10px) rotate(-10deg);
+        transform: translateX(-10px) rotate(-10deg);
+    }
+
+    30% {
+        -webkit-transform: translateX(calc(10px / 2)) rotate(10deg);
+        transform: translateX(calc(10px / 2)) rotate(10deg);
+    }
+
+    45% {
+        -webkit-transform: translateX(calc(-10px / 2)) rotate(calc(-10deg / 1.8));
+        transform: translateX(calc(-10px / 2)) rotate(calc(-10deg / 1.8));
+    }
+
+    60% {
+        -webkit-transform: translateX(calc(10px / 3.3)) rotate(calc(10deg / 3));
+        transform: translateX(calc(10px / 3.3)) rotate(calc(10deg / 3));
+    }
+
+    75% {
+        -webkit-transform: translateX(calc(-10px / 5.5)) rotate(calc(-10deg / 5));
+        transform: translateX(calc(-10px / 5.5)) rotate(calc(-10deg / 5));
+    }
+}
+
+
+.zzz-container {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.zzz-animate {
+    animation-name: zzz;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+    color: rgba(54, 54, 54, 0);
+    font-weight: bold;
+    position: absolute;
+    z-index: 100;
+    transform: translateY(100%);
+    font-family: 'Concert One', cursive;
+}
+
+.zzz-z {
+    animation-delay: 0s;
+    right: 5px;
+}
+.zzz-zz {
+    animation-delay: 0.2s;
+    right: -15px;
+}
+.zzz-zzz {
+    animation-delay: 0.4s;
+    right: 0;
+}
+
+@-webkit-keyframes zzz {
+	0% {
+        color: rgba(54, 54, 54, 0);
+        font-size: 1px;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+    95% {
+        color: var(--top);
+        font-size: 18px;
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-80%);
+    }
+	100% {
+        color: rgba(54, 54, 54, 0);
+        font-size: 18px;
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes zzz {
+    0% {
+        color: rgba(54, 54, 54, 0);
+        font-size: 1px;
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+    95% {
+        color: var(--top);
+        font-size: 18px;
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+	100% {
+        color: rgba(54, 54, 54, 0);
+        font-size: 18px;
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+}
+
+.pulse {
+	animation: pulse 0.2s ease-in-out alternate;
+  }
+
+  @-webkit-keyframes pulse {
+	0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+	100% {
+        transform: scale(1);
+    }
+  }
+
+  @keyframes pulse {
+	0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+	100% {
+        transform: scale(1);
+    }
+  }
