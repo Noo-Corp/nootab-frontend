@@ -428,9 +428,16 @@ th {
 	/* Unicode character for "minus" sign (-) */
 }
 
-#logo {
-	position: absolute;
+#heading {
+	position: fixed;
 	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+}
+
+#logo {
+	position: relative;
 	left: 10px;
 	cursor: pointer;
 }
@@ -485,9 +492,8 @@ th {
 }
 
 #heading-text {
-	position: absolute;
-	left: 74px;
-	top: 0;
+	position: relative;
+	left: 12px;
 	color: #424242;
 	font-size: 30px;
 	font-weight: lighter;

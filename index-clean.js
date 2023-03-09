@@ -249,6 +249,7 @@ window.addEventListener("load", function () {
 
 
 	const colourPickerButton = document.querySelector('.colour-picker-button');
+    colourPickerButton.style.backgroundImage = "url('colour-wheel.png')";
 	colourPickerButton.addEventListener('click', function () {
 		// create color picker input element
 		const colourPickerInput = document.createElement('input');
