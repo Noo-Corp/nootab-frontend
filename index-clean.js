@@ -292,7 +292,7 @@ window.addEventListener("load", function () {
   const darkmode_button = document.querySelector('#darkmode-button');
   const logo = document.querySelector('#logo img');
 
-  if (localStorage.getItem("colour-mode-back") == '#424242') {
+  if (main_mode_back == '#424242') {
     darkmode_button.style.backgroundImage = 'url("light-mode.png")';
     logo.src = "logo-asleep.png";
     document.documentElement.style.setProperty('--bodyback', "#363636");
@@ -319,9 +319,32 @@ window.addEventListener("load", function () {
     coll[i].addEventListener("click", collToggle);
   }
 
+  document.getElementById('logo').addEventListener('click', logoClick);
+
   var search = document.querySelector(".search-bar form input");
   search.focus();
 });
+
+function logoClick() {
+  const logo = document.getElementById('logo');
+
+  if (localStorage.getItem("colour-mode-back") === '#F5F5F5' || localStorage.getItem("colour-mode-back") === null) {
+      logo.classList.remove('animate');
+      void logo.offsetWidth;
+      logo.classList.add('animate');
+  } else {
+      const zzz_container = $(".zzz-container");
+      const zzz_children = zzz_container.children("div");
+      zzz_children.each(function() {
+          $(this).addClass("zzz-animate").text("Z").on("animationend", function() {
+              $(this).removeClass("zzz-animate").text("");
+          });
+      });
+      logo.classList.remove('pulse');
+      void logo.offsetWidth;
+      logo.classList.add('pulse');
+  }
+}
 
 function popupClick() {
   popup.classList.add('closed');
