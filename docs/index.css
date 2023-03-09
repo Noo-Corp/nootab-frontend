@@ -494,7 +494,7 @@ th {
     position: absolute;
     z-index: 100;
     transform: translateY(100%);
-    font-family: 'Concert One', cursive;
+    font-family: 'sans-serif';
 }
 
 .zzz-z {
@@ -553,7 +553,7 @@ th {
 }
 
 .pulse {
-	animation: pulse 0.2s ease-in-out alternate;
+	animation: pulse 0.25s ease-in-out alternate;
   }
 
   @-webkit-keyframes pulse {
