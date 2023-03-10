@@ -43,6 +43,7 @@ th {
 	font-weight: bold;
 	color: var(--header);
 	background: var(--top);
+	width: 14.3%;
 }
 
 #calendar tr#dayRow td:first-child {
