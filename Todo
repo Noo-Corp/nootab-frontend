@@ -1,25 +1,23 @@
-----fun----
 add ads
-chrome extension
 firefox extension
 
-3 tab layout for site (calendar, notes)
-- click to select/deslect a tab
-- click 1: takes up whole space
-- click 2: split the space (first clicked on left, second clicked on right)
-- save tab layout to local storage
-
 chatgpt (or similar) tab??
-
 
 - ads on either side of screen
 - buy to remove ads
 
-social media sharing images
-
 autoopen "startup" functinoality: save links and press a button to autopen them all 
 
---test--
-firefox and chrome
+update site meta desc and extension page
+- new features in popup
+- new features in descriptions
+- mentino we dont keep any data, all data stored locally
+
+make js more efficient for load times
+
+add text options/images (convert to base64) to notes 
+
+--------------------------------------
+Supported browsers: firefox and chrome
 
 obfuscator: https://obfuscator.io/

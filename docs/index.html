@@ -72,15 +72,38 @@
 		<div class="darkmode">
 			<button id="darkmode-button"></button>
 		</div>
-		<div id="calWrapper">
-			<div id="calDate">
-				<select id="sMonth"></select><select id="sYear"></select><input id="btnShow" type="button" value="Show"/>
+		
+		<div>
+			<div id="notes" class="panel-container mode" style="display:none">
+				<div class="panelWrapper">
+					<div id="editorContainer">
+						<textarea class="panelWrapper" id="editor"></textarea>
+						<button id="editor-save-btn">Save</button>
+					</div>
+				</div>
 			</div>
-			<div id="calContainer">
-				<!-- calendar view -->
+			
+			<div id="calendar" class="panel-container mode" style="display:none">
+				<div class="panelWrapper">
+					<div id="calDate">
+						<select id="sMonth"></select><select id="sYear"></select><input id="btnShow" type="button" value="Show"/>
+					</div>
+					<div id="calContainer">
+						<!-- calendar view -->
+					</div>
+					<div id="calEvent"></div>
+					<!-- event panel view -->
+				</div>
 			</div>
-			<div id="calEvent"></div>
-			<!-- event panel view -->
-		</div>
+
+			<div class="panel-select">
+			  <a href="javascript:void(0)" onclick="openMode('notes');">
+				<div class="panel-mode" id="notes-select">Notes</div>
+			  </a>
+			  <a href="javascript:void(0)" onclick="openMode('calendar');">
+				<div class="panel-mode" id="calendar-select">Calendar</div>
+			  </a>
+			</div>
+		  </div>
 	</body>
 </html>
