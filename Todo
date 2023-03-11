@@ -1,10 +1,10 @@
 add ads
+- ads on either side of screen
+- buy to remove ads
+
 firefox extension
 
 chatgpt (or similar) tab??
-
-- ads on either side of screen
-- buy to remove ads
 
 autoopen "startup" functinoality: save links and press a button to autopen them all 
 
@@ -15,7 +15,9 @@ update site meta desc and extension page
 
 make js more efficient for load times
 
-add text options/images (convert to base64) to notes 
+notes overhaul
+- add text options
+- add image (convert to base64)
 
 --------------------------------------
 Supported browsers: firefox and chrome
