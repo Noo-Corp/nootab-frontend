@@ -655,18 +655,16 @@ th {
 
 #editor {
 	resize: none;
-	height: 40em;
-	max-height: 40vh;
 	box-sizing: border-box;
-	border: 1px solid var(--bodyback);
-	border-radius: 5px;
-	left: 50%;
-	transform: translateX(-50%);
-	position: relative;
 	background: var(--modeback);
 	color: var(--modetext);
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
+	border: 1px solid var(--bodyback);
+	border-radius: 8px;
+	padding: 10px;
+	height: 100%;
+	width: 100%;
 }
 
 #editorContainer {
@@ -686,4 +684,21 @@ th {
 	font-size: 16px;
 	font-weight: bold;
 	cursor: pointer;
+}
+
+#editor-box {
+	height: 40em;
+	max-height: 40vh;
+	left: 50%;
+	transform: translateX(-50%);
+	position: relative;
+}
+
+#editor-alert {
+	position: absolute;
+	right: 0;
+	top: -40px;
+	color: var(--main);
+	font-weight: bold;
+	display: none;
 }

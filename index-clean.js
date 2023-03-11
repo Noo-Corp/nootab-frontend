@@ -437,8 +437,8 @@ function getTextColor(hexCode) {
 function toggleDarkMode() {
 	const darkmode_button = document.querySelector('#darkmode-button');
 	const logo = document.querySelector('#logo img');
-	var light = '#F5F5F5';
-	var dark = '#424242';
+	const light = '#F5F5F5';
+	const dark = '#424242';
 
 	if (darkmode_button.style.backgroundImage === 'url("light-mode.png")') {
 		darkmode_button.style.backgroundImage = 'url("dark-mode.png")';
@@ -631,8 +631,10 @@ function openMode(modeName) {
 function saveNote() {
     localStorage.setItem("notes-main", document.getElementById("editor").value);
     document.getElementById("editor-save-btn").textContent = "Save";
+    document.getElementById("editor-alert").style.display = "none";
 }
 
 function indicateSave() {
-    document.getElementById("editor-save-btn").textContent = "* Save";
+    document.getElementById("editor-save-btn").textContent = "*Save";
+    document.getElementById("editor-alert").style.display = "block";
 }
