@@ -191,9 +191,9 @@ var calendar = {
 
 	//close the event panel by deleting the HTML that makes it up
 	close: function () {
-		event = document.getElementById("calEvent");
-		event.classList.remove('show');
-		event.style.display = "none";
+		e = document.getElementById("calEvent");
+		e.classList.remove('show');
+		e.style.display = "none";
 		document.removeEventListener("click", closeOnClick);
 	}
 };
@@ -229,6 +229,15 @@ window.addEventListener("load", function () {
 	document.getElementById("btnShow").addEventListener("click", calendar.draw); //listener for on click event on show button
 	calendar.draw(); //display calendar for current month and year
 
+    document.addEventListener("keydown", documentKeyHandler);
+
+    //get open panels
+    var main_panel_open = localStorage.getItem("panel-main") || "calendar";
+
+    document.getElementById(main_panel_open).style.display = "block";
+    document.getElementById(main_panel_open+"-select").style.borderBottom = "6px solid var(--top)";
+    document.getElementById(main_panel_open+"-select").style.color = "var(--top)";
+    localStorage.setItem("panel-main", main_panel_open);
 
 	//set document colours from localStorage
 	var main_colour = localStorage.getItem("colour-main") || "#ed6461";
@@ -305,7 +314,6 @@ window.addEventListener("load", function () {
 
 	darkmode_button.addEventListener("click", toggleDarkMode);
 
-
 	// check if popup was already dismissed
 	if (localStorage.getItem('popup-dismissed')) {
 		popup.style.display = 'none';
@@ -324,8 +332,36 @@ window.addEventListener("load", function () {
 
 	var search = document.querySelector(".search-bar form input");
 	search.focus();
+    
+
+    const saved_note_text = localStorage.getItem("notes-main") || "";
+    document.getElementById('editor').value = saved_note_text;
+
+    document.getElementById('editor-save-btn').addEventListener('click', saveNote);
+    document.getElementById('editor').addEventListener('input', indicateSave);
 });
 
+function documentKeyHandler(event) {
+    if (event.key === 'Tab') {
+        if (document.getElementById("calEvent").style.display === "none") {
+            event.preventDefault();
+            var current_mode = localStorage.getItem('panel-main');
+            var toggle_to;
+            if (current_mode == "calendar") {
+                toggle_to = "notes";
+            } else if (current_mode == "notes") {
+                toggle_to = "calendar";
+            }
+            openMode(toggle_to);
+        }
+    } else if (event.ctrlKey && event.key === 's') {
+        if (document.getElementById("notes").style.display == "block") {
+            event.preventDefault();
+            saveNote();
+        }
+    }
+}
+  
 function logoClick() {
 	const logo = document.getElementById('logo');
 
@@ -375,10 +411,12 @@ function closeOnClick(event) {
 	if (event.type == "click") {
 		if ($('#calEvent').css('opacity') == 1 && !calEvent.contains(event.target) && (!event.target.closest('td') || event.target.closest('tr').id == 'dayRow' || event.target.closest('td').id == 'empty')) {
 			calendar.close();
+            document.removeEventListener("click", closeOnClick);
 		}
 	} else if (event.type == "keydown") {
-		if (event.keyCode === 27 || event.key === 'Escape') {
+		if (event.key === 'Escape') {
 			calendar.close();
+            document.removeEventListener("keydown", closeOnClick);
 		}
 	}
 }
@@ -565,4 +603,36 @@ function generatePalette(hsv) {
 		v: v4
 	};
 	return modifiedHsv;
+}
+
+function openMode(modeName) {
+    var i, x, panelModes;
+    x = document.getElementsByClassName("mode");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    panelModes = document.getElementsByClassName("panel-mode");
+    for (i = 0; i < x.length; i++) {
+        panelModes[i].style.borderBottom = "6px solid #363636";
+        panelModes[i].style.color = "#363636";
+    }
+
+    document.getElementById(modeName).style.display = "block";
+    document.getElementById(modeName+"-select").style.borderBottom = "6px solid var(--top)";
+    document.getElementById(modeName+"-select").style.color = "var(--top)";
+    if (modeName == "notes") {
+        localStorage.setItem('panel-main', "notes");
+        document.getElementById("editor").focus();
+    } else if (modeName == "calendar") {
+        localStorage.setItem('panel-main', "calendar");
+    }
+}
+
+function saveNote() {
+    localStorage.setItem("notes-main", document.getElementById("editor").value);
+    document.getElementById("editor-save-btn").textContent = "Save";
+}
+
+function indicateSave() {
+    document.getElementById("editor-save-btn").textContent = "* Save";
 }

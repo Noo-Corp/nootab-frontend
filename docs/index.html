@@ -15,13 +15,11 @@
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
 		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 		<link rel="manifest" href="site.webmanifest">
 		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
-		
 		<link rel="stylesheet" href="index.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	</head>
@@ -72,7 +70,6 @@
 		<div class="darkmode">
 			<button id="darkmode-button"></button>
 		</div>
-		
 		<div>
 			<div id="notes" class="panel-container mode" style="display:none">
 				<div class="panelWrapper">
@@ -82,7 +79,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div id="calendar" class="panel-container mode" style="display:none">
 				<div class="panelWrapper">
 					<div id="calDate">
@@ -95,15 +91,14 @@
 					<!-- event panel view -->
 				</div>
 			</div>
-
 			<div class="panel-select">
-			  <a href="javascript:void(0)" onclick="openMode('notes');">
-				<div class="panel-mode" id="notes-select">Notes</div>
-			  </a>
-			  <a href="javascript:void(0)" onclick="openMode('calendar');">
-				<div class="panel-mode" id="calendar-select">Calendar</div>
-			  </a>
+				<a href="javascript:void(0)" onclick="openMode('notes');">
+					<div class="panel-mode" id="notes-select">Notes</div>
+				</a>
+				<a href="javascript:void(0)" onclick="openMode('calendar');">
+					<div class="panel-mode" id="calendar-select">Calendar</div>
+				</a>
 			</div>
-		  </div>
+		</div>
 	</body>
 </html>
