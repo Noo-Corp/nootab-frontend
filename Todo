@@ -10,6 +10,8 @@ notes overhaul
 
 autoopen "startup" functinoality: save links and press a button to autopen them all 
 
+give focus to search when switchign to calendar
+
 firefox extension
 update site meta desc and extension page
 - new features in popup
