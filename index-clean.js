@@ -625,6 +625,7 @@ function openMode(modeName) {
         document.getElementById("editor").focus();
     } else if (modeName == "calendar") {
         localStorage.setItem('panel-main', "calendar");
+        document.querySelector(".search-bar form input").focus();
     }
 }
 
