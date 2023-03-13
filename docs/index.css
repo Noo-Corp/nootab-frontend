@@ -9,6 +9,7 @@
 	--empty: #c34444;
 	--hover: #ff7572;
 	--tophover: #ff7572;
+	--backtext: #646464;
 }
 
 body {
@@ -629,9 +630,9 @@ th {
 
 .panel-mode {
 	display: inline;
-	border-bottom: 6px solid #646464;
+	border-bottom: 6px solid var(--backtext);
 	padding: 8px 16px;
-	color: #646464;
+	color: var(--backtext);
 	position: relative;
 	top: 5px;
 	transition: transform 0.2s ease-in-out;
@@ -704,8 +705,52 @@ th {
 	display: none;
 }
 
-.adbox {
+.ad-btn {
 	position: fixed;
-	bottom: 0;
-	left: 0;
+	top: 70px;
+	left: 25px;
+	--b: 3px;   /* border thickness */
+	--s: .45em; /* size of the corner */
+
+	padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+	--_p: var(--s);
+	background:
+	conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--top) 0)
+	var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+	transition: .3s linear, color 0s;
+	outline: var(--b) solid #0000;
+	outline-offset: .6em;
+	font-size: 16px;
+
+	border: 0;
+	cursor: pointer;
+}
+
+.ad-btn:hover,
+.ad-btn:focus-visible{
+  --_p: 0px;
+  outline-color: var(--top);
+  outline-offset: .05em;
+}
+
+.ad-btn:active {
+  background: var(--modeback);
+}
+
+.ad-btn .text {
+	color: var(--backtext);
+	line-height: 1.5em;
+}
+
+.ad-btn .support {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.ad-btn .view-ad {
+	font-size: 15px;
+}
+
+.fa-external-link {
+	font-size: 12px;
 }

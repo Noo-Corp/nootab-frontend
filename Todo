@@ -1,7 +1,6 @@
 F: chatgpt (or similar) tab??
 
 !: add ads
-- make a support us button with direct link
 - daily quest 5 a day
 - keep streak
 
@@ -13,14 +12,20 @@ B. autoopen "startup" functionality: save links and press a button to autopen th
 
 C. colour picker: select main and accent colours, still autogenerate accent colour by default
 
+D. Bookmarks tab from top?
+
+E: quests tab (click on ad 5 times, make 5 searches, etc.)
+- give XP towards noo level
+- leaderboard? (get/post requests to leaderboard.nootab.com or something)
+
 !: update site meta desc and extension page
 - new features in popup
 - new features in descriptions
 - mention we dont keep any data, all data stored locally
 
-flashes on new tab firefox
+suggest to be recommended firefox extension email: amo-featured@mozilla.org with a link to its AMO listing page. 
 
 --------------------------------------
 Supported browsers: firefox and chrome
-Using Adsterra for ads
+Using HilltopAds for ads, alternative Adsterra
 obfuscator: https://obfuscator.io/

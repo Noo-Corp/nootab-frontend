@@ -639,3 +639,7 @@ function indicateSave() {
     document.getElementById("editor-save-btn").textContent = "*Save";
     document.getElementById("editor-alert").style.display = "block";
 }
+
+function openAd() {
+    window.open('https://creepy-reception.com/bK3/VX0UP.3Kp/vUbNmwVtJvZmDZ0u0gNGjIYj0aM/D/gV0jLdTfQS2pNljeQ/wJOHD_UK', '_blank');
+}
