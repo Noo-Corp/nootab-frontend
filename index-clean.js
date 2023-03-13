@@ -613,8 +613,8 @@ function openMode(modeName) {
     }
     panelModes = document.getElementsByClassName("panel-mode");
     for (i = 0; i < x.length; i++) {
-        panelModes[i].style.borderBottom = "6px solid #363636";
-        panelModes[i].style.color = "#363636";
+        panelModes[i].style.borderBottom = "6px solid #646464";
+        panelModes[i].style.color = "#646464";
     }
 
     document.getElementById(modeName).style.display = "block";

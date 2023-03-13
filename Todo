@@ -1,23 +1,26 @@
-chatgpt (or similar) tab??
+F: chatgpt (or similar) tab??
 
-add ads
-- ads on either side of screen
-- buy to remove ads
+!: add ads
+- make a support us button with direct link
+- daily quest 5 a day
+- keep streak
 
-notes overhaul
+A. notes overhaul
 - add text options
 - add image (convert to base64)
 
-autoopen "startup" functinoality: save links and press a button to autopen them all 
+B. autoopen "startup" functionality: save links and press a button to autopen them all 
 
-update site meta desc and extension page
+C. colour picker: select main and accent colours, still autogenerate accent colour by default
+
+!: update site meta desc and extension page
 - new features in popup
 - new features in descriptions
-- mentino we dont keep any data, all data stored locally
+- mention we dont keep any data, all data stored locally
 
-check that the site description updates (search for "nootab, noo tab, new tab, etc.")
+flashes on new tab firefox
 
 --------------------------------------
 Supported browsers: firefox and chrome
-
+Using Adsterra for ads
 obfuscator: https://obfuscator.io/
