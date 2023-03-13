@@ -641,5 +641,5 @@ function indicateSave() {
 }
 
 function openAd() {
-    window.open('https://creepy-reception.com/bK3/VX0UP.3Kp/vUbNmwVtJvZmDZ0u0gNGjIYj0aM/D/gV0jLdTfQS2pNljeQ/wJOHD_UK', '_blank');
+    window.open('https://creepy-reception.com/b/3mV.0QP-3cpkvCbjmZVtJWZLDS0u0/NFjYY/0/MhD/gV0/LUTVQF2/N/jeQIwdOADdUm', '_blank');
 }
