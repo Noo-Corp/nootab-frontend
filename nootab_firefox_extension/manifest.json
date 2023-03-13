@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Noo Tab",
-    "version": "1.0",
+    "version": "1.0.2",
 
     "description": "Minimalist new tab page that provides seamless access to search and productivity tools, all with customizable colour themes.",
 
