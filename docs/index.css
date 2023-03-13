@@ -340,6 +340,7 @@ th {
 
 .popup {
 	position: fixed;
+	display: none;
 	top: 15px;
 	background-color: var(--modetext);
 	color: var(--modeback);
@@ -349,19 +350,11 @@ th {
 	max-width: 500px;
 	text-align: left;
 	animation: slide-in 0.5s ease-in;
-	/* add a transition property for sliding out */
-	transition: transform 0.5s ease-out;
-	transform: translateX(0%);
 	z-index: 999;
 }
 
 .popup span {
 	color: var(--modeback);
-}
-
-.popup.closed {
-	/* add a transform property for sliding out */
-	transform: translateX(-100%);
 }
 
 .close {

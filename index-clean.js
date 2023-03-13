@@ -315,9 +315,13 @@ window.addEventListener("load", function () {
 	darkmode_button.addEventListener("click", toggleDarkMode);
 
 	// check if popup was already dismissed
+    const popup = document.querySelector('.popup');
+
 	if (localStorage.getItem('popup-dismissed')) {
 		popup.style.display = 'none';
-	}
+	} else {
+        popup.style.display = 'block';
+    }
 
 	document.getElementById('close-popup').addEventListener('click', popupClick);
 
@@ -370,13 +374,16 @@ function logoClick() {
 		void logo.offsetWidth;
 		logo.classList.add('animate');
 	} else {
-		const zzz_container = $(".zzz-container");
-		const zzz_children = zzz_container.children("div");
-		zzz_children.each(function () {
-			$(this).addClass("zzz-animate").text("Z").on("animationend", function () {
-				$(this).removeClass("zzz-animate").text("");
-			});
-		});
+		const zzz_container = document.querySelector(".zzz-container");
+            const zzz_children = zzz_container.querySelectorAll("div");
+            zzz_children.forEach(function (child) {
+                child.classList.add("zzz-animate");
+                child.textContent = "Z";
+                child.addEventListener("animationend", function () {
+                    child.classList.remove("zzz-animate");
+                    child.textContent = "";
+                });
+            });
 		logo.classList.remove('pulse');
 		void logo.offsetWidth;
 		logo.classList.add('pulse');
@@ -384,15 +391,9 @@ function logoClick() {
 }
 
 function popupClick() {
-	popup.classList.add('closed');
+    const popup = document.querySelector('.popup');
 	localStorage.setItem('popup-dismissed', 'true');
-
-	// remove closed class after animation has finished
-	popup.addEventListener('transitionend', () => {
-		if (popup.classList.contains('closed')) {
-			popup.style.display = 'none';
-		}
-	});
+    popup.style.display = 'none';
 }
 
 function collToggle() {
@@ -409,10 +410,12 @@ function collToggle() {
 function closeOnClick(event) {
 	calEvent = document.getElementById("calEvent");
 	if (event.type == "click") {
-		if ($('#calEvent').css('opacity') == 1 && !calEvent.contains(event.target) && (!event.target.closest('td') || event.target.closest('tr').id == 'dayRow' || event.target.closest('td').id == 'empty')) {
-			calendar.close();
-            document.removeEventListener("click", closeOnClick);
-		}
+        if(document.querySelector('#calEvent').classList.contains('show')) {
+            if (!calEvent.contains(event.target) && (!event.target.closest('td') || event.target.closest('tr').id == 'dayRow' || event.target.closest('td').id == 'empty')) {
+                calendar.close();
+                document.removeEventListener("click", closeOnClick);
+            }
+        }
 	} else if (event.type == "keydown") {
 		if (event.key === 'Escape') {
 			calendar.close();
