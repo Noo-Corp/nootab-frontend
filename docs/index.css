@@ -227,12 +227,15 @@ th {
 	background-color: transparent;
 	background-size: cover;
 	background-repeat: no-repeat;
-	width: 40px;
-	height: 40px;
 	border: none;
 	margin: 15px;
 	transition: transform 0.5s ease;
 	cursor: pointer;
+}
+
+.colour-picker-button img {
+	width: 40px;
+	height: 40px;
 }
 
 .colour-picker-button:hover {
@@ -251,12 +254,15 @@ th {
 	background-color: transparent;
 	background-size: cover;
 	background-repeat: no-repeat;
-	width: 40px;
-	height: 40px;
 	border: none;
 	margin: 15px;
 	transform-origin: center bottom;
 	cursor: pointer;
+}
+
+#darkmode-button img {
+	width: 40px;
+	height: 40px;
 }
 
 #darkmode-button:hover {
@@ -744,6 +750,8 @@ th {
 	font-size: 15px;
 }
 
-.fa-external-link {
-	font-size: 12px;
+.external-link {
+	height: 12px;
+	width: 12px;
+	vertical-align: middle;
 }
