@@ -646,5 +646,5 @@ function indicateSave() {
 }
 
 function openAd() {
-    window.open('https://creepy-reception.com/b/3mV.0QP-3cpkvCbjmZVtJWZLDS0u0/NFjYY/0/MhD/gV0/LUTVQF2/N/jeQIwdOADdUm', '_blank');
+    window.open('https://www.highrevenuegate.com/y50i5kcnsa?key=b7c1523c50c728096c4ab46936dce76d', '_blank');
 }
