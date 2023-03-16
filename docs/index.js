@@ -337,6 +337,7 @@ window.addEventListener("load", function () {
 	document.getElementById('logo').addEventListener('click', logoClick);
 
 	var search = document.querySelector(".search-bar form input");
+    search.background = "var(--modetext)";
 	search.focus();
     
 

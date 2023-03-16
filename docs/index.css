@@ -319,7 +319,7 @@ th {
 	border: none;
 	border-radius: 8px 0 0 8px;
 	color: var(--modetext);
-	background: var(--modeback);
+	background: transparent;
 	box-shadow: 3px 6px var(--bodyback);
 }
 
