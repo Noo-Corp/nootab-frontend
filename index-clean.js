@@ -341,7 +341,7 @@ window.addEventListener("load", function () {
     search.style.background = "var(--modeback)";    
 
     const saved_note_text = localStorage.getItem("notes-main") || "";
-    document.getElementById('editor').value = saved_note_text;
+    document.getElementById('editor').innerHTML = saved_note_text;
 
     document.getElementById('editor-save-btn').addEventListener('click', saveNote);
     document.getElementById('editor').addEventListener('input', indicateSave);
@@ -635,7 +635,7 @@ function openMode(modeName) {
 }
 
 function saveNote() {
-    localStorage.setItem("notes-main", document.getElementById("editor").value);
+    localStorage.setItem("notes-main", document.getElementById("editor").innerHTML);
     document.getElementById("editor-save-btn").textContent = "Save";
     document.getElementById("editor-alert").style.display = "none";
 }
@@ -644,3 +644,23 @@ function indicateSave() {
     document.getElementById("editor-save-btn").textContent = "*Save";
     document.getElementById("editor-alert").style.display = "block";
 }
+
+function format(command, value) {
+    document.execCommand(command, false, value);
+    document.getElementById("editor").focus();
+}
+
+function setUrl() {
+    let input = document.getElementById('tool-url');
+    let sText = document.getSelection();
+    if (input.value != "") {
+      document.getElementById("editor").focus();
+      if (sText != "") {
+        document.execCommand('insertHTML', false, '<a class="editor-link" href="' + input.value + '" onclick="event.preventDefault(); window.open(\'' + input.value + '\', \'_blank\');">' + sText + '</a>');
+      } else {
+        document.execCommand('insertHTML', false, '<a class="editor-link" href="' + input.value + '" onclick="event.preventDefault(); window.open(\'' + input.value + '\', \'_blank\');">' + input.value + '</a>');
+      }
+      input.value = "";
+    }
+}  
+  

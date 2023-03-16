@@ -1,31 +1,20 @@
-F: chatgpt (or similar) tab??
-
-A. notes overhaul
-- add text options
-- add image (convert to base64)
-
-B. autoopen "startup" functionality: save links and press a button to autopen them all 
+B. Bookmarks tab from top?
+- store links at the top, open them all with a button
+- autoopen "startup" functionality: save links and press a button to autopen them all 
 
 C. colour picker: select main and accent colours, still autogenerate accent colour by default
 
-D. Bookmarks tab from top?
 
-!: update site meta desc and extension page
+D: update site meta desc and extension page
 - new features in popup
 - new features in descriptions
 - update screenshots
 - mention we dont keep any data, all data stored locally
 
-not getting revenue from hilltop? try push notice ads
-
-noot lag on page open
-finish gsc search
-optimize it?
-
-suggest to be recommended firefox extension email: amo-featured@mozilla.org with a link to its AMO listing page. 
+E: suggest to be recommended firefox extension email: amo-featured@mozilla.org with a link to its AMO listing page. 
 
 --------------------------------------
 Supported browsers: firefox and chrome
 Using HilltopAds for ads, alternative Adsterra
-obfuscator: https://obfuscator.io/
+minifier: https://www.toptal.com/developers/javascript-minifier
 

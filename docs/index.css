@@ -666,6 +666,7 @@ th {
 	padding: 10px;
 	height: 100%;
 	width: 100%;
+	text-align: left;
 }
 
 #editorContainer {
@@ -702,4 +703,27 @@ th {
 	color: var(--main);
 	font-weight: bold;
 	display: none;
+}
+
+.editor-toolbar {
+	text-align: left;
+}
+
+.fa-fw {
+	cursor: pointer;
+	color: var(--modetext);
+}
+
+.fa-fw:hover {
+	color: var(--top);
+}
+
+#tool-url {
+	color:var(--modetext);
+	background: transparent;
+	border: 1px solid var(--modetext);
+}
+
+.editor-link {
+	cursor: pointer;
 }
