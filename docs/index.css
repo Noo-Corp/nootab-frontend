@@ -704,26 +704,3 @@ th {
 	font-weight: bold;
 	display: none;
 }
-
-.editor-toolbar {
-	text-align: left;
-}
-
-.fa-fw {
-	cursor: pointer;
-	color: var(--modetext);
-}
-
-.fa-fw:hover {
-	color: var(--top);
-}
-
-#tool-url {
-	color:var(--modetext);
-	background: transparent;
-	border: 1px solid var(--modetext);
-}
-
-.editor-link {
-	cursor: pointer;
-}

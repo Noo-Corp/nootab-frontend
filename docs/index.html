@@ -3,16 +3,8 @@
 	<head>
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-3MMCC236VW"></script>
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			
-			gtag('config', 'G-3MMCC236VW');
-		</script>
 		<link rel="stylesheet" href="index.css">
 		<script type="text/javascript" src="index.js"></script>
-		<script src="https://use.fontawesome.com/4c97752ffe.js"></script>
 
 		<title>Noo Tab</title>
 		<meta name="description" content="Noo Tab provides seamless access to search and productivity tools, all with customizable colour themes. Customize your new tab with nootab.com">
@@ -81,17 +73,9 @@
 			<div id="notes" class="panel-container mode" style="display:none">
 				<div class="panelWrapper">
 					<div id="editorContainer">
-						<div class="editor-toolbar">
-							<span class="fa fa-bold fa-fw" aria-hidden="true" onclick="format('strong')"></span>
-							<span class="fa fa-italic fa-fw" aria-hidden="true" onclick="format('italic')"></span>
-							<span class="fa fa-underline fa-fw" aria-hidden="true" onclick="format('underline')"></span>
-							<span class="fa fa-list fa-fw" aria-hidden="true" onclick="format('unorderedlist')"></span>
-							<span class="fa fa-link fa-fw" aria-hidden="true" onclick='setUrl()'></span>
-							<span><input id="tool-url" placeholder="url"></span>
-						</div>
 						<div id="editor-box">
 							<p id="editor-alert">unsaved</p>
-							<div class="panelWrapper" id="editor" contenteditable="true"></div>
+							<textarea class="panelWrapper" id="editor"></textarea>
 						</div>
 						<button id="editor-save-btn">Save</button>
 					</div>
