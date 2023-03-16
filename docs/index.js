@@ -337,9 +337,8 @@ window.addEventListener("load", function () {
 	document.getElementById('logo').addEventListener('click', logoClick);
 
 	var search = document.querySelector(".search-bar form input");
-    search.background = "var(--modetext)";
 	search.focus();
-    
+    search.style.background = "var(--modeback)";    
 
     const saved_note_text = localStorage.getItem("notes-main") || "";
     document.getElementById('editor').value = saved_note_text;
