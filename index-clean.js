@@ -644,7 +644,3 @@ function indicateSave() {
     document.getElementById("editor-save-btn").textContent = "*Save";
     document.getElementById("editor-alert").style.display = "block";
 }
-
-function openAd() {
-    window.open('https://creepy-reception.com/ba3mV.0VPr3sp/vAbrmTVCJTZ/Df0o0wNpjRYP0/MsDpg_0DLhTLQ/2xN/jjQ_wCOJDqUj', '_blank');
-}
