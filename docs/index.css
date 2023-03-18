@@ -745,7 +745,7 @@ th {
 }
 
 .urlButton:hover {
-	background: var(--bodyback);
+	background: var(--modeback);
 }
 
 .minusButton {
@@ -805,7 +805,7 @@ th {
 }
 
 #openAllUrlsButton:hover {
-	background: var(--bodyback);
+	background: var(--modeback);
 }
 
 .hasSeturlButtons #openAllUrlsButton {
