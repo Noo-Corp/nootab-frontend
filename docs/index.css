@@ -326,7 +326,7 @@ th {
 .search-bar form button[type="submit"] {
 	height: 100%;
 	padding: 0 16px;
-	background-color: var(--main);
+	background-color: transparent;
 	border: none;
 	border-radius: 0 8px 8px 0;
 	color: var(--text);
@@ -641,7 +641,7 @@ th {
 	bottom: 0;
 	position: fixed;
 	height: 45px;
-	background: var(--modeback);
+	background: transparent;
 	z-index: 10;
 	left: 50%;
 	transform: translate(-50%);
@@ -704,3 +704,110 @@ th {
 	font-weight: bold;
 	display: none;
 }
+
+#urlButtonContainer {
+  top: 0;
+  position: fixed;
+  background: transparent;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 0 15px 0 15px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+#urlDivider {
+  border-left: 2px solid var(--backtext);
+  height: 30px;
+  margin: 5px 12px;
+  display: none;
+}
+
+  .hasSeturlButtons #urlDivider {
+	display: block;
+  }
+
+.urlButton {
+  border: 2px dashed var(--backtext);
+  border-right: none;
+  color: var(--backtext);
+  background: transparent;
+  cursor: pointer;
+  font-size: 1em;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  margin: 15px 0 15px 8px;
+}
+
+.urlButton:hover {
+	background: var(--bodyback);
+}
+
+.minusButton {
+  border: 2px solid red;
+  background: transparent;
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin: 15px 0 15px 0;
+}
+
+.minusButton:hover {
+	color: var(--backtext);
+	border-color: #ff5353;
+	background: #ff5353;
+}
+
+.urlButton.initial {
+	display: none;
+}
+
+.minusButton.initial {
+	display: none;
+}
+
+#plusButton {
+  border: 2px solid var(--top);
+  background: transparent;
+  color: var(--backtext);
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 15px 8px 15px 0;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+
+#plusButton:hover {
+	background: var(--top);
+}
+
+#openAllUrlsButton {
+	border: 2px solid var(--backtext);
+	background: transparent;
+	color: var(--backtext);
+	font-size: 1em;
+	cursor: pointer;
+	border-radius: 8px;
+	margin: 15px 0 15px 4px;
+	height: 30px;
+	display: none;
+}
+
+#openAllUrlsButton:hover {
+	background: var(--bodyback);
+}
+
+.hasSeturlButtons #openAllUrlsButton {
+	display: block;
+  }
