@@ -1,5 +1,4 @@
 /*Copyright Alex Moica*/
-
 var calendar = {
 	//define variables used throughout the calendar functions
 	monthNamesFull: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -11,7 +10,7 @@ var calendar = {
 	curYear: 0,
 
 	//Accesses stored data to dynamically build the given calendar month
-	draw: function () {
+	draw: function() {
 		calendar.curMonth = parseInt(document.getElementById("sMonth").value); //HTML select element for month
 		calendar.curYear = parseInt(document.getElementById("sYear").value); //HTML select element for year
 		var daysInMonth = new Date(calendar.curYear, calendar.curMonth + 1, 0).getDate(), //getDate starts months at index 1, so add 1 to curMonth
@@ -67,11 +66,6 @@ var calendar = {
 
 		dayRow.appendChild(cellFragment);
 		table.appendChild(dayRow); //append row to the table
-
-		var row = null;
-		var cell = null;
-		var dayCounter = 0; //count through the tile array
-		var zeroCount = 0; //how many empty are at the end of the array
 
 		const today = new Date();
 		const day = String(today.getDate());
@@ -138,7 +132,7 @@ var calendar = {
 	},
 
 	//show the event panel where the user can add an event on a certain date
-	show: function (e) {
+	show: function(e) {
 		const event = document.getElementById("calEvent");
 		const inputForm = document.createElement("form");
 		inputForm.addEventListener("submit", calendar.save);
@@ -167,7 +161,7 @@ var calendar = {
 	},
 
 	//write events to localStorage for future instances and have them show up on the calendar
-	save: function (e) {
+	save: function(e) {
 		e.stopPropagation(); //prevent the same event being called
 		e.preventDefault(); //prevent submit from submitting the form, instead having it execute the below custom action
 		calendar.data[calendar.curDay] = document.getElementById("inputDetails").value;
@@ -176,7 +170,7 @@ var calendar = {
 	},
 
 	//delete event from localStorage and have it removed from calendar
-	delete: function () {
+	delete: function() {
 		if (calendar.data[calendar.curDay]) { //only perform action if there is an event in the cell
 			delete calendar.data[calendar.curDay]; //delete event from local array
 			localStorage.setItem("calendar" + calendar.curMonth + calendar.curYear, JSON.stringify(calendar.data)); //save local array to localStorage
@@ -190,7 +184,7 @@ var calendar = {
 	},
 
 	//close the event panel by deleting the HTML that makes it up
-	close: function () {
+	close: function() {
 		e = document.getElementById("calEvent");
 		e.classList.remove('show');
 		e.style.display = "none";
@@ -199,7 +193,7 @@ var calendar = {
 };
 
 //add a listener to perform the following actions on page load
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
 	var today = new Date();
 	var sMonth = document.getElementById("sMonth"); //HTML select element for month
 	var sYear = document.getElementById("sYear"); //HTML select element for year
@@ -229,15 +223,15 @@ window.addEventListener("load", function () {
 	document.getElementById("btnShow").addEventListener("click", calendar.draw); //listener for on click event on show button
 	calendar.draw(); //display calendar for current month and year
 
-    document.addEventListener("keydown", documentKeyHandler);
+	document.addEventListener("keydown", documentKeyHandler);
 
-    //get open panels
-    var main_panel_open = localStorage.getItem("panel-main") || "calendar";
+	//get open panels
+	var main_panel_open = localStorage.getItem("panel-main") || "calendar";
 
-    document.getElementById(main_panel_open).style.display = "block";
-    document.getElementById(main_panel_open+"-select").style.borderBottom = "6px solid var(--top)";
-    document.getElementById(main_panel_open+"-select").style.color = "var(--top)";
-    localStorage.setItem("panel-main", main_panel_open);
+	document.getElementById(main_panel_open).style.display = "block";
+	document.getElementById(main_panel_open + "-select").style.borderBottom = "6px solid var(--top)";
+	document.getElementById(main_panel_open + "-select").style.color = "var(--top)";
+	localStorage.setItem("panel-main", main_panel_open);
 
 	//set document colours from localStorage
 	var main_colour = localStorage.getItem("colour-main") || "#ed6461";
@@ -258,15 +252,15 @@ window.addEventListener("load", function () {
 
 
 	const colourPickerButton = document.querySelector('.colour-picker-button');
-    const colourPickerImage = document.querySelector('.colour-picker-button img');
-    colourPickerImage.src = "images/colour-wheel.png";
-	colourPickerButton.addEventListener('click', function () {
+	const colourPickerImage = document.querySelector('.colour-picker-button img');
+	colourPickerImage.src = "images/colour-wheel.png";
+	colourPickerButton.addEventListener('click', function() {
 		// create color picker input element
 		const colourPickerInput = document.createElement('input');
 		colourPickerInput.type = 'color';
 
 		// add event listener to alert hex code when color is selected
-		colourPickerInput.addEventListener('change', function () {
+		colourPickerInput.addEventListener('change', function() {
 			var main_colour_active = colourPickerInput.value;
 			var main_colour_hsv_active = hexToHsv(main_colour_active);
 
@@ -287,12 +281,12 @@ window.addEventListener("load", function () {
 		colourPickerInput.click();
 
 		// remove color picker input element when color is selected or when user cancels selection
-		colourPickerInput.addEventListener('blur', function () {
+		colourPickerInput.addEventListener('blur', function() {
 			colourPickerInput.remove();
 		});
 
 		// add event listener to the document to detect clicks outside the color picker
-		document.addEventListener('click', function (event) {
+		document.addEventListener('click', function(event) {
 			if (!colourPickerInput.contains(event.target) && event.target !== colourPickerButton) {
 				colourPickerInput.remove();
 			}
@@ -301,7 +295,7 @@ window.addEventListener("load", function () {
 
 
 	const darkmode_button = document.querySelector('#darkmode-button');
-    const darkmode_image = document.querySelector('#darkmode-button img');
+	const darkmode_image = document.querySelector('#darkmode-button img');
 	const logo = document.querySelector('#logo img');
 
 	if (main_mode_back == '#424242') {
@@ -317,13 +311,13 @@ window.addEventListener("load", function () {
 	darkmode_button.addEventListener("click", toggleDarkMode);
 
 	// check if popup was already dismissed
-    const popup = document.querySelector('.popup');
+	const popup = document.querySelector('.popup');
 
 	if (localStorage.getItem('popup-dismissed')) {
 		popup.style.display = 'none';
 	} else {
-        popup.style.display = 'block';
-    }
+		popup.style.display = 'block';
+	}
 
 	document.getElementById('close-popup').addEventListener('click', popupClick);
 
@@ -338,36 +332,54 @@ window.addEventListener("load", function () {
 
 	var search = document.querySelector(".search-bar form input");
 	search.focus();
-    search.style.background = "var(--modeback)";    
+	search.style.background = "var(--modeback)";
 
-    const saved_note_text = localStorage.getItem("notes-main") || "";
-    document.getElementById('editor').value = saved_note_text;
+	var search = document.querySelector(".search-bar form button");
+	search.style.background = "var(--main)";
 
-    document.getElementById('editor-save-btn').addEventListener('click', saveNote);
-    document.getElementById('editor').addEventListener('input', indicateSave);
+	var panelSelect = document.querySelector(".panel-select");
+	panelSelect.style.background = "var(--modeback)";
+
+	var plusButton = document.querySelector("#plusButton");
+	plusButton.style.display = "block";
+
+	initUrlButtons();
+
+	var urlData = JSON.parse(localStorage.getItem("urls"));
+	if (urlData && urlData.length > 0) {
+		const container = document.getElementById("urlButtonContainer");
+		container.removeChild(container.children[1]);
+		container.removeChild(container.children[0]);
+	}
+
+	const saved_note_text = localStorage.getItem("notes-main") || "";
+	document.getElementById('editor').value = saved_note_text;
+
+	document.getElementById('editor-save-btn').addEventListener('click', saveNote);
+	document.getElementById('editor').addEventListener('input', indicateSave);
 });
 
 function documentKeyHandler(event) {
-    if (event.key === 'Tab') {
-        if (document.getElementById("calEvent").style.display === "none") {
-            event.preventDefault();
-            var current_mode = localStorage.getItem('panel-main');
-            var toggle_to;
-            if (current_mode == "calendar") {
-                toggle_to = "notes";
-            } else if (current_mode == "notes") {
-                toggle_to = "calendar";
-            }
-            openMode(toggle_to);
-        }
-    } else if (event.ctrlKey && event.key === 's') {
-        if (document.getElementById("notes").style.display == "block") {
-            event.preventDefault();
-            saveNote();
-        }
-    }
+	if (event.key === 'Tab') {
+		if (document.getElementById("calEvent").style.display === "none") {
+			event.preventDefault();
+			var current_mode = localStorage.getItem('panel-main');
+			var toggle_to;
+			if (current_mode == "calendar") {
+				toggle_to = "notes";
+			} else if (current_mode == "notes") {
+				toggle_to = "calendar";
+			}
+			openMode(toggle_to);
+		}
+	} else if (event.ctrlKey && event.key === 's') {
+		if (document.getElementById("notes").style.display == "block") {
+			event.preventDefault();
+			saveNote();
+		}
+	}
 }
-  
+
 function logoClick() {
 	const logo = document.getElementById('logo');
 
@@ -377,15 +389,15 @@ function logoClick() {
 		logo.classList.add('animate');
 	} else {
 		const zzz_container = document.querySelector(".zzz-container");
-            const zzz_children = zzz_container.querySelectorAll("div");
-            zzz_children.forEach(function (child) {
-                child.classList.add("zzz-animate");
-                child.textContent = "Z";
-                child.addEventListener("animationend", function () {
-                    child.classList.remove("zzz-animate");
-                    child.textContent = "";
-                });
-            });
+		const zzz_children = zzz_container.querySelectorAll("div");
+		zzz_children.forEach(function(child) {
+			child.classList.add("zzz-animate");
+			child.textContent = "Z";
+			child.addEventListener("animationend", function() {
+				child.classList.remove("zzz-animate");
+				child.textContent = "";
+			});
+		});
 		logo.classList.remove('pulse');
 		void logo.offsetWidth;
 		logo.classList.add('pulse');
@@ -393,9 +405,9 @@ function logoClick() {
 }
 
 function popupClick() {
-    const popup = document.querySelector('.popup');
+	const popup = document.querySelector('.popup');
 	localStorage.setItem('popup-dismissed', 'true');
-    popup.style.display = 'none';
+	popup.style.display = 'none';
 }
 
 function collToggle() {
@@ -408,20 +420,19 @@ function collToggle() {
 	}
 }
 
-
 function closeOnClick(event) {
 	calEvent = document.getElementById("calEvent");
 	if (event.type == "click") {
-        if(document.querySelector('#calEvent').classList.contains('show')) {
-            if (!calEvent.contains(event.target) && (!event.target.closest('td') || event.target.closest('tr').id == 'dayRow' || event.target.closest('td').id == 'empty')) {
-                calendar.close();
-                document.removeEventListener("click", closeOnClick);
-            }
-        }
+		if (document.querySelector('#calEvent').classList.contains('show')) {
+			if (!calEvent.contains(event.target) && (!event.target.closest('td') || event.target.closest('tr').id == 'dayRow' || event.target.closest('td').id == 'empty')) {
+				calendar.close();
+				document.removeEventListener("click", closeOnClick);
+			}
+		}
 	} else if (event.type == "keydown") {
 		if (event.key === 'Escape') {
 			calendar.close();
-            document.removeEventListener("keydown", closeOnClick);
+			document.removeEventListener("keydown", closeOnClick);
 		}
 	}
 }
@@ -438,9 +449,8 @@ function getTextColor(hexCode) {
 	}
 }
 
-
 function toggleDarkMode() {
-    const darkmode_image = document.querySelector('#darkmode-button img');
+	const darkmode_image = document.querySelector('#darkmode-button img');
 	const logo = document.querySelector('#logo img');
 	const light = '#F5F5F5';
 	const dark = '#424242';
@@ -463,7 +473,6 @@ function toggleDarkMode() {
 		localStorage.setItem('colour-mode-text', light);
 	}
 }
-
 
 function hexToHsv(hex) {
 	// Convert hex code to RGB values
@@ -512,7 +521,6 @@ function hexToHsv(hex) {
 	};
 }
 
-
 function hsvToHex(hsv) {
 	if (typeof hsv === 'string') {
 		hsv = JSON.parse(hsv);
@@ -559,7 +567,6 @@ function hsvToHex(hsv) {
 
 	return hex;
 }
-
 
 function generatePalette(hsv) {
 	var modifiedHsv = {};
@@ -611,36 +618,223 @@ function generatePalette(hsv) {
 }
 
 function openMode(modeName) {
-    var i, x, panelModes;
-    x = document.getElementsByClassName("mode");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    panelModes = document.getElementsByClassName("panel-mode");
-    for (i = 0; i < x.length; i++) {
-        panelModes[i].style.borderBottom = "6px solid #646464";
-        panelModes[i].style.color = "#646464";
-    }
+	var i, x, panelModes;
+	x = document.getElementsByClassName("mode");
+	for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";
+	}
+	panelModes = document.getElementsByClassName("panel-mode");
+	for (i = 0; i < x.length; i++) {
+		panelModes[i].style.borderBottom = "6px solid #646464";
+		panelModes[i].style.color = "#646464";
+	}
 
-    document.getElementById(modeName).style.display = "block";
-    document.getElementById(modeName+"-select").style.borderBottom = "6px solid var(--top)";
-    document.getElementById(modeName+"-select").style.color = "var(--top)";
-    if (modeName == "notes") {
-        localStorage.setItem('panel-main', "notes");
-        document.getElementById("editor").focus();
-    } else if (modeName == "calendar") {
-        localStorage.setItem('panel-main', "calendar");
-        document.querySelector(".search-bar form input").focus();
-    }
+	document.getElementById(modeName).style.display = "block";
+	document.getElementById(modeName + "-select").style.borderBottom = "6px solid var(--top)";
+	document.getElementById(modeName + "-select").style.color = "var(--top)";
+	if (modeName == "notes") {
+		localStorage.setItem('panel-main', "notes");
+		document.getElementById("editor").focus();
+	} else if (modeName == "calendar") {
+		localStorage.setItem('panel-main', "calendar");
+		document.querySelector(".search-bar form input").focus();
+	}
 }
 
 function saveNote() {
-    localStorage.setItem("notes-main", document.getElementById("editor").value);
-    document.getElementById("editor-save-btn").textContent = "Save";
-    document.getElementById("editor-alert").style.display = "none";
+	localStorage.setItem("notes-main", document.getElementById("editor").value);
+	document.getElementById("editor-save-btn").textContent = "Save";
+	document.getElementById("editor-alert").style.display = "none";
 }
 
 function indicateSave() {
-    document.getElementById("editor-save-btn").textContent = "*Save";
-    document.getElementById("editor-alert").style.display = "block";
+	document.getElementById("editor-save-btn").textContent = "*Save";
+	document.getElementById("editor-alert").style.display = "block";
+}
+
+// Function to retrieve data from local storage
+function getUrlsFromStorage() {
+	const urls = JSON.parse(localStorage.getItem("urls")) || [];
+	const values = JSON.parse(localStorage.getItem("url_values")) || [];
+	return {
+		urls,
+		values
+	};
+}
+
+// Function to save data to local storage
+function saveUrlsToStorage(urls, values) {
+	localStorage.setItem("urls", JSON.stringify(urls));
+	localStorage.setItem("url_values", JSON.stringify(values));
+}
+
+// Function to add a new URL button
+function addUrlButton() {
+	const container = document.getElementById("urlButtonContainer");
+	const divider = document.getElementById("urlDivider");
+
+	const newButton = document.createElement("button");
+	newButton.className = "urlButton";
+	newButton.onclick = function() {
+		goToUrl(this);
+	};
+	newButton.innerHTML = "+ New";
+
+	const newMinusButton = document.createElement("button");
+	newMinusButton.className = "minusButton";
+	newMinusButton.onclick = function() {
+		deleteUrlButton(this);
+	};
+	newMinusButton.innerHTML = "-";
+
+	container.insertBefore(newButton, divider);
+	container.insertBefore(newMinusButton, divider);
+
+	localStorage.setItem("emptyURL", false);
+
+	updateURLVisibility();
+}
+
+// Function to delete a URL button
+function deleteUrlButton(button) {
+	const container = document.getElementById("urlButtonContainer");
+	const index = Array.from(container.children).indexOf(button);
+	const linkedUploadBtn = container.children[index - 1];
+
+	const {
+		urls,
+		values
+	} = getUrlsFromStorage();
+	if (linkedUploadBtn.dataset.url) {
+		const urlIndex = urls.findIndex(url => url === linkedUploadBtn.dataset.url);
+		const valueIndex = values.findIndex(value => value === linkedUploadBtn.dataset.value);
+		if (urlIndex > -1) {
+			urls.splice(urlIndex, 1);
+		}
+		if (valueIndex > -1) {
+			values.splice(valueIndex, 1);
+		}
+		saveUrlsToStorage(urls, values);
+	}
+
+	container.removeChild(container.children[index]);
+	container.removeChild(container.children[index - 1]);
+
+	updateURLVisibility();
+}
+
+// Function to update the visibility of the URL container
+function updateURLVisibility() {
+	const container = document.getElementById("urlButtonContainer");
+	const hasSeturlButtons = container.getElementsByClassName("urlButton").length > 0;
+	var emptyURL = this.localStorage.getItem("emptyURL");
+
+	if (hasSeturlButtons && emptyURL != "true") {
+		container.classList.add("hasSeturlButtons");
+		localStorage.setItem("emptyURL", false);
+		var urlButtonInitial = document.querySelector(".urlButton.initial");
+		var minusButtonInitial = document.querySelector(".minusButton.initial");
+
+		if (urlButtonInitial && minusButtonInitial) {
+			urlButtonInitial.style.display = "block";
+			minusButtonInitial.style.display = "block";
+		}
+	} else {
+		container.classList.remove("hasSeturlButtons");
+		localStorage.setItem("emptyURL", "true");
+	}
+
+	if (emptyURL == "true") {
+		container.removeChild(container.children[1]);
+		container.removeChild(container.children[0]);
+	}
+}
+
+// Function to go to a URL
+function goToUrl(button) {
+	var url = prompt("Enter the URL:");
+	var value = prompt("(Optional) Enter the name:");
+
+	if (url !== "" && url != null) {
+		if (value == "" || value == null) {
+			value = url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 8);
+			if (url.length > 8) {
+				value += "..";
+			}
+		}
+		
+		setupUrlButtons(button, url, value);
+
+		const {
+			urls,
+			values
+		} = getUrlsFromStorage();
+		urls.push(url);
+		values.push(value);
+		saveUrlsToStorage(urls, values);
+	}
+}
+
+// Function to open all URLs
+function openAllUrls() {
+	const setUrlButtons = document.querySelectorAll(".urlButton");
+	if (setUrlButtons.length > 0) {
+		for (let i = 0; i < setUrlButtons.length; i++) {
+			var url = setUrlButtons[i].dataset.url;
+			if (url !== "" && url != null) {
+				if (!url.startsWith("http://") && !url.startsWith("https://")) {
+					url = "https://" + url;
+				}
+				window.open(url, '_blank');
+			}
+		}
+	}
+}
+
+// Function to initialize the URL buttons on page load
+function initUrlButtons() {
+	const {
+		urls,
+		values
+	} = getUrlsFromStorage();
+	const container = document.getElementById("urlButtonContainer");
+	const divider = document.getElementById("urlDivider");
+
+	urls.forEach((url, index) => {
+		const newButton = document.createElement("button");
+		newButton.className = "urlButton";
+		
+		setupUrlButtons(newButton, url, values[index]);
+		
+		const newMinusButton = document.createElement("button");
+		newMinusButton.className = "minusButton";
+		newMinusButton.onclick = function() {
+			deleteUrlButton(this);
+		};
+		newMinusButton.innerHTML = "-";
+
+		container.insertBefore(newButton, divider);
+		container.insertBefore(newMinusButton, divider);
+	});
+
+	updateURLVisibility();
+}
+
+function setupUrlButtons(button, url, value) {
+	button.dataset.value = value;
+	button.dataset.url = url;
+
+	var urlHref = url;
+
+	if (!url.startsWith("http://") && !url.startsWith("https://")) {
+		urlHref = "https://" + url;
+	}
+
+	button.onclick = function() {
+		window.location.href = urlHref;
+	};
+
+	button.innerText = value;
+	button.style.borderStyle = "solid";
+	button.style.borderRight = "none";
 }
