@@ -238,11 +238,13 @@ window.addEventListener("load", function() {
 	var main_colour_hsv = hexToHsv(main_colour);
 	var main_mode_back = localStorage.getItem("colour-mode-back") || '#F5F5F5';
 	var main_mode_text = localStorage.getItem("colour-mode-text") || '#424242';
+    var main_popup_back = localStorage.getItem("popup-back") || '#646464';
 
 	var palette = generatePalette(main_colour_hsv);
 	document.documentElement.style.setProperty('--main', main_colour);
 	document.documentElement.style.setProperty('--modeback', main_mode_back);
 	document.documentElement.style.setProperty('--modetext', main_mode_text);
+    document.documentElement.style.setProperty('--popupback', main_popup_back);
 	document.documentElement.style.setProperty('--header', getTextColor(hsvToHex(palette.c3)));
 	document.documentElement.style.setProperty('--text', getTextColor(main_colour));
 	document.documentElement.style.setProperty('--empty', hsvToHex(palette.c1));
@@ -459,16 +461,20 @@ function toggleDarkMode() {
 		darkmode_image.src = 'images/dark-mode.png';
 		logo.src = "images/logo-awake.png";
 		document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
+        document.documentElement.style.setProperty('--popupback', "#646464");
 		document.documentElement.style.setProperty('--modeback', light);
 		document.documentElement.style.setProperty('--modetext', dark);
+		localStorage.setItem('popup-back', "#646464");
 		localStorage.setItem('colour-mode-back', light);
 		localStorage.setItem('colour-mode-text', dark);
 	} else {
 		darkmode_image.src = 'images/light-mode.png';
 		logo.src = "images/logo-asleep.png";
 		document.documentElement.style.setProperty('--bodyback', "#363636");
+        document.documentElement.style.setProperty('--popupback', "#E8E8E8");
 		document.documentElement.style.setProperty('--modeback', dark);
 		document.documentElement.style.setProperty('--modetext', light);
+		localStorage.setItem('popup-back', "#E8E8E8");
 		localStorage.setItem('colour-mode-back', dark);
 		localStorage.setItem('colour-mode-text', light);
 	}

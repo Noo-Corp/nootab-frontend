@@ -10,6 +10,7 @@
 	--hover: #ff7572;
 	--tophover: #ff7572;
 	--backtext: #646464;
+	--popupback: #646464;
 }
 
 body {
@@ -363,6 +364,14 @@ th {
 	color: var(--modeback);
 }
 
+#popup-warning {
+	color: var(--modeback);
+	background: var(--popupback);
+	border-radius: 8px;
+	padding: 1px 6px 1px 6px;
+	margin-bottom: 16px;
+}
+
 .close {
 	position: absolute;
 	top: 0;
@@ -402,14 +411,16 @@ th {
 	font-weight: bold;
 }
 
-#collapsible-first {
+.collapsible.border {
 	border-bottom: 1px solid var(--modetext);
 }
 
-.active#collapsible-first,
+.active.collapsible.border {
+	border-bottom: none;
+}
+
 .collapsible:hover {
 	background-color: var(--hover);
-	border-bottom: none;
 }
 
 .active,
@@ -749,9 +760,9 @@ th {
 }
 
 .minusButton {
-  border: 2px solid red;
+  border: 2px solid #ff5353;
   background: transparent;
-  color: red;
+  color: #ff5353;
   font-weight: bold;
   font-size: 1em;
   cursor: pointer;
@@ -762,7 +773,6 @@ th {
 
 .minusButton:hover {
 	color: var(--backtext);
-	border-color: #ff5353;
 	background: #ff5353;
 }
 
@@ -777,7 +787,7 @@ th {
 #plusButton {
   border: 2px solid var(--top);
   background: transparent;
-  color: var(--backtext);
+  color: var(--top);
   font-weight: bold;
   font-size: 1em;
   cursor: pointer;
@@ -790,6 +800,7 @@ th {
 
 #plusButton:hover {
 	background: var(--top);
+	color: var(--backtext);
 }
 
 #openAllUrlsButton {
