@@ -85,11 +85,7 @@
 			<button class="urlButton initial" onclick="goToUrl(this)">+ New</button><button class="minusButton initial" onclick="deleteUrlButton(this)">-</button><div id="urlDivider"></div><button id="plusButton" onclick="addUrlButton()">+</button>
 			<button id="openAllUrlsButton" onclick="openAllUrls()">Open All</button>
 		</div>
-		<div class="search-bar">
-			<form action="https://www.google.com/search" method="GET">
-				<input type="text" name="q" placeholder="Search Google" autocomplete="off">
-				<button type="submit">Search</button>
-			</form>
+		<div class="spacer">
 		</div>
 		<div class="colour-picker">
 			<button class="colour-picker-button">
@@ -116,7 +112,7 @@
 			<div id="calendar" class="panel-container mode" style="display:none">
 				<div class="panelWrapper">
 					<div id="calDate">
-						<select id="sMonth"></select><select id="sYear"></select><input id="btnShow" type="button" value="Show"/>
+						<button id="sLeft">&#5176;</button><button id="sRight">&#5171;</button><select id="sMonth"></select><select id="sYear"></select><button id="sToday">Today</button>
 					</div>
 					<div id="calContainer">
 						<!-- calendar view -->

@@ -1,1 +1,43 @@
-Project complete!
+worklog
+--------------------------
+O2: change bookmark system, remove -'s, change + to be an edit button where you can add/edit/remove bookmarks, replace - with a star?, only starred bookmarks will open when open all clicked, change open all to open starred or startup? 
+
+
+Noo Tab - Update 1
+--------------------------
+!!!!O1: noo tab login/webapp/storage ($12/month for dynos & storage)!!!!
+
+F2: note tabs, add/remove notes
+
+- change the years the calendar shows to be based off the min between the earliest entry and current year
+
+F1: Account tiers
+- using without account: no backup, no sync, no data download, local save only
+- making account: [no backup, no sync, data download (local data), local save only], can start free trial/subscribe, can sign up to mailing list
+- subscribed: backup & accounts across devices/browsers, data download (online data), free trial for a month, then $2.99 a month afterwards
+- cancelling subscription: account goes back to no backup, no sync, data download (local data), local save only, can re-subscribe
+-- show notification & send email of cancel
+- shop page with what is included in each tier
+|F3: banner under noo saying "Local data only" if Guest
+
+F1: make calendar edit event a to-do list: add/delete new option, rearrange options, strikeout, edit options
+|F2: mouseover select for whole day or event in calendar view 
+-whole day-> edit tasks, individual event -> drag/drop to other day or cross out
+|F3: make calendar events appear in rounded secondary-colour boxes
+
+F2: dissmissable update notification that appears under noo to give information about new updates!
+
+O1: noo tab app? Make similar to colournote, available offline, sync when online, gray out/icon what isn't synced
+- when subscription ends: save data changes locally only, no sync, data download (local)
+-- show notification & send email of cancel
+
+|F1: data download
+- none for guest
+- download local data if no subscription, send to email address
+- download online data if subscribed, send to email address
+
+- if multiple tabs open, do they all sync? accross devices?
+- loading screen/icon for nootab webapp so it doesent load broken
+
+---------------------------------
+guidance: why I open a new notepad file for todo: easy to see, reference, doesent feel like a small part of something bigger, fresh empty, can focus just thoughts on this, rewarding to cross out, informal

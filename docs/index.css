@@ -106,28 +106,47 @@ th {
 
 #calDate {
 	width: 100%;
+	text-align: left;
 }
 
 #sMonth,
 #sYear,
-#btnShow {
-	padding: 8px 12px;
-	margin-bottom: 10px;
+#sLeft,
+#sRight {
+	padding: 4px 8px;
+	font-size: 1.5em;
+	border: 0;
+	cursor: pointer;
+}
+
+#sMonth:hover,
+#sYear:hover,
+#sLeft:hover,
+#sRight:hover {
+	color: var(--backtext);
+}
+
+#sToday {
+	padding: 4px 8px;
 	font-size: 1em;
 	border: 0;
 	cursor: pointer;
-	height: 36px;
+	background: none;
+	color: var(--backtext);
+	border: 2px solid var(--backtext);
+	border-radius: 8px;
+	margin-left: 12px;
+}
+
+#sToday:hover {
+	background: var(--modeback);
 }
 
 #sMonth,
 #sYear {
-	background: var(--main);
-	color: var(--header);
-}
-
-#sMonth:hover,
-#sYear:hover {
-	background: var(--empty);
+	background: none;
+	color: var(--main);
+	font-weight: bold;
 }
 
 #sMonth {
@@ -135,17 +154,30 @@ th {
 	border-bottom-left-radius: 8px;
 }
 
-#btnShow {
+#sYear {
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
-	background: var(--top);
-	color: var(--header);
+}
+
+#sLeft,
+#sRight {
+	background: none;
+	color: var(--top);
+	font-weight: bold;
+}
+
+#sLeft {
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
 	margin: 4px 0;
 }
 
-#btnShow:hover {
-	background: var(--tophover);
+#sRight {
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	margin-right: 12px;
 }
+
 
 #calEvent {
 	width: 375px;
@@ -290,59 +322,8 @@ th {
 	}
 }
 
-.search-bar {
-	display: flex;
-	position: sticky;
-	justify-content: center;
-	align-items: center;
-	height: 60px;
-	margin: 0 10% 0 10%;
-	top: 15px;
-	padding-bottom: 86px;
-	margin-top: max(15%, 180px);
-	z-index: 2;
-}
-
-.search-bar form {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	width: 100%;
-	max-width: 600px;
-}
-
-.search-bar form input[type="text"] {
-	flex: 1;
-	height: 40px;
-	font-size: 16px;
-	padding: 10px;
-	border: none;
-	border-radius: 8px 0 0 8px;
-	color: var(--modetext);
-	background: transparent;
-	box-shadow: 3px 6px var(--bodyback);
-}
-
-.search-bar form button[type="submit"] {
-	height: 100%;
-	padding: 0 16px;
-	background-color: transparent;
-	border: none;
-	border-radius: 0 8px 8px 0;
-	color: var(--text);
-	font-size: 16px;
-	font-weight: bold;
-	cursor: pointer;
-	box-shadow: 3px 6px var(--bodyback);
-}
-
-.search-bar form button[type="submit"]:hover {
-	background-color: var(--hover);
-}
-
-.search-bar form input[type="text"]::placeholder {
-	color: var(--modetext);
+.spacer {
+	margin-top: max(5%, 100px);
 }
 
 .popup {
@@ -700,8 +681,7 @@ th {
 }
 
 #editor-box {
-	height: 40em;
-	max-height: 40vh;
+	height: 75vh;
 	left: 50%;
 	transform: translateX(-50%);
 	position: relative;
