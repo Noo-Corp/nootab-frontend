@@ -93,7 +93,7 @@ var calendar = {
 					const curMonth = today.getMonth();
 					
 					if (calendar.curYear === curYear && calendar.curMonth === curMonth && tile == day) { //add border for current day
-						cell.style.border = "3px solid white";
+						cell.style.border = "3px solid"
 					}
 
 					if (calendar.data[tile]) {
@@ -727,7 +727,7 @@ function addUrlButton() {
 	newMinusButton.onclick = function() {
 		deleteUrlButton(this);
 	};
-	newMinusButton.innerHTML = "&#9734;";
+	newMinusButton.innerHTML = "-";//"&#9734;";
 
 	container.insertBefore(newButton, divider);
 	container.insertBefore(newMinusButton, divider);
@@ -854,7 +854,7 @@ function initUrlButtons() {
 		newMinusButton.onclick = function() {
 			deleteUrlButton(this);
 		};
-		newMinusButton.innerHTML = "&#9734;";
+		newMinusButton.innerHTML = "-";//"&#9734;";
 
 		container.insertBefore(newButton, divider);
 		container.insertBefore(newMinusButton, divider);
