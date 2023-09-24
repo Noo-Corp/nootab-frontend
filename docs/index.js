@@ -89,13 +89,17 @@ var calendar = {
 					const tile = tiles[y * 7 + x];
 					cell.innerHTML = `<div class='cell'>${tile}</div>`;
 
-					if (calendar.data[tile]) {
-						const curYear = today.getFullYear();
-						const curMonth = today.getMonth();
+					const curYear = today.getFullYear();
+					const curMonth = today.getMonth();
+					
+					if (calendar.curYear === curYear && calendar.curMonth === curMonth && tile == day) { //add border for current day
+						cell.style.border = "3px solid white";
+					}
 
+					if (calendar.data[tile]) {
 						if (calendar.curYear === curYear && calendar.curMonth === curMonth && tile == day) {
 							const data = calendar.data[tile].replace(/\n/g, "<br>");
-							cell.innerHTML = `<div id="current-day" style="padding: 12px;"><div class='cell'>${tile}</div>${data}</div>`;
+							cell.innerHTML = `<div id="current-day"><div class='cell'>${tile}</div>${data}</div>`;
 							cell.style.padding = "0px";
 							cell.style.position = "relative";
 						} else {
@@ -105,7 +109,7 @@ var calendar = {
 					} else {
 						cell.style.height = "128px"; // default height of empty cells
 						if (calendar.curYear === today.getFullYear() && calendar.curMonth === today.getMonth() && tile == day) {
-							cell.innerHTML = `<div id="current-day" style="display: flex;"><div class='cell'>${tile}</div></div>`;
+							cell.innerHTML = `<div id="current-day"><div class='cell'>${tile}</div></div>`;
 							cell.style.padding = "0px";
 							cell.style.position = "relative";
 						}
@@ -723,7 +727,7 @@ function addUrlButton() {
 	newMinusButton.onclick = function() {
 		deleteUrlButton(this);
 	};
-	newMinusButton.innerHTML = "-";
+	newMinusButton.innerHTML = "&#9734;";
 
 	container.insertBefore(newButton, divider);
 	container.insertBefore(newMinusButton, divider);
@@ -850,7 +854,7 @@ function initUrlButtons() {
 		newMinusButton.onclick = function() {
 			deleteUrlButton(this);
 		};
-		newMinusButton.innerHTML = "-";
+		newMinusButton.innerHTML = "&#9734;";
 
 		container.insertBefore(newButton, divider);
 		container.insertBefore(newMinusButton, divider);

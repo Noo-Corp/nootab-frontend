@@ -244,10 +244,11 @@ th {
 }
 
 #current-day {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	border: 3px solid var(--text);
 }
 
 .colour-picker {
