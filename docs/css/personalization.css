@@ -131,8 +131,8 @@
 	padding: 8px 12px;
 	margin: 5px 0 10px 0;
 	font-size: 1em;
-	border: none;
-	background: var(--bodyback);
+	border: 1px solid var(--bodyback);
+	background: transparent;
 	color: var(--modetext);
 	cursor: pointer;
 }
