@@ -5,11 +5,11 @@ window.addEventListener("load", function() {
     var lightImg = "images/light-mode.png";
 
     //set document colours from localStorage
-	var main_colour = localStorage.getItem("colour-main");
-	var secondary_colour = localStorage.getItem("colour-secondary");
+	var main_colour = localStorage.getItem("colour-main") || "#ed6461";
+	var secondary_colour = localStorage.getItem("colour-secondary") || "#00baff";
 	var main_colour_hsv = hexToHsv(main_colour);
 	var secondary_colour_hsv = hexToHsv(secondary_colour);
-	var main_mode_back = localStorage.getItem("colour-mode-back");
+	var main_mode_back = localStorage.getItem("colour-mode-back") || '#F5F5F5';
 
 	const light = '#F5F5F5';
 	const dark = '#424242';
