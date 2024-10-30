@@ -1,0 +1,176 @@
+.darkmode {
+	position: fixed;
+	top: 65px;
+	right: 10px;
+	text-align: center;
+}
+
+#darkmode-button {
+	background-color: transparent;
+	background-size: cover;
+	background-repeat: no-repeat;
+	border: none;
+	margin: 15px;
+	transform-origin: center bottom;
+	cursor: pointer;
+}
+
+#darkmode-button:focus {
+    outline: none;
+}
+
+#darkmode-button img {
+	width: 40px;
+	height: 40px;
+}
+
+#darkmode-button:hover {
+	animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+
+	from,
+	to {
+		transform: scale(1, 1);
+	}
+
+	25% {
+		transform: scale(0.9, 1.1);
+	}
+
+	50% {
+		transform: scale(1.1, 0.9);
+	}
+
+	75% {
+		transform: scale(0.95, 1.05);
+	}
+}
+
+.colour-picker {
+	position: fixed;
+	top: 0;
+	right: 10px;
+}
+
+.colour-picker-container {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.colour-picker-tab {
+	border-radius: 8px;
+	padding: 5px 5px 0 5px;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+
+.colour-picker-tab:hover {
+	background: var(--bodyback);
+}
+
+.colour-picker-tab p {
+	margin-bottom: 10px;
+}
+
+.colour-picker-button {
+	background-color: transparent;
+	background-size: cover;
+	background-repeat: no-repeat;
+	border: none;
+	margin: 15px;
+	transition: transform 0.5s ease;
+	cursor: pointer;
+}
+
+.colour-picker-button:focus {
+    outline: none;
+}
+
+.colour-picker-button img {
+	width: 40px;
+	height: 40px;
+}
+
+.colour-picker-button:hover {
+	transform: scale(1.1) rotate(-90deg);
+	/* rotate left when hovered over */
+}
+
+#colourPickerContent {
+	display: none;
+	width: 375px;
+	position: fixed;
+	left: 50%;
+	bottom: 52%;
+	transform: translate(-50%, 50%);
+	background: var(--modeback);
+	color: var(--modetext);
+	border: 1px solid var(--modetext);
+	opacity: 0;
+	transition: opacity 0.15s ease-in-out;
+	z-index: 3;
+}
+
+#colourPickerContent.show {
+	display: block;
+	opacity: 1;
+}
+
+#colourPickerContent h1 {
+	padding-top: 10px;
+	padding-bottom: 18px;
+	margin: 0;
+	font-size: 1.5em;
+	font-weight: bold;
+	line-height: 1.5;
+}
+
+#colourRandomSelect, #colourPickerCancel, #colourPickerSubmit {
+	padding: 8px 12px;
+	margin: 5px 0 10px 0;
+	font-size: 1em;
+	border: none;
+	background: var(--bodyback);
+	color: var(--modetext);
+	cursor: pointer;
+}
+
+#colourPickerSubmit:hover {
+	background: var(--tophover);
+}
+
+.rainbowText {
+	background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 3s ease-in-out infinite;
+    background-size: 200% 100%;
+	margin: 0;
+}
+
+@keyframes rainbow_animation {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
+
+#colourRandomSelect {
+	border-radius: 8px 0 0 8px;
+}
+
+#colourRandomSelect:hover, #colourPickerCancel:hover {
+	background: var(--bodyback);
+}
+
+#colourPickerSubmit {
+	background: var(--top);
+	color: var(--header);
+	border-radius: 0 8px 8px 0;
+}

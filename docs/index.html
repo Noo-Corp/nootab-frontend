@@ -11,122 +11,91 @@
 		  gtag('config', 'G-3MMCC236VW');
 		</script>
 
-
-		<link rel="stylesheet" href="index.css">
-		<script type="text/javascript" src="index.js"></script>
-
 		<title>Noo Tab</title>
 		<meta name="description" content="Noo Tab provides seamless access to search and productivity tools, all with customizable colour themes. Customize your new tab with nootab.com">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="theme-color" content="#ffffff">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 		<link rel="shortcut icon" type="image/png" href="images/favicon.ico">
 		<link rel="manifest" href="site.webmanifest">
 		<link rel="canonical" href="https://nootab.com/">
+
+		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="css/personalization.css">
+		<link rel="stylesheet" href="css/quicklinks.css">
+		<link rel="stylesheet" href="css/notes.css">
+
+		<script type="text/javascript" src="js/base.js"></script>
+		<script type="text/javascript" src="js/personalization.js"></script>
+		<script type="text/javascript" src="js/personalization_colour_select.js"></script>
+		<script type="text/javascript" src="js/quicklinks.js"></script>
+		<script type="text/javascript" src="js/notes.js"></script>
 	</head>
 	<body>
-		<div id="popup" class="popup">
-			<span class="close" id="close-popup">&times;</span>
-			<p>Welcome to Noo Tab!</p>
-			<button type="button" class="collapsible border">Using the Calendar</button>
-			<div class="content">
-				<p><b>Adding, Removing, and Editing Events</b></p>
-				<p>Click a day on the calendar.</p>
-				<p>Enter event details.</p>
-				<p>Click "Save" to add or update an event.</p>
-				<p>Click "Delete" to remove all events from a day.</p>
-				<p><b>Changing the Calendar View</b></p>
-				<p>Choose a month and year from the dropdown menus.</p>
-				<p>Click "Show" to switch to the chosen month and year.</p>
+		<div id="logo-container">
+			<div id="logo">
+			  <img alt="noo logo">
+			  <div class="zzz-container">
+				<div class="zzz-zzz"></div>
+				<div class="zzz-zz"></div>
+				<div class="zzz-z"></div>
+			  </div>
 			</div>
-			<button type="button" class="collapsible border">Using Bookmarks</button>
-			<div class="content">
-				<p><b>Adding and Removing Bookmarks</b></p>
-				<p>Click the plus button at the top of the page.</p>
-				<p>Click on the "+ New" bookmark and enter the URL.</p>
-				<p>(Optional) Add a name to your bookmark.</p>
-				<p>Click the minus button next to a bookmark to remove it.</p>
-				<p><b>Opening Bookmarks</b></p>
-				<p>Click a bookmark to open it in the current tab.</p>
-				<p>Open all bookmarks in separate tabs by clicking "Open All".</p>
-				<div id="popup-warning">
-					<p>Your browser may block multiple tabs from opening the first time you use the "Open All" feature.</p>
-					<p>Allow popups from nootab.com in the prompt that appears if you want the "Open All" feature to work fully.</p>
-				</div>
-			</div>
-			<button type="button" class="collapsible">Additional Features</button>
-			<div class="content">
-				<p><b>Navigation</b></p>
-				<p>Switch between calendar and notes view using the tabs at the bottom of the screen or by pressing the tab key.</p>
-				<b>Notes</b>
-				<p>Take notes using the notes tab and save them securely by clicking the save button or using the keyboard shortcut Ctrl+S.<br><br>Your data will be stored locally in your browser.</p>
-				<b>Colour Wheel</b>
-				<p>Click to change the site's colour theme.</p>
-				<b>Dark Mode Toggle</b>
-				<p>Use the icon to switch between dark and light mode.</p>
-			</div>
-		</div>
-		<div>
-			<div id="heading">
-				<div id="logo">
-					<img alt="noo logo">
-					<div class="zzz-container">
-						<div class="zzz-zzz"></div>
-						<div class="zzz-zz"></div>
-						<div class="zzz-z"></div>
-					</div>
-				</div>
-				<h1 id="heading-text">NOO TAB</h1>
-			</div>
-		</div>
+		  </div>
 		<div id="urlButtonContainer">
 			<!-- <button class="urlButton initial" onclick="goToUrl(this)">+ New</button><button class="minusButton initial" onclick="deleteUrlButton(this)">&#9734;</button><div id="urlDivider"></div><button id="plusButton" onclick="addUrlButton()">&#x270E;</button> -->
 			<button class="urlButton initial" onclick="goToUrl(this)">+ New</button><button class="minusButton initial" onclick="deleteUrlButton(this)">-</button><div id="urlDivider"></div><button id="plusButton" onclick="addUrlButton()">+</button>
-			<button id="openAllUrlsButton" onclick="openAllUrls()">Open All</button>
+			<button id="openAllUrlsButton" onclick="openAllUrls()">OPEN ALL</button>
 		</div>
 		<div class="spacer">
 		</div>
+
 		<div class="colour-picker">
 			<button class="colour-picker-button">
-				<img alt="pick colour">
+				<img id="colour-picker-image" src="images/colour-wheel.png" alt="pick colour">
 			</button>
 		</div>
+
+		<div id="colourPickerContent">	
+			<h1>COLOUR THEME</h1>
+	
+			<div class="colour-picker-container">
+			<div class="colour-picker-tab">
+				<theme-colour-picker id='primary-colour-picker'></theme-colour-picker>
+				<p>Main</p>
+				<input type="hidden" id="primary-colour-picker-hidden" name="primary-colour-picker" />
+			</div>
+			
+			<div class="colour-picker-tab">
+				<theme-colour-picker id='secondary-colour-picker'></theme-colour-picker>
+				<p>Accent</p>
+				<input type="hidden" id="secondary-colour-picker-hidden" name="secondary-colour-picker" />
+			</div>
+			</div>
+			
+			<button id="colourRandomSelect">
+				<p class="rainbowText">Randomize</p>
+			</button>
+			<button id="colourPickerCancel">Cancel</button>
+			<button id="colourPickerSubmit">Apply</button>
+		</div>
+
 		<div class="darkmode">
 			<button id="darkmode-button">
 				<img alt="toggle darkmode">
 			</button>
 		</div>
-		<div>
-			<div id="notes" class="panel-container mode" style="display:none">
-				<div class="panelWrapper">
-					<div id="editorContainer">
-						<div id="editor-box">
-							<p id="editor-alert">unsaved</p>
-							<textarea class="panelWrapper" id="editor"></textarea>
-						</div>
-						<button id="editor-save-btn">Save</button>
+
+		<div id="notes">
+			<div class="panelWrapper">
+				<div id="editorContainer">
+					<div id="editor-box">
+						<p id="editor-alert">unsaved</p>
+						<textarea class="panelWrapper" id="editor"></textarea>
 					</div>
+					<button id="editor-save-btn">Save</button>
 				</div>
-			</div>
-			<div id="calendar" class="panel-container mode" style="display:none">
-				<div class="panelWrapper">
-					<div id="calDate">
-						<button id="sLeft">&#5176;</button><button id="sRight">&#5171;</button><select id="sMonth"></select><select id="sYear"></select><button id="sToday">Today</button>
-					</div>
-					<div id="calContainer">
-						<!-- calendar view -->
-					</div>
-					<div id="calEvent"></div>
-					<!-- event panel view -->
-				</div>
-			</div>
-			<div class="panel-select">
-				<a href="javascript:void(0)" onclick="openMode('notes');">
-					<div class="panel-mode" id="notes-select">Notes</div>
-				</a>
-				<a href="javascript:void(0)" onclick="openMode('calendar');">
-					<div class="panel-mode" id="calendar-select">Calendar</div>
-				</a>
 			</div>
 		</div>
 	</body>

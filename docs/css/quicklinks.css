@@ -1,0 +1,107 @@
+#urlButtonContainer {
+    top: 0;
+    position: fixed;
+    background: transparent;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 0 15px 0 15px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    max-height: 120px;
+    overflow-y: auto;
+}
+  
+#urlDivider {
+border-left: 2px solid var(--backtext);
+height: 30px;
+margin: 5px 12px;
+display: none;
+}
+
+.hasSeturlButtons #urlDivider {
+    display: block;
+}
+
+.urlButton {
+border: 2px dashed var(--backtext);
+border-right: none;
+color: var(--backtext);
+background: transparent;
+cursor: pointer;
+font-size: 1em;
+border-top-left-radius: 8px;
+border-bottom-left-radius: 8px;
+margin: 15px 0 15px 8px;
+}
+
+.urlButton:hover {
+    background: var(--modeback);
+}
+
+.minusButton {
+border: 2px solid #ff5353;
+background: transparent;
+color: #ff5353;
+font-weight: bold;
+font-size: 1em;
+cursor: pointer;
+border-top-right-radius: 8px;
+border-bottom-right-radius: 8px;
+margin: 15px 0 15px 0;
+}
+
+.minusButton:hover {
+    color: var(--backtext);
+    background: #ff5353;
+}
+
+.urlButton.initial {
+    display: none;
+}
+
+.minusButton.initial {
+    display: none;
+}
+
+#plusButton {
+border: 2px solid var(--top);
+background: transparent;
+color: var(--top);
+font-weight: bold;
+font-size: 1em;
+cursor: pointer;
+border-radius: 8px;
+margin: 15px 8px 15px 0;
+width: 30px;
+height: 30px;
+display: none;
+}
+
+#plusButton:hover {
+    background: var(--top);
+    color: var(--backtext);
+}
+
+#openAllUrlsButton {
+    border: 2px solid var(--backtext);
+    background: transparent;
+    color: var(--backtext);
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 15px 0 15px 4px;
+    height: 30px;
+    display: none;
+}
+
+#openAllUrlsButton:hover {
+    background: var(--modeback);
+}
+
+.hasSeturlButtons #openAllUrlsButton {
+    display: block;
+}
