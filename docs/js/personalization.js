@@ -50,8 +50,8 @@ window.addEventListener("load", function() {
 	});	
 
 	colourPickerButton.addEventListener('click', function() {
-		var main_colour = localStorage.getItem("colour-main");
-		var secondary_colour = localStorage.getItem("colour-secondary");
+		var main_colour = localStorage.getItem("colour-main") || "#ed6461";
+		var secondary_colour = localStorage.getItem("colour-secondary") || "#00baff";
 		primaryHidden.value = main_colour;
 		secondaryHidden.value = secondary_colour;
 		document.querySelector("#primary-colour-picker").shadowRoot.querySelector(".button-colour").style.background = main_colour;
@@ -151,7 +151,7 @@ window.addEventListener("load", function() {
 	darkmode_button.addEventListener("click", function(event) {
 		event.preventDefault();
 
-		const mode_back = localStorage.getItem("colour-mode-back");
+		const mode_back = localStorage.getItem("colour-mode-back") || '#F5F5F5';
 
 		if (mode_back == light) {
 			darkmode_image.src = lightImg;
@@ -197,8 +197,8 @@ document.addEventListener('keydown', function (event) {
 });
 
 function resetToSavedColours() {
-	var savedPrimaryColour = localStorage.getItem("colour-main");
-	var savedSecondaryColour = localStorage.getItem("colour-secondary");
+	var savedPrimaryColour = localStorage.getItem("colour-main") || "#ed6461";
+	var savedSecondaryColour = localStorage.getItem("colour-secondary") || "#00baff";
 	var main_colour_hsv_active = hexToHsv(savedPrimaryColour);
 	var secondary_colour_hsv_active = hexToHsv(savedSecondaryColour);
 	var palette_active = generatePalette(main_colour_hsv_active, secondary_colour_hsv_active, 0);
