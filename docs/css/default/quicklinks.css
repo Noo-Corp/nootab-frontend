@@ -4,7 +4,7 @@
     background: transparent;
     left: 50%;
     transform: translate(-50%);
-    padding: 0 15px 0 15px;
+    padding: 0 15px;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
     display: flex;
@@ -13,12 +13,12 @@
     max-height: 120px;
     overflow-y: auto;
 }
-  
+
 #urlDivider {
-border-left: 2px solid var(--backtext);
-height: 30px;
-margin: 5px 12px;
-display: none;
+    border-left: 2px solid var(--backtext);
+    height: 30px;
+    margin: 5px 12px;
+    display: none;
 }
 
 .hasSeturlButtons #urlDivider {
@@ -26,15 +26,15 @@ display: none;
 }
 
 .urlButton {
-border: 2px dashed var(--backtext);
-border-right: none;
-color: var(--backtext);
-background: transparent;
-cursor: pointer;
-font-size: 1em;
-border-top-left-radius: 8px;
-border-bottom-left-radius: 8px;
-margin: 15px 0 15px 8px;
+    border: 2px dashed var(--backtext);
+    border-right: none;
+    color: var(--backtext);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1em;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    margin: 15px 0 15px 8px;
 }
 
 .urlButton:hover {
@@ -42,15 +42,15 @@ margin: 15px 0 15px 8px;
 }
 
 .minusButton {
-border: 2px solid #ff5353;
-background: transparent;
-color: #ff5353;
-font-weight: bold;
-font-size: 1em;
-cursor: pointer;
-border-top-right-radius: 8px;
-border-bottom-right-radius: 8px;
-margin: 15px 0 15px 0;
+    border: 2px solid #ff5353;
+    background: transparent;
+    color: #ff5353;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin: 15px 0;
 }
 
 .minusButton:hover {
@@ -58,26 +58,23 @@ margin: 15px 0 15px 0;
     background: #ff5353;
 }
 
-.urlButton.initial {
-    display: none;
-}
-
+.urlButton.initial,
 .minusButton.initial {
     display: none;
 }
 
 #plusButton {
-border: 2px solid var(--top);
-background: transparent;
-color: var(--top);
-font-weight: bold;
-font-size: 1em;
-cursor: pointer;
-border-radius: 8px;
-margin: 15px 8px 15px 0;
-width: 30px;
-height: 30px;
-display: none;
+    border: 2px solid var(--top);
+    background: transparent;
+    color: var(--top);
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 15px 8px 15px 0;
+    width: 30px;
+    height: 30px;
+    display: none;
 }
 
 #plusButton:hover {

@@ -1,0 +1,50 @@
+#editor {
+    resize: none;
+    box-sizing: border-box;
+    background: var(--modeback);
+    color: var(--modetext);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    border: 1px solid var(--bodyback);
+    border-radius: 8px;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    text-align: left;
+}
+
+#editorContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4em;
+    position: relative;
+}
+
+#editor-box {
+    height: 75vh;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+}
+
+#editor-alert {
+    position: absolute;
+    right: 0;
+    top: -40px;
+    color: var(--main);
+    font-weight: bold;
+    display: none;
+}
+
+#editor-save-btn {
+    align-self: center;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: var(--main);
+    border: none;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -1,28 +1,42 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", () => {
     const logo = document.querySelector('#logo img');
-	logo.addEventListener('click', logoClick);
+    logo.addEventListener('click', handleLogoClick);
 });
 
-function logoClick() {
-	const logo = document.getElementById('logo');
+function handleLogoClick() {
+    const logo = document.getElementById('logo');
+    const isLightMode = localStorage.getItem("colour-mode-back") === '#F5F5F5' || localStorage.getItem("colour-mode-back") === null;
 
-	if (localStorage.getItem("colour-mode-back") === '#F5F5F5' || localStorage.getItem("colour-mode-back") === null) {
-		logo.classList.remove('animate');
-		void logo.offsetWidth;
-		logo.classList.add('animate');
-	} else {
-		const zzz_container = document.querySelector(".zzz-container");
-		const zzz_children = zzz_container.querySelectorAll("div");
-		zzz_children.forEach(function(child) {
-			child.classList.add("zzz-animate");
-			child.textContent = "Z";
-			child.addEventListener("animationend", function() {
-				child.classList.remove("zzz-animate");
-				child.textContent = "";
-			});
-		});
-		logo.classList.remove('pulse');
-		void logo.offsetWidth;
-		logo.classList.add('pulse');
-	}
+    if (isLightMode) {
+        animateLogo(logo);
+    } else {
+        animateZzzEffect();
+        pulseLogo(logo);
+    }
+}
+
+function animateLogo(logo) {
+    logo.classList.remove('animate');
+    void logo.offsetWidth;
+    logo.classList.add('animate');
+}
+
+function animateZzzEffect() {
+    const zzzContainer = document.querySelector(".zzz-container");
+    const zzzChildren = zzzContainer.querySelectorAll("div");
+
+    zzzChildren.forEach(child => {
+        child.classList.add("zzz-animate");
+        child.textContent = "Z";
+        child.addEventListener("animationend", () => {
+            child.classList.remove("zzz-animate");
+            child.textContent = "";
+        });
+    });
+}
+
+function pulseLogo(logo) {
+    logo.classList.remove('pulse');
+    void logo.offsetWidth;
+    logo.classList.add('pulse');
 }
