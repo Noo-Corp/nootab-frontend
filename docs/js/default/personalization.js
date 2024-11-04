@@ -29,7 +29,7 @@ window.addEventListener("load", function() {
 	const colourPickerContent = document.querySelector('#colourPickerContent');
 	const colourPickerSubmit = document.querySelector('#colourPickerSubmit');
 	const colourRandomSelect = document.querySelector('#colourRandomSelect');
-	const colourPickerCancel = document.querySelector('#colourPickerCancel');
+	const colourPickerClose = document.querySelector('#close-colour');
 
 	const primaryColourPicker = document.querySelector('#primary-colour-picker');
 	const secondaryColourPicker = document.querySelector('#secondary-colour-picker');
@@ -127,7 +127,7 @@ window.addEventListener("load", function() {
 		this.blur();
 	});
 
-	colourPickerCancel.addEventListener('click', function(event) {
+	colourPickerClose.addEventListener('click', function(event) {
 		event.preventDefault();
 		resetToSavedColours();
 		colourPickerContent.classList.remove('show');

@@ -1,5 +1,9 @@
 window.addEventListener("load", function() {
-    document.querySelector("#plusButton").style.display = "block";
+	const editBtn = document.querySelector("#editButton");
+	const quickLinkContent = document.querySelector('#quickLinkContent');
+	const linksClose = document.querySelector('#close-links');
+
+    document.querySelector("#editButton").style.display = "block";
     initUrlButtons();
 	var urlData = JSON.parse(localStorage.getItem("urls"));
     if (urlData && urlData.length > 0) {
@@ -7,6 +11,37 @@ window.addEventListener("load", function() {
         buttons.removeChild(buttons.children[1]);
         buttons.removeChild(buttons.children[0]);
     }
+
+	editBtn.addEventListener('click', function() {
+		quickLinkContent.classList.add('show');
+	});
+
+	linksClose.addEventListener('click', function(event) {
+		event.preventDefault();
+		quickLinkContent.classList.remove('show');
+	});
+});
+
+document.addEventListener('click', function (e) {
+	const quickLinkContent = document.querySelector('#quickLinkContent');
+	const isQuickLinksOpen = quickLinkContent.classList.contains('show');
+
+	if (isQuickLinksOpen) {
+		const isClickInsideModal = e.target.closest('#quickLinkContent') || 
+									e.target.id === 'editButton';
+
+		if (!isClickInsideModal) {
+			quickLinkContent.classList.remove('show');
+		}
+	}
+});
+
+document.addEventListener('keydown', function (event) {
+	const quickLinkContent = document.querySelector('#quickLinkContent');
+
+	if (event.key === 'Escape' && quickLinkContent.classList.contains('show')) {
+		quickLinkContent.classList.remove('show');
+	}
 });
 
 function getUrlsFromStorage() {
@@ -38,7 +73,7 @@ function addUrlButton() {
 	newMinusButton.onclick = function() {
 		deleteUrlButton(this);
 	};
-	newMinusButton.innerHTML = "-";//"&#9734;";
+	newMinusButton.innerHTML = "&#9734;";
 
 	buttons.append(newButton);
 	buttons.append(newMinusButton);
@@ -164,7 +199,7 @@ function initUrlButtons() {
 		newMinusButton.onclick = function() {
 			deleteUrlButton(this);
 		};
-		newMinusButton.innerHTML = "-";//"&#9734;";
+		newMinusButton.innerHTML = "&#9734;";
 
 		buttons.append(newButton);
 		buttons.append(newMinusButton);

@@ -111,7 +111,7 @@
     line-height: 1.5;
 }
 
-#colourRandomSelect, #colourPickerCancel, #colourPickerSubmit {
+#colourRandomSelect, #colourPickerSubmit {
     padding: 8px 12px;
     margin: 5px 0 10px 0;
     font-size: 1em;
@@ -129,8 +129,7 @@
     border-radius: 8px 0 0 8px;
 }
 
-#colourRandomSelect:hover,
-#colourPickerCancel:hover {
+#colourRandomSelect:hover {
     background: var(--bodyback);
 }
 

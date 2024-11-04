@@ -125,3 +125,19 @@ body {
     max-width: 1400px;
     position: relative;
 }
+
+.close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 5px;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ff5353;
+	cursor: pointer;
+	transition: color 0.25s ease;
+}
+
+.close:hover {
+	color: #e71313;
+}

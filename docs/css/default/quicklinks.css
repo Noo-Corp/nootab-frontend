@@ -32,6 +32,35 @@
     background: var(--modeback);
 }
 
+#quickLinkContent {
+    display: none;
+    width: 375px;
+    position: fixed;
+    left: 50%;
+    bottom: 52%;
+    transform: translate(-50%, 50%);
+    background: var(--modeback);
+    color: var(--modetext);
+    border: 1px solid var(--modetext);
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+    z-index: 3;
+}
+
+#quickLinkContent.show {
+    display: block;
+    opacity: 1;
+}
+
+#quickLinkContent h1 {
+    padding-top: 10px;
+    padding-bottom: 18px;
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
 .minusButton {
     border: 2px solid #ff5353;
     background: transparent;
@@ -54,7 +83,7 @@
     display: none;
 }
 
-#plusButton {
+#editButton {
     border: 2px solid var(--top);
     background: transparent;
     color: var(--top);
@@ -68,7 +97,7 @@
     display: none;
 }
 
-#plusButton:hover {
+#editButton:hover {
     background: var(--top);
     color: var(--backtext);
 }
