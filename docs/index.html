@@ -33,58 +33,49 @@
 		<script type="text/javascript" src="js/panels/notes.js"></script>
 	</head>
 	<body>
-		<div id="logo-container">
+		<div id="header">
 			<div id="logo">
-			  <img alt="noo logo">
-			  <div class="zzz-container">
-				<div class="zzz-zzz"></div>
-				<div class="zzz-zz"></div>
-				<div class="zzz-z"></div>
-			  </div>
+				<img alt="noo logo">
+				<div class="zzz-container">
+					<div class="zzz-zzz"></div>
+					<div class="zzz-zz"></div>
+					<div class="zzz-z"></div>
+				</div>
 			</div>
-		  </div>
-		<div id="urlButtonContainer">
+
 			<!-- <button class="urlButton initial" onclick="goToUrl(this)">+ New</button><button class="minusButton initial" onclick="deleteUrlButton(this)">&#9734;</button><div id="urlDivider"></div><button id="plusButton" onclick="addUrlButton()">&#x270E;</button> -->
-			<button class="urlButton initial" onclick="goToUrl(this)">+ New</button><button class="minusButton initial" onclick="deleteUrlButton(this)">-</button><div id="urlDivider"></div><button id="plusButton" onclick="addUrlButton()">+</button>
-			<button id="openAllUrlsButton" onclick="openAllUrls()">OPEN ALL</button>
-		</div>
-		<div class="spacer">
-		</div>
-
-		<div class="colour-picker">
-			<button class="colour-picker-button">
-				<img id="colour-picker-image" src="images/colour-wheel.png" alt="pick colour">
-			</button>
-		</div>
-
-		<div id="colourPickerContent">	
-			<h1>COLOUR THEME</h1>
-	
-			<div class="colour-picker-container">
-			<div class="colour-picker-tab">
-				<theme-colour-picker id='primary-colour-picker'></theme-colour-picker>
-				<p>Main</p>
-				<input type="hidden" id="primary-colour-picker-hidden" name="primary-colour-picker" />
+			<div id="urlButtonContainer">
+				<div id="urlButtons">
+					<button class="urlButton initial" onclick="goToUrl(this)">+ New</button>
+					<button class="minusButton initial" onclick="deleteUrlButton(this)">-</button>
+				</div>
+				<div id="urlDivider"></div>
+				<button id="plusButton" onclick="addUrlButton()">+</button>
+				<button id="openAllUrlsButton" onclick="openAllUrls()">OPEN ALL</button>
 			</div>
-			
-			<div class="colour-picker-tab">
-				<theme-colour-picker id='secondary-colour-picker'></theme-colour-picker>
-				<p>Accent</p>
-				<input type="hidden" id="secondary-colour-picker-hidden" name="secondary-colour-picker" />
-			</div>
-			</div>
-			
-			<button id="colourRandomSelect">
-				<p class="rainbowText">Randomize</p>
-			</button>
-			<button id="colourPickerCancel">Cancel</button>
-			<button id="colourPickerSubmit">Apply</button>
-		</div>
 
-		<div class="darkmode">
-			<button id="darkmode-button">
-				<img alt="toggle darkmode">
-			</button>
+			<button id="darkmode-button"><img alt="toggle darkmode"></button><button class="colour-picker-button"><img id="colour-picker-image" src="images/colour-wheel.png" alt="pick colour"></button>
+
+			<div id="colourPickerContent">
+				<h1>COLOUR THEME</h1>
+				<div class="colour-picker-container">
+					<div class="colour-picker-tab">
+						<theme-colour-picker id='primary-colour-picker'></theme-colour-picker>
+						<p>Main</p>
+						<input type="hidden" id="primary-colour-picker-hidden" name="primary-colour-picker" />
+					</div>
+					<div class="colour-picker-tab">
+						<theme-colour-picker id='secondary-colour-picker'></theme-colour-picker>
+						<p>Accent</p>
+						<input type="hidden" id="secondary-colour-picker-hidden" name="secondary-colour-picker" />
+					</div>
+				</div>
+				<button id="colourRandomSelect">
+					<p class="rainbowText">Randomize</p>
+				</button>
+				<button id="colourPickerCancel">Cancel</button>
+				<button id="colourPickerSubmit">Apply</button>
+			</div>
 		</div>
 
 		<div id="notes">

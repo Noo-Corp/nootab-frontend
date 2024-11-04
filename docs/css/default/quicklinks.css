@@ -1,28 +1,19 @@
 #urlButtonContainer {
-    top: 0;
-    position: fixed;
-    background: transparent;
-    left: 50%;
-    transform: translate(-50%);
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
     padding: 0 15px;
+    background: transparent;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
+}
+
+#urlButtons {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    max-height: 120px;
-    overflow-y: auto;
-}
-
-#urlDivider {
-    border-left: 2px solid var(--backtext);
-    height: 30px;
-    margin: 5px 12px;
-    display: none;
-}
-
-.hasSeturlButtons #urlDivider {
-    display: block;
+    overflow-x: auto;
+    max-width: 50vw;
+    white-space: nowrap;
 }
 
 .urlButton {
@@ -92,13 +83,32 @@
     border-radius: 8px;
     margin: 15px 0 15px 4px;
     height: 30px;
-    display: none;
+    white-space: nowrap;
 }
 
 #openAllUrlsButton:hover {
     background: var(--modeback);
 }
 
-.hasSeturlButtons #openAllUrlsButton {
+#urlDivider {
+    border-left: 2px solid var(--backtext);
+    height: 30px;
+    margin: 5px 12px;
+    display: none;
+}
+
+.hasSeturlButtons #urlDivider {
     display: block;
+}
+
+@media (max-width: 800px) {
+    #urlButtons {
+        max-width: 30vw;
+    }
+}
+
+@media (max-width: 570px) {
+    #urlButtons {
+        max-width: 18vw;
+    }
 }

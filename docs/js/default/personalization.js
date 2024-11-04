@@ -41,7 +41,7 @@ window.addEventListener("load", function() {
 			const colourPicker = tab.querySelector('theme-colour-picker');
 			if (colourPicker) {
 				const shadow = colourPicker.shadowRoot;
-				const colourPickerButton = shadow.querySelector('.colour-picker button');
+				const colourPickerButton = shadow.querySelector('.colour-picker-button');
 				if (colourPickerButton) {
 					colourPickerButton.click();
 				}
@@ -177,7 +177,7 @@ document.addEventListener('click', function (e) {
 
 	if (isColourPickerOpen) {
 		const isClickInsidePicker = e.target.closest('#colourPickerContent') || 
-									e.target.classList.contains('colour-picker') || 
+									e.target.classList.contains('colour-picker-button') || 
 									e.target.id === 'colour-picker-image';
 
 		if (!isClickInsidePicker) {

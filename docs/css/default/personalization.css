@@ -1,16 +1,10 @@
-.darkmode {
-    position: fixed;
-    top: 0;
-    right: 70px;
-    text-align: center;
-}
-
 #darkmode-button {
     background-color: transparent;
     background-size: cover;
     background-repeat: no-repeat;
     border: none;
-    margin: 15px;
+    margin-right: 20px;
+    padding: 0;
     transform-origin: center bottom;
     cursor: pointer;
 }
@@ -44,12 +38,6 @@
     }
 }
 
-.colour-picker {
-    position: fixed;
-    top: 0;
-    right: 10px;
-}
-
 .colour-picker-container {
     display: flex;
     justify-content: space-evenly;
@@ -75,7 +63,8 @@
     background-size: cover;
     background-repeat: no-repeat;
     border: none;
-    margin: 15px;
+    margin: 0 25px 0 10px;
+    padding: 0;
     transition: transform 0.5s ease;
     cursor: pointer;
 }
