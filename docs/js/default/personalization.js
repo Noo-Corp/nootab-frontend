@@ -1,29 +1,37 @@
 window.addEventListener("load", function() {
+	const light = '#F5F5F5';
+	const dark = '#424242';
+
     var awakeImg = "images/logo-awake.png";
     var asleepImg = "images/logo-asleep.png";
     var darkImg = "images/dark-mode.png";
     var lightImg = "images/light-mode.png";
 
     //set document colours from localStorage
-	var main_colour = localStorage.getItem("colour-main") || "#ed6461";
-	var secondary_colour = localStorage.getItem("colour-secondary") || "#00baff";
-	var main_colour_hsv = hexToHsv(main_colour);
-	var secondary_colour_hsv = hexToHsv(secondary_colour);
-	var main_mode_back = localStorage.getItem("colour-mode-back") || '#F5F5F5';
+	const colorProperties = [
+		{ key: "colour-main-back-text", cssVar: "--backtext", defaultValue: "#6f6f6f" },
+		{ key: "colour-mode-back", cssVar: "--modeback", defaultValue: "#F5F5F5" },
+		{ key: "colour-mode-text", cssVar: "--modetext", defaultValue: "#424242" },
+		{ key: "colour-main-body-back", cssVar: "--bodyback", defaultValue: "#E8E8E8" },
+		{ key: "colour-main", cssVar: "--main", defaultValue: "#ed6461" },
+		{ key: "colour-main-empty", cssVar: "--empty", defaultValue: "#b74d4b" },
+		{ key: "colour-main-hover", cssVar: "--hover", defaultValue: "#d95b59" },
+		{ key: "colour-main-text", cssVar: "--text", defaultValue: "#F5F5F5" },
+		{ key: "colour-secondary", cssVar: "--secondary", defaultValue: "#00baff" },
+		{ key: "colour-secondary-hover", cssVar: "--secondaryhover", defaultValue: "#00abeb" },
+		{ key: "colour-secondary-text", cssVar: "--secondarytext", defaultValue: "#F5F5F5" }
+	];
+	
+	colorProperties.forEach(({ key, cssVar, defaultValue }) => {
+		let value = localStorage.getItem(key);
+		if (!value) {
+		  value = defaultValue;
+		}
+		localStorage.setItem(key, value);
+		document.documentElement.style.setProperty(cssVar, value);
+	});
 
-	const light = '#F5F5F5';
-	const dark = '#424242';
-
-	var palette = generatePalette(main_colour_hsv, secondary_colour_hsv, 0);
-	document.documentElement.style.setProperty('--modeback', main_mode_back);
-	document.documentElement.style.setProperty('--modetext', main_mode_back === light ? dark : light);
-	document.documentElement.style.setProperty('--main', main_colour);
-	document.documentElement.style.setProperty('--text', getTextColour(main_colour));
-	document.documentElement.style.setProperty('--empty', hsvToHex(palette.c1));
-	document.documentElement.style.setProperty('--hover', hsvToHex(palette.c2));
-	document.documentElement.style.setProperty('--header', getTextColour(hsvToHex(palette.c3)));
-	document.documentElement.style.setProperty('--top', hsvToHex(palette.c3));
-	document.documentElement.style.setProperty('--tophover', hsvToHex(palette.c4));
+	updateIframesStyles();
 
 	const colourPickerButton = document.querySelector('.colour-picker-button');
 	const colourPickerContent = document.querySelector('#colourPickerContent');
@@ -50,8 +58,8 @@ window.addEventListener("load", function() {
 	});	
 
 	colourPickerButton.addEventListener('click', function() {
-		var main_colour = localStorage.getItem("colour-main") || "#ed6461";
-		var secondary_colour = localStorage.getItem("colour-secondary") || "#00baff";
+		var main_colour = localStorage.getItem("colour-main");
+		var secondary_colour = localStorage.getItem("colour-secondary");
 		primaryHidden.value = main_colour;
 		secondaryHidden.value = secondary_colour;
 		document.querySelector("#primary-colour-picker").shadowRoot.querySelector(".button-colour").style.background = main_colour;
@@ -67,9 +75,11 @@ window.addEventListener("load", function() {
 
 		var palette_active = generatePalette(main_colour_hsv_active, "", 0);
 		document.documentElement.style.setProperty('--main', main_colour_active);
-		document.documentElement.style.setProperty('--text', getTextColour(main_colour_active));
 		document.documentElement.style.setProperty('--empty', hsvToHex(palette_active.c1));
 		document.documentElement.style.setProperty('--hover', hsvToHex(palette_active.c2));
+		document.documentElement.style.setProperty('--text', getTextColour(main_colour_active));
+
+		updateIframesStyles();
 	});
 
 
@@ -79,17 +89,24 @@ window.addEventListener("load", function() {
 		var secondary_colour_active = secondaryHidden.value;
 		var secondary_colour_hsv_active = hexToHsv(secondary_colour_active);
 		var palette_active = generatePalette("", secondary_colour_hsv_active, 0);
-		document.documentElement.style.setProperty('--header', getTextColour(hsvToHex(palette_active.c3)));
-		document.documentElement.style.setProperty('--top', hsvToHex(palette_active.c3));
-		document.documentElement.style.setProperty('--tophover', hsvToHex(palette_active.c4));
+		document.documentElement.style.setProperty('--secondary', hsvToHex(palette_active.c3));
+		document.documentElement.style.setProperty('--secondaryhover', hsvToHex(palette_active.c4));
+		document.documentElement.style.setProperty('--secondarytext', getTextColour(hsvToHex(palette_active.c3)));
+
+		updateIframesStyles();
 	});
 
 
 	colourPickerSubmit.addEventListener('click', function(event) {
 		event.preventDefault();
-		
+
 		localStorage.setItem('colour-main', document.documentElement.style.getPropertyValue('--main'));
-        localStorage.setItem('colour-secondary', document.documentElement.style.getPropertyValue('--top'));
+        localStorage.setItem('colour-secondary', document.documentElement.style.getPropertyValue('--secondary'));
+		localStorage.setItem('colour-main-empty', document.documentElement.style.getPropertyValue('--empty'));
+        localStorage.setItem('colour-main-hover', document.documentElement.style.getPropertyValue('--hover'));
+		localStorage.setItem('colour-main-text', document.documentElement.style.getPropertyValue('--text'));
+        localStorage.setItem('colour-secondary-hover', document.documentElement.style.getPropertyValue('--secondaryhover'));
+		localStorage.setItem('colour-secondary-text', document.documentElement.style.getPropertyValue('--secondarytext'));
 
 		colourPickerContent.classList.remove('show');
 	});
@@ -116,9 +133,11 @@ window.addEventListener("load", function() {
 		document.documentElement.style.setProperty('--text', getTextColour(main_colour_active));
 		document.documentElement.style.setProperty('--empty', hsvToHex(palette_active.c1));
 		document.documentElement.style.setProperty('--hover', hsvToHex(palette_active.c2));
-		document.documentElement.style.setProperty('--header', getTextColour(secondary_colour_active));
-		document.documentElement.style.setProperty('--top', secondary_colour_active);
-		document.documentElement.style.setProperty('--tophover', hsvToHex(palette_active.c4));
+		document.documentElement.style.setProperty('--secondarytext', getTextColour(secondary_colour_active));
+		document.documentElement.style.setProperty('--secondary', secondary_colour_active);
+		document.documentElement.style.setProperty('--secondaryhover', hsvToHex(palette_active.c4));
+
+		updateIframesStyles();
 
 		primaryHidden.value = main_colour_active;
 		secondaryHidden.value = secondary_colour_active;
@@ -138,20 +157,20 @@ window.addEventListener("load", function() {
 
     const logo = document.querySelector('#logo img');
 
-	if (main_mode_back == dark) {
+	const mode_back = localStorage.getItem("colour-mode-back");
+
+	if (mode_back == dark) {
 		darkmode_image.src = lightImg;
 		logo.src = asleepImg;
-		document.documentElement.style.setProperty('--bodyback', "#363636");
 	} else {
 		darkmode_image.src = darkImg;
 		logo.src = awakeImg;
-		document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
 	}
 
 	darkmode_button.addEventListener("click", function(event) {
 		event.preventDefault();
 
-		const mode_back = localStorage.getItem("colour-mode-back") || '#F5F5F5';
+		const mode_back = localStorage.getItem("colour-mode-back");
 
 		if (mode_back == light) {
 			darkmode_image.src = lightImg;
@@ -159,14 +178,22 @@ window.addEventListener("load", function() {
 			document.documentElement.style.setProperty('--bodyback', "#363636");
 			document.documentElement.style.setProperty('--modeback', dark);
 			document.documentElement.style.setProperty('--modetext', light);
-			localStorage.setItem('colour-mode-back', dark);
+			localStorage.setItem('colour-main-body-back', document.documentElement.style.getPropertyValue('--bodyback'));
+			localStorage.setItem('colour-mode-back', document.documentElement.style.getPropertyValue('--modeback'));
+			localStorage.setItem('colour-mode-text', document.documentElement.style.getPropertyValue('--modetext'));
+
+			updateIframesStyles();
 		} else {
 			darkmode_image.src = darkImg;
 			logo.src = awakeImg;
 			document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
 			document.documentElement.style.setProperty('--modeback', light);
 			document.documentElement.style.setProperty('--modetext', dark);
-			localStorage.setItem('colour-mode-back', light);
+			localStorage.setItem('colour-main-body-back', document.documentElement.style.getPropertyValue('--bodyback'));
+			localStorage.setItem('colour-mode-back', document.documentElement.style.getPropertyValue('--modeback'));
+			localStorage.setItem('colour-mode-text', document.documentElement.style.getPropertyValue('--modetext'));
+
+			updateIframesStyles();
 		}
 	});
 });
@@ -197,18 +224,57 @@ document.addEventListener('keydown', function (event) {
 });
 
 function resetToSavedColours() {
-	var savedPrimaryColour = localStorage.getItem("colour-main") || "#ed6461";
-	var savedSecondaryColour = localStorage.getItem("colour-secondary") || "#00baff";
-	var main_colour_hsv_active = hexToHsv(savedPrimaryColour);
-	var secondary_colour_hsv_active = hexToHsv(savedSecondaryColour);
-	var palette_active = generatePalette(main_colour_hsv_active, secondary_colour_hsv_active, 0);
-	document.documentElement.style.setProperty('--main', savedPrimaryColour);
-	document.documentElement.style.setProperty('--header', getTextColour(hsvToHex(palette_active.c3)));
-	document.documentElement.style.setProperty('--text', getTextColour(savedPrimaryColour));
-	document.documentElement.style.setProperty('--empty', hsvToHex(palette_active.c1));
-	document.documentElement.style.setProperty('--hover', hsvToHex(palette_active.c2));
-	document.documentElement.style.setProperty('--top', hsvToHex(palette_active.c3));
-	document.documentElement.style.setProperty('--tophover', hsvToHex(palette_active.c4));
+	var main_colour = localStorage.getItem("colour-main");
+	var main_empty = localStorage.getItem("colour-main-empty");
+	var main_hover = localStorage.getItem("colour-main-hover");
+	var main_text = localStorage.getItem("colour-main-text");
+	var secondary_colour = localStorage.getItem("colour-secondary");
+	var secondary_hover = localStorage.getItem("colour-secondary-hover");
+	var secondary_text = localStorage.getItem("colour-secondary-text");
+
+	document.documentElement.style.setProperty('--main', main_colour);
+	document.documentElement.style.setProperty('--empty', main_empty);
+	document.documentElement.style.setProperty('--hover', main_hover);
+	document.documentElement.style.setProperty('--text', main_text);
+	document.documentElement.style.setProperty('--secondary', secondary_colour);
+	document.documentElement.style.setProperty('--secondaryhover', secondary_hover);
+	document.documentElement.style.setProperty('--secondarytext', secondary_text);
+
+	updateIframesStyles();
+}
+
+function updateIframesStyles() {
+    const iframes = document.querySelectorAll('iframe');
+
+    iframes.forEach(function(iframe) {
+        const iframeDoc = iframe.contentWindow.document;
+        
+        if (iframeDoc) {
+            let modeback = getComputedStyle(document.documentElement).getPropertyValue('--modeback');
+            let modetext = getComputedStyle(document.documentElement).getPropertyValue('--modetext');
+            let bodyback = getComputedStyle(document.documentElement).getPropertyValue('--bodyback');
+            let main = getComputedStyle(document.documentElement).getPropertyValue('--main');
+            let backtext = getComputedStyle(document.documentElement).getPropertyValue('--backtext');
+            let empty = getComputedStyle(document.documentElement).getPropertyValue('--empty');
+            let hover = getComputedStyle(document.documentElement).getPropertyValue('--hover');
+            let text = getComputedStyle(document.documentElement).getPropertyValue('--text');
+            let secondary = getComputedStyle(document.documentElement).getPropertyValue('--secondary');
+            let secondaryhover = getComputedStyle(document.documentElement).getPropertyValue('--secondaryhover');
+            let secondarytext = getComputedStyle(document.documentElement).getPropertyValue('--secondarytext');
+
+            iframeDoc.documentElement.style.setProperty('--modeback', modeback);
+            iframeDoc.documentElement.style.setProperty('--modetext', modetext);
+            iframeDoc.documentElement.style.setProperty('--bodyback', bodyback);
+            iframeDoc.documentElement.style.setProperty('--main', main);
+            iframeDoc.documentElement.style.setProperty('--backtext', backtext);
+            iframeDoc.documentElement.style.setProperty('--empty', empty);
+            iframeDoc.documentElement.style.setProperty('--hover', hover);
+            iframeDoc.documentElement.style.setProperty('--text', text);
+            iframeDoc.documentElement.style.setProperty('--secondary', secondary);
+            iframeDoc.documentElement.style.setProperty('--secondaryhover', secondaryhover);
+            iframeDoc.documentElement.style.setProperty('--secondarytext', secondarytext);
+        }
+    });
 }
 
 function getTextColour(hexCode) {

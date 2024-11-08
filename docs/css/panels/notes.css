@@ -1,3 +1,7 @@
+html {
+    height: 100%;
+}
+
 #editor {
     resize: none;
     box-sizing: border-box;
@@ -16,24 +20,19 @@
 #editorContainer {
     display: flex;
     flex-direction: column;
-    margin-bottom: 4em;
     position: relative;
-}
-
-#editor-box {
-    height: 75vh;
-    left: 50%;
-    transform: translateX(-50%);
-    position: relative;
+    height: 100%;
 }
 
 #editor-alert {
     position: absolute;
-    right: 0;
-    top: -40px;
+    right: 8px;
+    bottom: -1px;
     color: var(--main);
     font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
     display: none;
+    font-size: 12px;
 }
 
 #editor-save-btn {
