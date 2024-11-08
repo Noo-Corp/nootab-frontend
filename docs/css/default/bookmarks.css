@@ -18,7 +18,7 @@
 
 .urlButton {
     border: 2px solid var(--backtext);
-    color: var(--backtext);
+    color: var(--modetext2);
     background: transparent;
     cursor: pointer;
     font-size: 1em;
@@ -36,7 +36,7 @@
 }
 
 .ui-spinner.ui-corner-all.ui-widget.ui-widget-content {
-    border: 2px solid var(--main);
+    border: 1px solid var(--main);
     background: transparent;
     color: var(--modetext);
 }
@@ -61,6 +61,7 @@
     margin-top: 0;
     margin-bottom: 22px;
     font-size: 14px;
+    color: var(--modetext2);
 }
 
 #launch-link-text {
@@ -199,12 +200,12 @@
 .launch-link {
     background: none;
     border: none;
-    color: var(--modetext);
+    color: var(--modetext2);
     font-size: 22px;
 }
 
 .launch-link:hover {
-    color: var(--hover);
+    color: var(--modetext);
 }
 
 .edit-link {

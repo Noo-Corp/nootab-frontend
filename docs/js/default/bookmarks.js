@@ -79,7 +79,7 @@ function initUrls() {
 			step: -1,
 			min: 1,
 			max: urls.length
-		});
+		}).siblings('.ui-spinner-up, .ui-spinner-down').addClass("spinner-bookmark-button");
 
 		$(orderInput).on('change', function() {
 			const newIndex = parseInt(this.value) - 1;
@@ -126,7 +126,7 @@ function initUrls() {
 		buttons.append(newButton);
 	});
 
-	$('.ui-spinner-button').click(function(event) {
+	$('.spinner-bookmark-button').click(function(event) {
 		event.stopPropagation();
 		$(this).siblings('input').change();
 	});
@@ -137,7 +137,7 @@ function initUrls() {
 function addUrlButton(event) {
 	event.stopPropagation();
 	var url = prompt("Enter Bookmark URL:");
-	if (url.trim() !== "" && url != null) {
+	if (url != null && url.trim() !== "") {
 		var value = prompt("Enter Bookmark Name (Optional):");
 
 		if (value.trim() == "" || value == null) {

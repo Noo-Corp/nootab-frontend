@@ -12,6 +12,7 @@ window.addEventListener("load", function() {
 		{ key: "colour-main-back-text", cssVar: "--backtext", defaultValue: "#6f6f6f" },
 		{ key: "colour-mode-back", cssVar: "--modeback", defaultValue: "#F5F5F5" },
 		{ key: "colour-mode-text", cssVar: "--modetext", defaultValue: "#424242" },
+		{ key: "colour-mode-text-2", cssVar: "--modetext2", defaultValue: "#6f6f6f" },
 		{ key: "colour-main-body-back", cssVar: "--bodyback", defaultValue: "#E8E8E8" },
 		{ key: "colour-main", cssVar: "--main", defaultValue: "#ed6461" },
 		{ key: "colour-main-empty", cssVar: "--empty", defaultValue: "#b74d4b" },
@@ -181,9 +182,11 @@ window.addEventListener("load", function() {
 			document.documentElement.style.setProperty('--bodyback', "#363636");
 			document.documentElement.style.setProperty('--modeback', dark);
 			document.documentElement.style.setProperty('--modetext', light);
+			document.documentElement.style.setProperty('--modetext2', "#999");
 			localStorage.setItem('colour-main-body-back', document.documentElement.style.getPropertyValue('--bodyback'));
 			localStorage.setItem('colour-mode-back', document.documentElement.style.getPropertyValue('--modeback'));
 			localStorage.setItem('colour-mode-text', document.documentElement.style.getPropertyValue('--modetext'));
+			localStorage.setItem('colour-mode-text-2', document.documentElement.style.getPropertyValue('--modetext2'));
 
 			updateIframesStyles();
 		} else {
@@ -192,9 +195,11 @@ window.addEventListener("load", function() {
 			document.documentElement.style.setProperty('--bodyback', "#E8E8E8");
 			document.documentElement.style.setProperty('--modeback', light);
 			document.documentElement.style.setProperty('--modetext', dark);
+			document.documentElement.style.setProperty('--modetext2', "#6f6f6f");
 			localStorage.setItem('colour-main-body-back', document.documentElement.style.getPropertyValue('--bodyback'));
 			localStorage.setItem('colour-mode-back', document.documentElement.style.getPropertyValue('--modeback'));
 			localStorage.setItem('colour-mode-text', document.documentElement.style.getPropertyValue('--modetext'));
+			localStorage.setItem('colour-mode-text-2', document.documentElement.style.getPropertyValue('--modetext2'));
 
 			updateIframesStyles();
 		}
@@ -257,6 +262,7 @@ function updateIframesStyles() {
         if (iframeDoc) {
             let modeback = getComputedStyle(document.documentElement).getPropertyValue('--modeback');
             let modetext = getComputedStyle(document.documentElement).getPropertyValue('--modetext');
+			let modetext2 = getComputedStyle(document.documentElement).getPropertyValue('--modetext2');
             let bodyback = getComputedStyle(document.documentElement).getPropertyValue('--bodyback');
             let main = getComputedStyle(document.documentElement).getPropertyValue('--main');
             let backtext = getComputedStyle(document.documentElement).getPropertyValue('--backtext');
@@ -269,6 +275,7 @@ function updateIframesStyles() {
 
             iframeDoc.documentElement.style.setProperty('--modeback', modeback);
             iframeDoc.documentElement.style.setProperty('--modetext', modetext);
+            iframeDoc.documentElement.style.setProperty('--modetext2', modetext2);
             iframeDoc.documentElement.style.setProperty('--bodyback', bodyback);
             iframeDoc.documentElement.style.setProperty('--main', main);
             iframeDoc.documentElement.style.setProperty('--backtext', backtext);

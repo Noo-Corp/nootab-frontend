@@ -4,6 +4,7 @@ window.addEventListener("load", function() {
 		{ key: "colour-main-back-text", cssVar: "--backtext" },
 		{ key: "colour-mode-back", cssVar: "--modeback" },
 		{ key: "colour-mode-text", cssVar: "--modetext" },
+		{ key: "colour-mode-text-2", cssVar: "--modetext2" },
 		{ key: "colour-main-body-back", cssVar: "--bodyback" },
 		{ key: "colour-main", cssVar: "--main" },
 		{ key: "colour-main-empty", cssVar: "--empty" },
