@@ -7,11 +7,13 @@ window.addEventListener("load", function() {
 
 	editBtn.addEventListener('click', function() {
 		bookmarksContent.classList.add('show');
+		document.getElementById("modalOverlay").style.display = "block";
 	});
 
 	linksClose.addEventListener('click', function(event) {
 		event.preventDefault();
 		bookmarksContent.classList.remove('show');
+		document.getElementById("modalOverlay").style.display = "none";
 	});
 
 	document.addEventListener('click', function (e) {
@@ -24,6 +26,7 @@ window.addEventListener("load", function() {
 	
 			if (!isClickInsideModal) {
 				bookmarksContent.classList.remove('show');
+				document.getElementById("modalOverlay").style.display = "none";
 			}
 		}
 	});
@@ -33,6 +36,7 @@ window.addEventListener("load", function() {
 	
 		if (event.key === 'Escape' && bookmarksContent.classList.contains('show')) {
 			bookmarksContent.classList.remove('show');
+			document.getElementById("modalOverlay").style.display = "none";
 		}
 	});
 });

@@ -23,6 +23,14 @@ iframe {
     align-items: center;
 }
 
+#modalOverlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: none;
+    z-index: 3;
+}
+
 #logo {
     margin-right: auto;
     margin-left: 10px;
@@ -166,7 +174,7 @@ iframe {
     box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
     padding: 35px;
-    z-index: 90;
+    z-index: 5;
 }
 
 #panelControls {

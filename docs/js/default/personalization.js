@@ -65,6 +65,7 @@ window.addEventListener("load", function() {
 		document.querySelector("#primary-colour-picker").shadowRoot.querySelector(".button-colour").style.background = main_colour;
 		document.querySelector("#secondary-colour-picker").shadowRoot.querySelector(".button-colour").style.background = secondary_colour;
 		colourPickerContent.classList.add('show');
+		document.getElementById("modalOverlay").style.display = "block";
 	});
 
 	primaryColourPicker.addEventListener('change', (event) => {
@@ -109,6 +110,7 @@ window.addEventListener("load", function() {
 		localStorage.setItem('colour-secondary-text', document.documentElement.style.getPropertyValue('--secondarytext'));
 
 		colourPickerContent.classList.remove('show');
+		document.getElementById("modalOverlay").style.display = "none";
 	});
 
 	colourRandomSelect.addEventListener('click', function(event) {
@@ -150,6 +152,7 @@ window.addEventListener("load", function() {
 		event.preventDefault();
 		resetToSavedColours();
 		colourPickerContent.classList.remove('show');
+		document.getElementById("modalOverlay").style.display = "none";
 	});
 
 	const darkmode_button = document.querySelector('#darkmode-button');
@@ -210,6 +213,7 @@ document.addEventListener('click', function (e) {
 		if (!isClickInsidePicker) {
 			resetToSavedColours();
 			colourPicker.classList.remove('show');
+			document.getElementById("modalOverlay").style.display = "none";
 		}
 	}
 });
@@ -220,6 +224,7 @@ document.addEventListener('keydown', function (event) {
 	if (event.key === 'Escape' && colourPicker.classList.contains('show')) {
 		resetToSavedColours();
 		colourPicker.classList.remove('show');
+		document.getElementById("modalOverlay").style.display = "none";
 	}
 });
 

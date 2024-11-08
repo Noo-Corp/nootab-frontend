@@ -95,7 +95,7 @@
     border: 1px solid var(--modetext);
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
-    z-index: 3;
+    z-index: 5;
 }
 
 #colourPickerContent.show {

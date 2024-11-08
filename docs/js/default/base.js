@@ -111,6 +111,7 @@ function toggleSidePanel(event) {
         panel.style.borderColor = "var(--backtext)";
     });
     document.getElementById('panelContainer').style.width = "calc(100% - 340px)";
+    document.getElementById("modalOverlay").style.display = "block";
 }
 
 document.addEventListener('click', function (event) {
@@ -143,4 +144,5 @@ function closePanel(event) {
         panel.style.borderColor = "transparent";
     });
     document.getElementById('panelContainer').style.width = "calc(100% - 20px)";
+    document.getElementById("modalOverlay").style.display = "none";
 }
