@@ -666,6 +666,15 @@
                 this.onFieldKeyDown(t, "b");
             }
             onHexChange(t) {
+                if(typeof t === 'string') {
+                    let r = new l(t);
+                    if (r.isValid) {
+                        this.color = r;
+                        let n = this.color.toHsv();
+                        b(this.cid, n.h, n.s, n.v);
+                    }
+                    return;
+                }
                 let i = t.target;
                 if (i.value.length !== 6) return;
                 let r = new l(`#${i.value}`);
@@ -705,6 +714,16 @@
                     b(this.cid, s.h, s.s, s.v);
                 }
             }
+            hexToRgb(hex) {
+                hex = hex.replace('#', '');
+                if (hex.length === 3) {
+                    hex = hex.split('').map(c => c + c).join('');
+                }
+                let r = parseInt(hex.substring(0, 2), 16);
+                let g = parseInt(hex.substring(2, 4), 16);
+                let b = parseInt(hex.substring(4, 6), 16);
+                return { r, g, b };
+            }
             connectedCallback() {
                 if (!this.shadowRoot) return;
                 (this.cid = this.getAttribute("cid") || ""), (this.color = c(this.getAttribute("color")));
@@ -715,6 +734,10 @@
                     n = $(),
                     s = $(),
                     a = $();
+                const pickerID = this.offsetParent.offsetParent.parentNode.host.id;
+                const currentHex = pickerID == "primary-colour-picker" ? document.documentElement.style.getPropertyValue('--main') : document.documentElement.style.getPropertyValue('--secondary');
+                const rgb = this.hexToRgb(currentHex);
+
                 (this.shadowRoot.innerHTML = `
            <style>${Et}</style>
            <div class="fields">
@@ -733,6 +756,13 @@
                     (this.$r = this.shadowRoot.getElementById(`r-${r}`)),
                     (this.$g = this.shadowRoot.getElementById(`g-${n}`)),
                     (this.$b = this.shadowRoot.getElementById(`b-${s}`)),
+
+                    this.onHexChange(currentHex),
+                    this.$hex.value = currentHex.slice(1),
+                    this.$r.value = rgb.r,
+                    this.$g.value = rgb.g,
+                    this.$b.value = rgb.b,
+                    
                     document.addEventListener(p, this.hsvChanged),
                     document.addEventListener(f, this.hueChanged),
                     this.$hex.addEventListener("input", this.onHexChange),
