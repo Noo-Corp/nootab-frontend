@@ -151,9 +151,9 @@ iframe {
     border: 2px solid var(--backtext);
     background: transparent;
     color: var(--backtext);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
-    padding: 0 19px;
+    padding: 0 24px;
     cursor: pointer;
     border-radius: 8px;
     height: 30px;
