@@ -267,6 +267,7 @@ iframe {
 }
 
 .panel-number {
+    display: none;
     opacity: 0;
     position: absolute;
     right: 0;

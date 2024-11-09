@@ -103,6 +103,7 @@ function loadPanels() {
         const panelNumbers = document.querySelectorAll('.panel-number');
         panelNumbers.forEach(number => {
             number.style.opacity = 1;
+            number.style.display = "block";
         });
     }
 }
@@ -122,6 +123,7 @@ function toggleSidePanel(event) {
     const panelNumbers = document.querySelectorAll('.panel-number');
     panelNumbers.forEach(number => {
         number.style.opacity = 1;
+        number.style.display = "block";
     });
     document.getElementById('panelContainer').style.width = "calc(100% - 340px)";
     document.getElementById("modalOverlay").style.display = "block";
@@ -160,6 +162,15 @@ function closePanel(event) {
     panelNumbers.forEach(number => {
         number.style.opacity = 0;
     });
+
+    sidePanel.addEventListener('transitionend', () => {
+        if (sidePanel.style.right === '-320px') {
+            panelNumbers.forEach(number => {
+                number.style.display = 'none';
+            });
+        }
+    });
+
     document.getElementById('panelContainer').style.width = "calc(100% - 20px)";
     document.getElementById("modalOverlay").style.display = "none";
 }

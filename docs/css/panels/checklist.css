@@ -115,6 +115,9 @@ html {
     cursor: pointer;
 }
 
+#checklist-add-btn:hover {
+    background-color: var(--hover);
+}
 
 @-moz-document url-prefix() {
     #checklist-list li input[type="checkbox"]:checked::before {
