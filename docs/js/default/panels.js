@@ -235,8 +235,13 @@ function deletePanel(event, index) {
     event.stopPropagation();
 
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
-    panelOrder.splice(index, 1);
-    localStorage.setItem('panel-order', JSON.stringify(panelOrder));
+    if (panelOrder.length == 1) {
+        localStorage.removeItem('panel-order');
+        document.getElementById('panelContainer').innerHTML = '';
+    } else {
+        panelOrder.splice(index, 1);
+        localStorage.setItem('panel-order', JSON.stringify(panelOrder));
+    }
 
     loadPanels();
     loadPanelOrderList();
