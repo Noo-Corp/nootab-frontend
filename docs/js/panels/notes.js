@@ -20,29 +20,31 @@ window.addEventListener("load", function() {
 		document.documentElement.style.setProperty(cssVar, value);
 	});
 
-	document.addEventListener("keydown", documentKeyHandler);
+	const urlParams = new URLSearchParams(window.location.search);
+	const panelIndex = urlParams.get('index');
 
-	const saved_note_text = localStorage.getItem("notes-main") || "";
-	document.getElementById('editor').value = saved_note_text;
+	const savedTexts = JSON.parse(localStorage.getItem('note-texts')) || [];
+	const textsOrder = JSON.parse(localStorage.getItem('note-texts-order')) || [];
+		
+	document.getElementById('note-editor').value = savedTexts[textsOrder[panelIndex]] || "";
 
-	document.getElementById('editor-save-btn').addEventListener('click', saveNote);
-	document.getElementById('editor').addEventListener('input', indicateSave);
+	document.getElementById('note-editor').addEventListener('change', function() {
+        saveNote(panelIndex);
+    });
 });
 
-function documentKeyHandler(event) {
-	if (event.ctrlKey && event.key === 's') {
-		event.preventDefault();
-		saveNote(event);
+function saveNote(panelIndex) {
+	let panelOrderLength = JSON.parse(localStorage.getItem('panel-order')).length;
+	let savedTexts = JSON.parse(localStorage.getItem('note-texts')) || [];
+	let textsOrder = JSON.parse(localStorage.getItem('note-texts-order')) || new Array(panelOrderLength);
+
+	if (textsOrder[panelIndex]) {
+
+	} else {
+		savedTexts.append(document.getElementById("note-editor").value)
+		textsOrder[panelIndex] = 0;
 	}
-}
 
-function saveNote() {
-	localStorage.setItem("notes-main", document.getElementById("editor").value);
-	document.getElementById("editor-save-btn").textContent = "Save";
-	document.getElementById("editor-alert").style.display = "none";
-}
-
-function indicateSave() {
-	document.getElementById("editor-save-btn").textContent = "*Save";
-	document.getElementById("editor-alert").style.display = "block";
+	savedTexts[panelIndex] = document.getElementById("note-editor").value;
+    localStorage.setItem('note-texts', JSON.stringify(savedTexts));
 }

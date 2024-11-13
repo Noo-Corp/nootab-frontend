@@ -2,7 +2,7 @@ html {
     height: 100%;
 }
 
-#editor {
+#note-editor {
     resize: none;
     box-sizing: border-box;
     background: var(--modeback);
@@ -17,37 +17,21 @@ html {
     text-align: left;
 }
 
-#editorContainer {
+#note-editor-container {
     display: flex;
     flex-direction: column;
     position: relative;
     height: 100%;
 }
 
-#editor-alert {
-    position: absolute;
-    right: 8px;
-    bottom: -1px;
-    color: var(--main);
-    font-weight: bold;
-    font-family: 'Open Sans', sans-serif;
-    display: none;
-    font-size: 12px;
-}
-
-#editor-save-btn {
-    align-self: center;
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: var(--main);
-    border: none;
-    border-radius: 8px;
-    color: var(--text);
+#note-title {
+    color: var(--modetext2);
     font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#editor-save-btn:hover {
-    background-color: var(--hover);
+    padding: 0;
+    padding-top: 2px;
+    width: calc(100% - 34px);
+    overflow: auto;
+    white-space: nowrap;
+    height: 36px;
+    align-content: center;
 }

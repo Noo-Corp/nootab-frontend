@@ -3,21 +3,6 @@ window.addEventListener("load", () => {
     loadPanelOrderList();
 });
 
-function addToPanelOrder(panelName) {
-    let panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
-    if (panelOrder.length < 8) {
-        panelOrder.push(panelName);
-        localStorage.setItem('panel-order', JSON.stringify(panelOrder));
-        loadPanels();
-    }
-}
-
-function clearPanelOrder() {
-    localStorage.removeItem('panel-order');
-    document.getElementById('panelContainer').innerHTML = '';
-    loadPanels();
-}
-
 function loadPanels() {
     const panelContainer = document.getElementById('panelContainer');
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
@@ -41,7 +26,7 @@ function loadPanels() {
 
         const iframe = document.createElement('iframe');
         if (panelName.toLowerCase() != 'blank') {
-            iframe.src = `html/${panelName.toLowerCase()}.html`;
+            iframe.src = `html/${panelName.toLowerCase()}.html?index=${index}`;
             panel.classList.add(panelName.toLowerCase());
         } else {
             panel.classList.add('blank');
@@ -49,6 +34,15 @@ function loadPanels() {
         iframe.style.visibility = 'hidden';
         iframe.onload = () => onFrameLoad(iframe);
         panel.appendChild(iframe);
+
+        if (panelName != "blank") {
+            const button = document.createElement('button');
+            button.className = 'panel-popout';
+            button.onclick = function(event) { panelPopout(event, this); };
+            button.innerHTML = '&#10063;';
+            panel.appendChild(button);
+        }
+
         panelContainer.appendChild(panel);
     });
 
@@ -89,6 +83,7 @@ function toggleSidePanel(event) {
 }
 
 document.addEventListener('click', function (event) {
+    const isPanelPopout = document.querySelector('.panel.popout') || false;
     const sidePanel = document.getElementById('sidePanel');
     const isOpen = sidePanel.style.right === '0px';
 
@@ -98,6 +93,13 @@ document.addEventListener('click', function (event) {
 			closePanel(event);
 		}
 	}
+
+    if (isPanelPopout) {
+        const isClickInside = event.target.closest('.panel.popout');
+        if (!isClickInside) {
+            closePopoutPanel();
+        }
+    }
 });
 
 document.addEventListener('keydown', function (event) {
@@ -252,4 +254,40 @@ function clearPanelOrder() {
     document.getElementById('panelContainer').innerHTML = '';
     loadPanels();
     loadPanelOrderList();
+}
+
+function panelPopout(event, button) {
+    event.stopPropagation();
+    const isPanelPopout = document.querySelector('.panel.popout') || false;
+
+    if (isPanelPopout) {
+        closePopoutPanel();
+    } else {
+        const mainPanel = button.closest('.panel');
+        if (mainPanel) {
+            document.getElementById("modalOverlay").style.display = "block";
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => {
+                if (panel !== mainPanel) {   
+                    panel.style.display = "none";
+                }
+            });
+            button.innerHTML = '&#9783;';
+            button.classList.add('popped');
+            mainPanel.classList.add('popout');
+        }
+    }
+}
+
+function closePopoutPanel() {
+    const button = document.querySelector('.panel-popout.popped');
+    const panelPopout = document.querySelector('.panel.popout');
+    button.innerHTML = '&#10063;';
+    button.classList.remove('popped');
+    panelPopout.classList.remove('popout');
+    document.getElementById("modalOverlay").style.display = "none";
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {
+        panel.style.display = "flex";
+    });
 }

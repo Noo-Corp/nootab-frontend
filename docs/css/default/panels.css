@@ -118,7 +118,7 @@ iframe {
 }
 
 .panel {
-    background-color: transparent;
+    background-color: var(--bodyback);
     border: 2px solid var(--backtext);
     color: white;
     display: flex;
@@ -156,5 +156,37 @@ iframe {
 }
 
 .panel.blank {
+    background-color: transparent;
     border: 2px solid transparent;
+}
+
+.panel-popout {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 8px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: var(--main);
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.panel-popout:hover {
+    color: var(--hover);
+    font-size: 26px;
+}
+
+.panel-popout.popped {
+    transform: scaleX(2) rotate(90deg);
+}
+
+.panel.popout {
+    width: 72vw;
+    position: absolute;
+    justify-self: center;
+    height: 80vh;
+    z-index: 5;
 }
