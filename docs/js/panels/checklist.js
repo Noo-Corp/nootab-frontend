@@ -1,102 +1,152 @@
 window.addEventListener("load", function() {
-    const colorProperties = [
-        { key: "colour-main-back-text", cssVar: "--backtext" },
-        { key: "colour-mode-back", cssVar: "--modeback" },
-        { key: "colour-mode-text", cssVar: "--modetext" },
-        { key: "colour-mode-text-2", cssVar: "--modetext2" },
-        { key: "colour-main-body-back", cssVar: "--bodyback" },
-        { key: "colour-main", cssVar: "--main" },
-        { key: "colour-main-empty", cssVar: "--empty" },
-        { key: "colour-main-hover", cssVar: "--hover" },
-        { key: "colour-main-text", cssVar: "--text" },
-        { key: "colour-secondary", cssVar: "--secondary" },
-        { key: "colour-secondary-hover", cssVar: "--secondaryhover" },
-        { key: "colour-secondary-text", cssVar: "--secondarytext" }
-    ];
+    const { panelIndex, isPopped } = getUrlParams();
+	
+    loadChecklist();
 
-    colorProperties.forEach(({ key, cssVar }) => {
-        let value = localStorage.getItem(key);
-        document.documentElement.style.setProperty(cssVar, value);
-    });
+	if (isPopped === "true") loadSidepanel("checklist");
 
-    document.getElementById('checklist-add-btn').addEventListener('click', addTask);
+    document.getElementById('main-title').addEventListener('input', () => updateTitle(panelIndex));
+    document.getElementById('checklist-add-btn').addEventListener('click', () => addTask(panelIndex));
     document.getElementById('checklist-input').addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            addTask(event);
+            event.preventDefault();
+            addTask(panelIndex);
+        } else if (event.key === 'Escape') {
+            event.preventDefault();
+            event.target.blur();
         }
     });
-
-    loadTasks();
 });
 
-function loadTasks() {
-    const savedTasks = JSON.parse(localStorage.getItem("checklist-list")) || [];
-    const checklistList = document.getElementById('checklist-list');
-    checklistList.innerHTML = '';
 
-    savedTasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        if (task.checked) {
-            li.classList.add('checked');
+function loadChecklist() {
+    const { panelIndex } = getUrlParams();
+	const savedChecklists = JSON.parse(localStorage.getItem('vals-checklist')) || [];
+	const checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || new Array(panelOrderLength);
+
+	const checklist = savedChecklists[checklistsOrder[panelIndex] - 1];
+	const checklistElement = document.getElementById('checklist-list');
+	const checklistTitleElement = document.getElementById('main-title');
+
+	if (checklist) {
+        checklistElement.innerHTML = "";
+
+		checklistTitleElement.innerText = checklist[0] || "Untitled";
+        if (Array.isArray(checklist[1])) {
+            checklist[1].forEach((task, index) => {
+                const li = document.createElement('li');
+                if (task.checked) {
+                    li.classList.add('checked');
+                }
+        
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = task.checked;
+                checkbox.addEventListener('change', () => toggleTask(panelIndex, index));
+        
+                const span = document.createElement('span');
+                span.textContent = task.text;
+        
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&#10006;';
+                removeBtn.classList.add('remove-btn');
+                removeBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    removeTask(panelIndex, index);
+                });
+        
+                li.appendChild(checkbox);
+                li.appendChild(span);
+                li.appendChild(removeBtn);
+        
+                li.addEventListener('click', (event) => {
+                    if (event.target !== checkbox) {
+                        toggleTask(panelIndex, index);
+                    }
+                });
+        
+                checklistElement.appendChild(li);
+            });
         }
+	} else {
+        checklistTitleElement.innerText = "Untitled";
+    }
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = task.checked;
-        checkbox.addEventListener('change', () => toggleTask(index));
-
-        const span = document.createElement('span');
-        span.textContent = task.text;
-
-        const removeBtn = document.createElement('button');
-        removeBtn.innerHTML = '&#10006;';
-        removeBtn.classList.add('remove-btn');
-        removeBtn.addEventListener('click', (event) => {
-            event.stopPropagation();
-            removeTask(index);
-        });
-
-        li.appendChild(checkbox);
-        li.appendChild(span);
-        li.appendChild(removeBtn);
-
-        li.addEventListener('click', (event) => {
-            if (event.target !== checkbox) {
-                toggleTask(index);
-            }
-        });
-
-        checklistList.appendChild(li);
-    });
+    const { isPopped } = getUrlParams();
+	if (isPopped === "true") loadSidepanel("checklist");
 }
 
-function addTask(event) {
-    const taskInput = document.getElementById('checklist-input');
+function updateTitle(panelIndex) {
+    let savedChecklists = JSON.parse(localStorage.getItem('vals-checklist')) || [];
+	let checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist'));
+
+    const checklistTitleElement = document.getElementById('main-title');
+    
+    let currentChecklist = savedChecklists?.[checklistsOrder?.[panelIndex] - 1] || [];
+
+    if (currentChecklist != "") {
+        savedChecklists[checklistsOrder[panelIndex] - 1][0] = checklistTitleElement.innerText;
+    } else {
+        savedChecklists.push(([checklistTitleElement.innerText, []]))
+        checklistsOrder[panelIndex] = savedChecklists.length;
+        localStorage.setItem("orders-checklist", JSON.stringify(checklistsOrder));
+    }
+
+    localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
+
+    const { isPopped } = getUrlParams();
+	if (isPopped === "true") loadSidepanel("checklist");
+}
+
+function addTask(panelIndex) {
+    let savedChecklists = JSON.parse(localStorage.getItem('vals-checklist')) || [];
+	let checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist'));
+
+    const checklistTitleElement = document.getElementById('main-title');
+    let taskInput = document.getElementById('checklist-input');
     const taskText = taskInput.value.trim();
     
-    if (taskText === '') return;
+    let checklistTasks = (savedChecklists?.[checklistsOrder[panelIndex] - 1]?.[1]) || [];
+    if (taskText != '') {
+        checklistTasks.push({ text: taskText, checked: false });    
+    }
+    
+    let currentChecklist = savedChecklists?.[checklistsOrder?.[panelIndex] - 1] || [];
 
-    const savedTasks = JSON.parse(localStorage.getItem("checklist-list")) || [];
-    savedTasks.push({ text: taskText, checked: false });
-    localStorage.setItem("checklist-list", JSON.stringify(savedTasks));
+    if (currentChecklist != "") {
+        savedChecklists[checklistsOrder[panelIndex] - 1] = ([checklistTitleElement.innerText, checklistTasks]);
+    } else {
+        savedChecklists.push(([checklistTitleElement.innerText, checklistTasks]))
+        checklistsOrder[panelIndex] = savedChecklists.length;
+    }
 
     taskInput.value = '';
 
-    loadTasks();
+    localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
+    localStorage.setItem("orders-checklist", JSON.stringify(checklistsOrder));
+
+    loadChecklist();
 }
 
-function removeTask(index) {
-    const savedTasks = JSON.parse(localStorage.getItem("checklist-list")) || [];
-    savedTasks.splice(index, 1);
-    localStorage.setItem("checklist-list", JSON.stringify(savedTasks));
 
-    loadTasks();
+function removeTask(panelIndex, index) {
+    const savedChecklists = JSON.parse(localStorage.getItem('vals-checklist'));
+	const checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist'));
+
+    savedChecklists[checklistsOrder[panelIndex] - 1][1].splice(index, 1);
+    localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
+
+    loadChecklist();
 }
 
-function toggleTask(index) {
-    const savedTasks = JSON.parse(localStorage.getItem("checklist-list")) || [];
-    savedTasks[index].checked = !savedTasks[index].checked;
-    localStorage.setItem("checklist-list", JSON.stringify(savedTasks));
 
-    loadTasks();
+function toggleTask(panelIndex, index) {
+    const savedChecklists = JSON.parse(localStorage.getItem('vals-checklist')) || [];
+	const checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+
+    savedChecklists[checklistsOrder[panelIndex] - 1][1][index].checked = !savedChecklists[checklistsOrder[panelIndex] - 1][1][index].checked;
+
+    localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
+
+    loadChecklist();
 }

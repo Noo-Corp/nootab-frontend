@@ -19,7 +19,7 @@ iframe {
     font-weight: bold;
     padding: 0 24px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 4px;
     height: 30px;
     white-space: nowrap;
 }
@@ -54,10 +54,23 @@ iframe {
     background-color: var(--bodyback);
     color: var(--modetext2);
     border: 2px solid var(--backtext);
+    position: relative;
 }
 
 #panelControls button:hover {
     background: var(--modeback);
+}
+
+#panelControls button span {
+    line-height: 0;
+    position: absolute;
+    right: 12px;
+    bottom: 50%;
+}
+
+#panelControls button span.inf {
+    font-size: 24px;
+    bottom: 53%;
 }
 
 #panelControls #clearButton {
@@ -125,7 +138,7 @@ iframe {
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 4px;
     transition: border-color 0.3s ease-in-out;
     position: relative;
 }
@@ -169,18 +182,19 @@ iframe {
     background-color: transparent;
     border: none;
     color: var(--main);
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     font-weight: bold;
 }
 
 .panel-popout:hover {
     color: var(--hover);
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .panel-popout.popped {
     transform: scaleX(2) rotate(90deg);
+    right: 10px;
 }
 
 .panel.popout {
@@ -189,4 +203,18 @@ iframe {
     justify-self: center;
     height: 80vh;
     z-index: 5;
+}
+
+@-moz-document url-prefix() {
+    .panel-popout {
+        font-size: 24px;
+    }
+
+    .panel-popout:hover {
+        font-size: 28px;
+    }
+
+    .panel-popout.popped {
+        right: 2px;
+    }
 }

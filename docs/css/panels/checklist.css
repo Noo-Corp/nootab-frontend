@@ -2,6 +2,10 @@ html {
     height: 100%;
 }
 
+#input-container {
+    display: flex;
+}
+
 #checklist-input {
     box-sizing: border-box;
     background: var(--modeback);
@@ -9,18 +13,32 @@ html {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     border: 1px solid var(--bodyback);
-    border-radius: 8px;
+    border-radius: 4px;
     margin-top: 10px;
     padding: 10px;
     width: 100%;
     text-align: left;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-#checklistContainer {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 100%;
+#checklist-add-btn {
+    align-self: center;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background-color: var(--main);
+    border: none;
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#checklist-add-btn:hover {
+    background-color: var(--hover);
 }
 
 #checklist-list {
@@ -33,12 +51,13 @@ html {
 
 #checklist-list li {
     display: flex;
+    position: relative;
     align-items: center;
     margin-bottom: 10px;
     justify-content: space-between;
     padding: 10px;
     background-color: var(--modeback);
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
@@ -100,23 +119,6 @@ html {
 
 #checklist-list li button:hover {
     color: #e71313;
-}
-
-#checklist-add-btn {
-    align-self: center;
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: var(--main);
-    border: none;
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-#checklist-add-btn:hover {
-    background-color: var(--hover);
 }
 
 @-moz-document url-prefix() {

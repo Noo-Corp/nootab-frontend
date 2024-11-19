@@ -44,7 +44,7 @@
 }
 
 .colour-picker-tab {
-    border-radius: 8px;
+    border-radius: 4px;
     padding: 5px 5px 0 5px;
     margin-bottom: 8px;
     cursor: pointer;
@@ -127,7 +127,7 @@
 }
 
 #colourRandomSelect {
-    border-radius: 8px 0 0 8px;
+    border-radius: 4px 0 0 4px;
 }
 
 #colourRandomSelect:hover {
@@ -137,7 +137,7 @@
 #colourPickerSubmit {
     background: var(--secondary);
     color: var(--secondarytext);
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 4px 4px 0;
 }
 
 .rainbowText {

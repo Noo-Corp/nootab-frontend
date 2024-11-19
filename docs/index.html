@@ -97,9 +97,10 @@
 			<span class="close" id="close-colour" onclick="closePanel(event)">&times;</span>
 			<table id="panelOrderList"></table>
 			<div id="panelControls">
-				<button id="notesButton" onclick="addToPanelOrder('notes')">Notes</button>
-				<button id="checklistButton" onclick="addToPanelOrder('checklist')">Checklist</button>
-				<button id="blankButton" onclick="addToPanelOrder('blank')">Blank</button>
+				<button id="notesButton" onclick="addToPanelOrder('notes')">Notes<span class="inf">&#8734;</span></button>
+				<button id="checklistButton" onclick="addToPanelOrder('checklist')">Checklist<span class="inf">&#8734;</span></button>
+				<button id="blankButton" onclick="addToPanelOrder('blank')">Plan<span>1</span></button>
+				<button id="blankButton" onclick="addToPanelOrder('blank')">Blank<span class="inf">&#8734;</span></button>
 				<button id="clearButton" onclick="clearPanelOrder()">Clear</button>
 			</div>
 		</div>

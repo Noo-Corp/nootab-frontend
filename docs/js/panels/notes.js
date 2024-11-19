@@ -1,50 +1,53 @@
 window.addEventListener("load", function() {
-	//set document colours from localStorage
-	const colorProperties = [
-		{ key: "colour-main-back-text", cssVar: "--backtext" },
-		{ key: "colour-mode-back", cssVar: "--modeback" },
-		{ key: "colour-mode-text", cssVar: "--modetext" },
-		{ key: "colour-mode-text-2", cssVar: "--modetext2" },
-		{ key: "colour-main-body-back", cssVar: "--bodyback" },
-		{ key: "colour-main", cssVar: "--main" },
-		{ key: "colour-main-empty", cssVar: "--empty" },
-		{ key: "colour-main-hover", cssVar: "--hover" },
-		{ key: "colour-main-text", cssVar: "--text" },
-		{ key: "colour-secondary", cssVar: "--secondary" },
-		{ key: "colour-secondary-hover", cssVar: "--secondaryhover" },
-		{ key: "colour-secondary-text", cssVar: "--secondarytext" }
-	];
-	
-	colorProperties.forEach(({ key, cssVar }) => {
-		let value = localStorage.getItem(key);
-		document.documentElement.style.setProperty(cssVar, value);
-	});
+	const { panelIndex, isPopped } = getUrlParams();
 
-	const urlParams = new URLSearchParams(window.location.search);
-	const panelIndex = urlParams.get('index');
+	loadNote();
 
-	const savedTexts = JSON.parse(localStorage.getItem('note-texts')) || [];
-	const textsOrder = JSON.parse(localStorage.getItem('note-texts-order')) || [];
-		
-	document.getElementById('note-editor').value = savedTexts[textsOrder[panelIndex]] || "";
+	if (isPopped === "true") loadSidepanel("note");
 
-	document.getElementById('note-editor').addEventListener('change', function() {
-        saveNote(panelIndex);
-    });
+	document.getElementById('note-editor').addEventListener('input', () => saveNote(panelIndex));
+	document.getElementById('main-title').addEventListener('input', () => saveNote(panelIndex));
 });
 
+
+function loadNote() {
+	const panelOrderLength = JSON.parse(localStorage.getItem('panel-order')).length;
+	const { panelIndex } = getUrlParams();
+	const savedNotes = JSON.parse(localStorage.getItem('vals-note')) || [];
+	const textsOrder = JSON.parse(localStorage.getItem('orders-note')) || new Array(panelOrderLength);
+
+	const note = savedNotes[textsOrder[panelIndex] - 1];
+	const noteEditorElement = document.getElementById('note-editor');
+	const noteTitleElement = document.getElementById('main-title');
+
+	if (note) {
+		noteTitleElement.innerText = note[0] || "Untitled";
+		noteEditorElement.value = note[1] || "";
+	} else {
+		noteTitleElement.innerText = "Untitled";
+		noteEditorElement.value = "";
+	}
+}
+
+
 function saveNote(panelIndex) {
-	let panelOrderLength = JSON.parse(localStorage.getItem('panel-order')).length;
-	let savedTexts = JSON.parse(localStorage.getItem('note-texts')) || [];
-	let textsOrder = JSON.parse(localStorage.getItem('note-texts-order')) || new Array(panelOrderLength);
+	let savedNotes = JSON.parse(localStorage.getItem('vals-note')) || [];
+	let textsOrder = JSON.parse(localStorage.getItem('orders-note'));
+
+	let noteTitle = document.getElementById("main-title").innerText;
+	let noteText = document.getElementById("note-editor").value;
+	let note = [noteTitle, noteText];
 
 	if (textsOrder[panelIndex]) {
-
+		savedNotes[textsOrder[panelIndex] - 1] = note;
 	} else {
-		savedTexts.append(document.getElementById("note-editor").value)
-		textsOrder[panelIndex] = 0;
+		savedNotes.push(note);
+		textsOrder[panelIndex] = savedNotes.length;
+		localStorage.setItem('orders-note', JSON.stringify(textsOrder));
 	}
 
-	savedTexts[panelIndex] = document.getElementById("note-editor").value;
-    localStorage.setItem('note-texts', JSON.stringify(savedTexts));
+	localStorage.setItem('vals-note', JSON.stringify(savedNotes));
+
+	const { isPopped } = getUrlParams();
+	if (isPopped === "true") loadSidepanel("note");
 }

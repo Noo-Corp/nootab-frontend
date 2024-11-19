@@ -26,13 +26,13 @@ function loadPanels() {
 
         const iframe = document.createElement('iframe');
         if (panelName.toLowerCase() != 'blank') {
-            iframe.src = `html/${panelName.toLowerCase()}.html?index=${index}`;
+            iframe.src = `html/${panelName.toLowerCase()}.html?index=${index}&popped=false`;
             panel.classList.add(panelName.toLowerCase());
         } else {
             panel.classList.add('blank');
         }
         iframe.style.visibility = 'hidden';
-        iframe.onload = () => onFrameLoad(iframe);
+        iframe.onload = () => onFrameLoad(iframe, false);
         panel.appendChild(iframe);
 
         if (panelName != "blank") {
@@ -61,8 +61,12 @@ function loadPanels() {
     }
 }
 
-function onFrameLoad(iframe) {
+function onFrameLoad(iframe, popped=false) {
     iframe.style.visibility = 'visible';
+
+    if (popped) {
+        iframe.parentNode.classList.remove('popout');
+    }
 }
 
 function toggleSidePanel(event) {
@@ -210,14 +214,23 @@ function loadPanelOrderList() {
 
 function updatePanelOrder(oldIndex, newIndex) {
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
+    const noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
+    const checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+
     if (newIndex < 0 || newIndex >= panelOrder.length || oldIndex === newIndex) return;
 
-    // Move the item in the panel order array
     const panelNameToMove = panelOrder.splice(oldIndex, 1)[0];
-    panelOrder.splice(newIndex, 0, panelNameToMove);
+    const panelNoteToMove = noteTextsOrder.splice(oldIndex, 1)[0];
+    const panelChecklistToMove = checklistListsOrder.splice(oldIndex, 1)[0];
 
-    // Save the updated order in localStorage
+    panelOrder.splice(newIndex, 0, panelNameToMove);
     localStorage.setItem('panel-order', JSON.stringify(panelOrder));
+
+    noteTextsOrder.splice(newIndex, 0, panelNoteToMove);
+    localStorage.setItem('orders-note', JSON.stringify(noteTextsOrder));
+
+    checklistListsOrder.splice(newIndex, 0, panelChecklistToMove);
+    localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
 
     loadPanels();
     loadPanelOrderList();
@@ -225,9 +238,19 @@ function updatePanelOrder(oldIndex, newIndex) {
 
 function addToPanelOrder(panelName) {
     let panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
+    let noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
+    let checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+
     if (panelOrder.length < 8) {
         panelOrder.push(panelName);
         localStorage.setItem('panel-order', JSON.stringify(panelOrder));
+
+        noteTextsOrder.push(null);
+        localStorage.setItem('orders-note', JSON.stringify(noteTextsOrder));
+
+        checklistListsOrder.push(null);
+        localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
+
         loadPanels();
         loadPanelOrderList();
     }
@@ -237,12 +260,23 @@ function deletePanel(event, index) {
     event.stopPropagation();
 
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
+	const noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
+    const checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+
     if (panelOrder.length == 1) {
         localStorage.removeItem('panel-order');
+        localStorage.removeItem('orders-note');
+        localStorage.removeItem('orders-checklist');
         document.getElementById('panelContainer').innerHTML = '';
     } else {
         panelOrder.splice(index, 1);
         localStorage.setItem('panel-order', JSON.stringify(panelOrder));
+
+        noteTextsOrder.splice(index, 1);
+        localStorage.setItem('orders-note', JSON.stringify(noteTextsOrder));
+
+        checklistListsOrder.splice(index, 1);
+        localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
     }
 
     loadPanels();
@@ -265,6 +299,7 @@ function panelPopout(event, button) {
     } else {
         const mainPanel = button.closest('.panel');
         if (mainPanel) {
+            const iframe = mainPanel.querySelector('iframe');
             document.getElementById("modalOverlay").style.display = "block";
             const panels = document.querySelectorAll('.panel');
             panels.forEach(panel => {
@@ -274,20 +309,28 @@ function panelPopout(event, button) {
             });
             button.innerHTML = '&#9783;';
             button.classList.add('popped');
+            iframe.onload = () => onFrameLoad(iframe, false);
+            iframe.src = iframe.src.replace(/([?&])popped=[^&]*/, `$1popped=true`);
             mainPanel.classList.add('popout');
         }
     }
 }
 
 function closePopoutPanel() {
-    const button = document.querySelector('.panel-popout.popped');
     const panelPopout = document.querySelector('.panel.popout');
+    const iframe = panelPopout.querySelector('iframe');
+    iframe.src = panelPopout.querySelector('iframe').src.replace(/([?&])popped=[^&]*/, `$1popped=false`);
+    iframe.onload = () => onFrameLoad(iframe, true);
+
+    const button = document.querySelector('.panel-popout.popped');
     button.innerHTML = '&#10063;';
     button.classList.remove('popped');
-    panelPopout.classList.remove('popout');
+
     document.getElementById("modalOverlay").style.display = "none";
     const panels = document.querySelectorAll('.panel');
     panels.forEach(panel => {
         panel.style.display = "flex";
     });
+
+    loadPanels();
 }
