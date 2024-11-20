@@ -66,6 +66,7 @@ iframe {
     position: absolute;
     right: 12px;
     bottom: 50%;
+    color: var(--secondary);
 }
 
 #panelControls button span.inf {
