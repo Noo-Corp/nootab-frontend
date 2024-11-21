@@ -1,0 +1,273 @@
+#urlButtonContainer {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    background: transparent;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+#urlButtons {
+    display: flex;
+    overflow-x: auto;
+    max-width: 50vw;
+    white-space: nowrap;
+}
+
+.urlButton {
+    border: 2px solid var(--backtext);
+    color: var(--modetext2);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 4px;
+    margin: 15px 0px 15px 10px;
+    height: 30px;
+}
+
+.urlButton:hover {
+    background: var(--modeback);
+}
+
+.urlButton.wide {
+    border-width: 3px;
+}
+
+.ui-spinner.ui-corner-all.ui-widget.ui-widget-content {
+    border: 1px solid var(--main);
+    background: transparent;
+    color: var(--modetext);
+}
+
+.ui-button.ui-widget.ui-spinner-button.ui-spinner-up.ui-corner-tr.ui-button-icon-only, .ui-button.ui-widget.ui-spinner-button.ui-spinner-down.ui-corner-br.ui-button-icon-only {
+    border-color: var(--main);
+    background: transparent;
+    color: var(--modetext);
+}
+
+.ui-button.ui-widget.ui-spinner-button.ui-spinner-up.ui-corner-tr.ui-button-icon-only:hover, .ui-button.ui-widget.ui-spinner-button.ui-spinner-down.ui-corner-br.ui-button-icon-only:hover {
+    cursor: pointer;
+    background: var(--hover);
+}
+
+.orderInput {
+    width: 20px;
+}
+
+#launch-hint {
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 22px;
+    font-size: 14px;
+    color: var(--modetext2);
+}
+
+#launch-link-text {
+    font-size: 22px;
+}
+
+#launch-text {
+    border: 2px solid var(--main);
+    background: transparent;
+    color: var(--main);
+    font-size: 0.8em;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 15px 0px;
+    padding: 5px 4px;
+    height: 30px;
+    white-space: nowrap;
+}
+
+#bookmarksContent {
+    display: none;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 50%;
+    bottom: 52%;
+    transform: translate(-50%, 50%);
+    background: var(--modeback);
+    color: var(--modetext);
+    border: 1px solid var(--modetext);
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+    z-index: 5;
+}
+
+#bookmarksContent.show {
+    display: block;
+    opacity: 1;
+}
+
+#bookmarksContent h1 {
+    padding-top: 10px;
+    padding-bottom: 8px;
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+#editUrlButton {
+    border: 2px solid var(--secondary);
+    background: transparent;
+    color: var(--secondary);
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 15px 10px 15px 0;
+    width: 31px;
+    height: 30px;
+}
+
+#editUrlButton:hover {
+    background: var(--secondary);
+    color: var(--secondarytext);
+}
+
+#openAllUrlsButton {
+    border: 2px solid var(--main);
+    background: transparent;
+    color: var(--main);
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 15px 0 15px 0;
+    height: 30px;
+    white-space: nowrap;
+}
+
+#openAllUrlsButton:hover {
+    background: var(--modeback);
+}
+
+#urlDivider {
+    border-left: 2px solid var(--backtext);
+    height: 30px;
+    margin: 5px 12px;
+    display: none;
+}
+
+.hasSeturlButtons #urlDivider {
+    display: block;
+}
+
+#bookmarkTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    max-height: 450px;
+    overflow: auto;
+    height: fit-content;
+    display: block ruby;
+}
+
+#bookmarkTable tr {
+    border-bottom: 1px solid var(--modetext);
+    margin-bottom: 4px;
+}
+
+#bookmarkTable td {
+    padding: 16px;
+    text-align: left;
+    font-size: 1em;
+    color: var(--modetext);
+    text-align: center;
+    word-wrap: anywhere;
+}
+
+#bookmarkTable td button {
+    padding: 5px 8px;
+    margin: 0 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#bookmarkTableBody {
+    width: 100%;
+    display: inline-table;
+}
+
+.launch-link {
+    background: none;
+    border: none;
+    color: var(--modetext2);
+    font-size: 22px;
+}
+
+.launch-link:hover {
+    color: var(--modetext);
+}
+
+.edit-link {
+    background: transparent;
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
+    font-size: 1.1em;
+}
+
+.edit-link:hover {
+    background: var(--secondary);
+    color: var(--secondarytext);
+}
+
+#addUrlButton {
+    border: 2px solid var(--secondary);
+    background: transparent;
+    color: var(--secondary);
+    font-size: 2em;
+    font-weight: bold;
+    padding: 2px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 2px;
+}
+
+#addUrlButton:hover {
+    background: var(--secondary);
+    color: var(--secondarytext);
+}
+
+.delete-link {
+    background: none;
+    border: 2px solid #ff5353;
+    color: #ff5353;
+    font-size: 1.1em;
+}
+
+.delete-link:hover {
+    background: #ff5353;
+    color: rgb(233, 233, 233);
+}
+
+@-moz-document url-prefix() {
+    #editUrlButton {
+        width: 30px;
+    }
+
+    #bookmarkTable td button {
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 800px) {
+    #urlButtons {
+        max-width: 30vw;
+    }
+}
+
+@media (max-width: 570px) {
+    #urlButtons {
+        max-width: 18vw;
+    }
+}

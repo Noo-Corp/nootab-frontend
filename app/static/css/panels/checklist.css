@@ -1,0 +1,128 @@
+html {
+    height: 100%;
+}
+
+#input-container {
+    display: flex;
+}
+
+#checklist-input {
+    box-sizing: border-box;
+    background: var(--modeback);
+    color: var(--modetext);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#checklist-add-btn {
+    align-self: center;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background-color: var(--main);
+    border: none;
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#checklist-add-btn:hover {
+    background-color: var(--hover);
+}
+
+#checklist-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#checklist-list li {
+    display: flex;
+    position: relative;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: var(--modeback);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#checklist-list li:hover {
+    filter: contrast(84%);
+}
+
+#checklist-list li.checked {
+    filter: contrast(80%);
+}
+
+#checklist-list li.checked span {
+    text-decoration: line-through;
+}
+
+#checklist-list li input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--backtext);
+    border-radius: 4px;
+    background-color: var(--modeback);
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    margin-right: 8px;
+}
+
+#checklist-list li input[type="checkbox"]:checked {
+    background-color: var(--secondaryhover);
+}
+
+#checklist-list li input[type="checkbox"]:checked::before {
+    content: '\2714';
+    position: absolute;
+    top: 0;
+    left: 3px;
+    font-size: 14px;
+    color: var(--secondarytext);
+    font-weight: bold;
+}
+
+#checklist-list li span {
+    flex-grow: 1;
+    font-size: 16px;
+    color: var(--modetext);
+    word-wrap: anywhere;
+}
+
+#checklist-list li button {
+    margin-left: 10px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ff5353;
+    font-size: 18px;
+}
+
+#checklist-list li button:hover {
+    color: #e71313;
+}
+
+@-moz-document url-prefix() {
+    #checklist-list li input[type="checkbox"]:checked::before {
+        top: -1px;
+    }
+}
