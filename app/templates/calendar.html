@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="../static/css/panels/common.css">
-<link rel="stylesheet" href="../static/css/panels/gmail.css">
+<link rel="stylesheet" href="../static/css/panels/calendar.css">
 <script type="text/javascript" src="../static/js/panels/common.js"></script>
-<script type="text/javascript" src="../static/js/panels/gmail.js"></script>
+<script type="text/javascript" src="../static/js/panels/calendar.js"></script>
 
 <div id="auth-buttons">
-  <a href="https://mail.google.com/mail/u/0/" target="_blank" id="gmail-link" style="display:none;">
-    <img src="../static/images/gmail.png"> 
+  <a href="https://calendar.google.com/calendar/u/0/r" target="_blank" id="calendar-link" style="display:none;">
+    <img src="../static/images/calendar.png"> 
     <span id="user-email"></span>
   </a>
   <button id="authorize-button" style="display:none;" onclick="refresh('0', 'passive')">AUTHORIZE</button>
@@ -13,19 +13,18 @@
 </div>
 
 <div id="initial-view" style="display: none;">
-  <img id="initial-img" src="../static/images/gmail.png">
+  <img id="initial-img" src="../static/images/calendar.png">
   <div id="initial-auth">Authorize to continue</div>
 </div>
 
 <div id="main-content">
-  <div id="email-list">
-    <div id="loading">GMAIL LOADING...</div>
+  <div id="loading-container">
+    <div id="loading">CALENDAR LOADING...</div>
   </div>
 
-  <div id="email-container">
-    <div id="email-positioner">
-      <div id="content" style="display:none;"></div>
-    </div>
+  <div id="schedule-container">
+    <div id="schedule-date"></div>
+    <div id="schedule-view"></div>
   </div>
 </div>
 

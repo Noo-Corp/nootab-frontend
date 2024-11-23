@@ -15,6 +15,7 @@ body {
 
 #initial-img {
     height: 50px;
+    width: 55px;
 }
 
 #initial-auth {
@@ -75,7 +76,7 @@ body {
     color: var(--modetext2);
 }
 
-#gmail-link {
+#calendar-link {
     text-align: center;
     text-decoration: none;
     display: block;
@@ -85,11 +86,12 @@ body {
     padding-top: 4px;
 }
 
-#gmail-link img {
+#calendar-link img {
     height: 9px;
+    width: 12px;
 }
 
-#gmail-link:hover {
+#calendar-link:hover {
     text-decoration: none;
     background-color: var(--main);
     color: var(--text);
@@ -135,64 +137,48 @@ body {
     background-color: var(--hover);
 }
 
-#email-list {
-    display: flex;
-    flex-direction: column;
+#schedule-container {
     margin-top: 48px;
+    background-color: var(--modeback);
+    overflow: auto;
 }
 
-#email-list span {
+#schedule-date {
     margin-bottom: 10px;
     font-size: 14px;
     color: var(--main);
     text-align: center;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
-#email-list ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#email-list ul li {
+.schedule-event {
     padding: 5px;
     color: var(--modetext);
     background-color: var(--modeback);
     border: 1px solid var(--modetext2);
     margin-bottom: 7px;
     border-radius: 4px;
-    cursor: pointer;
 }
 
-#email-list ul li span {
+.schedule-event.ended {
+    filter: brightness(0.75);
+}
+
+.schedule-event .event-time {
+    font-size: 14px;
     color: var(--modetext2);
-    font-weight: normal;
 }
 
-#email-list ul li:hover {
-    background-color: var(--bodyback);
-}
-
-#email-list ul li.opened {
-    background-color: var(--main);
-    color: var(--text);
+.schedule-event.all-day {
+    background-color: var(--secondary);
+    color: var(--secondarytext);
     font-weight: bold;
+    font-size: 14px;
 }
 
-#email-list ul li.opened span {
-    color: var(--text);
-}
-
-#email-container {
-    text-align: center;
-    display: block ruby;
-    background-color: var(--bodyback);
-}
-
-#content {
-    margin: 22px 0;
-    max-height: 70vh;
-    overflow: auto;
-    width: 100%;
+.schedule-event.all-day .event-time {
+    color: var(--secondarytext);
+    font-weight: normal;
+    font-size: 12px;
 }
