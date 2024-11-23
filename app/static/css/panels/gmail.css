@@ -187,12 +187,16 @@ body {
 #email-container {
     text-align: center;
     display: block ruby;
-    background-color: var(--bodyback);
+    background-color: #FFF;
+    margin: 22px 0;
 }
 
 #content {
-    margin: 22px 0;
     max-height: 70vh;
     overflow: auto;
+    width: 100%;
+}
+
+#email-positioner {
     width: 100%;
 }

@@ -68,6 +68,13 @@ function viewEmail(event, emailId) {
                 } else {
                     contentDiv.attachShadow({ mode: 'open' });
                 }
+
+                data.content = data.content.replace(
+                    /<div\s+dir=["']auto["'](.*?)>/,
+                    '<div dir="auto"$1 style="padding: 22px 0;">'
+                );
+
+                
                 const shadowRoot = contentDiv.shadowRoot;
                 shadowRoot.innerHTML = data.content;
             }
@@ -103,8 +110,10 @@ function googleAuthorize(check) {
 	})
 	.then(response => response.json())
 	.then(data => {
+        const contentDiv = document.getElementById("content");
+
         document.getElementById('email-list').innerHTML = '';
-        document.getElementById("content").style.display = "none";
+        contentDiv.style.display = "none";
 
         if (data.authorized) {
             document.getElementById('initial-view').style.display = "none";
@@ -112,8 +121,27 @@ function googleAuthorize(check) {
 			if (data.emails.length > 0) {
 				displayEmails(data.emails);
 			} else {
-				document.getElementById("content").innerText = "No unread emails found.";
-                document.getElementById("content").style.display = "table";
+                if (contentDiv.shadowRoot) {
+                    contentDiv.shadowRoot.innerHTML = "";
+                } else {
+                    contentDiv.attachShadow({ mode: 'open' });
+                }
+                const shadowRoot = contentDiv.shadowRoot;
+                shadowRoot.innerHTML = `
+                    <div style="
+                        width: 100%;
+                        background-color: var(--modeback);
+                        color: var(--secondary);
+                        font-weight: bold;
+                        font-size: 12px;
+                        position: absolute;
+                        left: 0;
+                        top: 46%;
+                        transform: translateY(-50%);
+                    ">
+                        NO UNREAD EMAILS
+                    </div>`;
+                contentDiv.style.display = "table";
 			}
 
             document.getElementById("user-email").textContent = data.user_email;

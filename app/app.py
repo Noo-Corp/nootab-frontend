@@ -120,7 +120,7 @@ def view_email(email_id):
             return jsonify({"subject": subject, "content": decoded_body})
 
         except (HttpError, KeyError):
-            return jsonify({"error": "Failed to view email"})
+            return jsonify({"error": "<div style='padding: 22px 0; font-weight: bold; font-size: 12px;'>FAILED TO VIEW EMAIL</div>"})
     
     return jsonify({"error": "Unauthorized"})
 
