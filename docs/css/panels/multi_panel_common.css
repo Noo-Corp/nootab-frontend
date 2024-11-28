@@ -26,6 +26,10 @@
     margin-left: 2px;
     width: fit-content;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+#main-title:focus {
     cursor: text;
 }
 

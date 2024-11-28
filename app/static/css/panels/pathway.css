@@ -1,0 +1,149 @@
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#main-container {
+    padding: 8px;
+    padding-bottom: 0;
+    height: calc(100% - 60px);
+    overflow: auto;
+}
+
+#title-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    height: 44px;
+    background: var(--bodyback);
+    left: 0;
+    width: calc(100% - 34px);
+    padding-right: 34px;
+    overflow: auto;
+    border-top: 2px solid var(--modeback);
+}
+
+#main-title {
+    color: var(--modetext2);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px;
+    padding-right: 6px;
+    margin-left: 2px;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+#goals-container {
+    margin-top: 48px;
+    background-color: var(--modeback);
+    overflow: auto;
+}
+
+.goal-section {
+    margin-bottom: 20px;
+}
+
+.goal-section h3 {
+    font-size: 18px;
+    color: var(--modetext);
+    margin-bottom: 10px;
+}
+
+.add-goal-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.add-goal-container input {
+    flex-grow: 1;
+    background: var(--modeback);
+    color: var(--modetext);
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+}
+
+.add-goal-container button {
+    background-color: var(--secondary);
+    color: var(--secondarytext);
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-goal-container button:hover {
+    background-color: var(--secondaryhover);
+}
+
+.goal {
+    padding: 5px;
+    color: var(--modetext);
+    background-color: var(--modeback);
+    border: 1px solid var(--modetext2);
+    margin-bottom: 7px;
+    border-radius: 4px;
+}
+
+.goal-title {
+    width: fit-content;
+}
+
+.goal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.goal-actions button {
+    background-color: transparent;
+    color: var(--modetext2);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 0;
+    font-weight: bold;
+}
+
+.goal-actions button:hover {
+    color: var(--secondary);
+}
+
+#input-container input {
+    margin-right: 8px;
+    flex-grow: 1;
+    background: var(--modeback);
+    color: var(--modetext);
+    font-size: 16px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+    padding: 10px;
+    text-align: left;
+}
+
+.goal-category {
+    font-size: 14px;
+    color: var(--modetext2);
+    margin-top: 4px;
+}
+
+.goal-milestone {
+    font-size: 14px;
+    color: var(--modetext2);
+    margin-top: 2px;
+    font-style: italic;
+}
+
+.editable-value {
+    cursor: pointer;
+    border-bottom: 2px dashed var(--backtext);
+}
+
+.editable-value:focus {
+    cursor: text;
+}

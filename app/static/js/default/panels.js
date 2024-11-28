@@ -242,7 +242,7 @@ function addToPanelOrder(panelName) {
     let checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
 
     if (panelOrder.length < 8) {
-        if (panelOrder.includes(panelName) && ["gmail", "calendar"].includes(panelName)) {
+        if (panelOrder.includes(panelName) && ["gmail", "calendar", "pathway"].includes(panelName)) {
             return
         }
 

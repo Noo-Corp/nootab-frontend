@@ -133,7 +133,7 @@ iframe {
 
 .panel {
     background-color: var(--bodyback);
-    border: 2px solid var(--backtext);
+    border: 1px solid var(--backtext);
     color: white;
     display: flex;
     align-items: center;

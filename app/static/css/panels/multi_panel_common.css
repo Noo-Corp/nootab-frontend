@@ -16,16 +16,23 @@
     width: calc(100% - 34px);
     overflow: auto;
     align-content: center;
+    display: flex;
+    align-items: center;
 }
 
 #main-title {
     color: var(--modetext2);
-    font-size: 16px;
+    font-size: 12px;
+    text-transform: uppercase;
     padding: 0;
-    padding-top: 5px;
+    padding-top: 8px;
     margin-left: 2px;
     width: fit-content;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+#main-title:focus {
     cursor: text;
 }
 
