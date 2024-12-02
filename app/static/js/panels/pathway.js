@@ -39,10 +39,14 @@ function loadGoals() {
         ? goalTypes 
         : ["pathway-goals-ongoing", "pathway-goals-current"];
 
+    let hasGoals = false;
+
     typesToShow.forEach((type) => {
         const savedGoals = JSON.parse(localStorage.getItem(type)) || [];
 
         if (savedGoals.length === 0 && isPopped !== "true") return; // Skip empty sections in non-popped view
+
+        hasGoals = hasGoals || savedGoals.length > 0;
 
         const sectionElement = document.createElement("div");
         sectionElement.classList.add("goal-section");
@@ -92,7 +96,11 @@ function loadGoals() {
             if (isPopped == "true") {
                 const sectionHeader = document.createElement("div");
                 sectionHeader.className = "section-header";
-                sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Next Milestone</div>";
+                if (type == "pathway-goals-past") {
+                    sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Result</div>";
+                } else {
+                    sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Next Milestone</div>";
+                }
                 sectionElement.appendChild(sectionHeader);
             }
 
@@ -210,7 +218,11 @@ function loadGoals() {
             milestoneInput.type = "text";
             milestoneInput.className = "flex-milestone-input";
             milestoneInput.id = `goal-milestone-input-${type}`;
-            milestoneInput.placeholder = "Next Milestone (Optional)";
+            if (type == "pathway-goals-past") {
+                milestoneInput.placeholder = "Result (Optional)";
+            } else {
+                milestoneInput.placeholder = "Next Milestone (Optional)";
+            }
         
             // Add Button
             const addButton = document.createElement("button");
@@ -229,6 +241,13 @@ function loadGoals() {
 
         goalsListElement.appendChild(sectionElement);
     });
+
+    if (!hasGoals) {
+        const noGoalsOverallMessage = document.createElement("div");
+        noGoalsOverallMessage.className = "no-goals-overall";
+        noGoalsOverallMessage.innerHTML = "No ongoing or current goals<br>Click <span>&#10063;</span> to add goals";
+        goalsListElement.appendChild(noGoalsOverallMessage);
+    }
 }
 
 

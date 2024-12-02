@@ -197,6 +197,7 @@ body {
 .goal.glance-view {
     padding: 6px;
     border: none;
+    font-size: 14px;
 }
 
 .goal.glance-view .goal-title {
@@ -258,7 +259,7 @@ body {
 .goal-title, .goal-category, .goal-milestone {
    flex: 1;
    overflow: auto;
-   margin: 0 14px;
+   margin: 0 10px;
 }
 
 .section-header {
@@ -284,7 +285,7 @@ body {
 }
 
 .section-header .header-next {
-    margin-right: 139px;
+    margin-right: 149px;
 }
 
 .goal-category, .goal-milestone {
@@ -309,7 +310,6 @@ body {
 }
 
 .editable-value.title {
-    font-size: 16px;
     color: var(--modetext);
 }
 
@@ -320,6 +320,23 @@ body {
 .no-goals {
     color: var(--modetext2);
     font-size: 14px;
+}
+
+.no-goals-overall {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+    color: var(--modetext2);
+    line-height: 1.6;
+}
+
+.no-goals-overall span {
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--main);
 }
 
 @-moz-document url-prefix() {
