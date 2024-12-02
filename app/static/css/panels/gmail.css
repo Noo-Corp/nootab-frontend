@@ -162,10 +162,9 @@ body {
 }
 
 #email-list ul li {
-    padding: 5px;
+    padding: 7px;
     color: var(--modetext);
-    background-color: var(--modeback);
-    border: 1px solid var(--modetext2);
+    background-color: var(--bodyback);
     margin-bottom: 7px;
     border-radius: 4px;
     cursor: pointer;
@@ -177,7 +176,7 @@ body {
 }
 
 #email-list ul li:hover {
-    background-color: var(--bodyback);
+    outline: 1px solid var(--modetext);
 }
 
 #email-list ul li.opened {

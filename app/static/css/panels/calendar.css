@@ -159,10 +159,10 @@ body {
 }
 
 .schedule-event {
-    padding: 5px;
+    padding: 7px;
     color: var(--modetext);
     background-color: var(--modeback);
-    border: 1px solid var(--modetext2);
+    border: none;
     margin-bottom: 7px;
     border-radius: 4px;
 }

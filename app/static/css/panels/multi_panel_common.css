@@ -114,3 +114,7 @@
     font-weight: bold;
     color: var(--secondarytext);
 }
+
+.new-btn:hover {
+    background-color: var(--secondaryhover);
+}

@@ -46,94 +46,147 @@ function loadGoals() {
 
         const sectionElement = document.createElement("div");
         sectionElement.classList.add("goal-section");
+        sectionElement.classList.add(`${goalTypeHeaders[type].toLowerCase().replace(/\s+/g, '-')}`);
 
-        const header = document.createElement("h3");
-        header.textContent = goalTypeHeaders[type];
-        sectionElement.appendChild(header);
+        if (isPopped == "false") {
+            sectionElement.classList.add("glance-view");
+        }
 
-        savedGoals.forEach((goal, index) => {
-            const goalElement = document.createElement("div");
-            goalElement.className = "goal";
-
-            // Goal Title (Editable in Popped View)
-            const goalTitle = document.createElement("div");
-            goalTitle.className = "goal-title";
-            if (isPopped === "true") {
-                goalTitle.innerHTML = `<span class="editable-value">${goal.name}</span>`;
-                const titleValue = goalTitle.querySelector(".editable-value");
-                titleValue.contentEditable = "true";
-                titleValue.addEventListener("blur", () => {
-                    updateGoalField(type, index, "name", titleValue.textContent.trim());
+        if (isPopped === "true") {
+            const goalHeader = document.createElement("div");
+            goalHeader.className = "goal-section-header";
+            goalHeader.classList.add(`${goalTypeHeaders[type].toLowerCase().replace(/\s+/g, '-')}`);
+            goalHeader.innerHTML = `<span class="header-chevron">&#9660;</span> ${goalTypeHeaders[type]}`;
+            const goalChevron = goalHeader.querySelector(".header-chevron");
+            goalHeader.addEventListener("click", () => {
+                const goalSection = sectionElement.querySelectorAll(".goal");
+                const addGoalContainer = sectionElement.querySelector(".add-goal-container");
+                const noGoalContainer = sectionElement.querySelector(".no-goals");
+                const sectionHeader = sectionElement.querySelector(".section-header");
+                const isCollapsed = goalChevron.textContent == "▶";
+            
+                goalChevron.innerHTML = isCollapsed ? "&#9660;" : "&#9654;";
+                goalSection.forEach((goal) => {
+                    goal.style.display = isCollapsed ? "flex" : "none";
                 });
-                titleValue.addEventListener("keydown", (e) => handleKeydown(e, type, index, "name", titleValue));
-            } else {
-                goalTitle.innerHTML = goal.name;
-            }
-            goalElement.appendChild(goalTitle);
+                if (addGoalContainer) {
+                    addGoalContainer.style.display = isCollapsed ? "flex" : "none";
+                }
+                if (noGoalContainer) {
+                    noGoalContainer.style.display = isCollapsed ? "block" : "none";
+                }
+                if (sectionHeader) {
+                    sectionHeader.style.display = isCollapsed ? "flex" : "none";
+                }
+            });
+            sectionElement.appendChild(goalHeader);
+        }
 
-            // Category (Editable Value Only)
-            const goalCategory = document.createElement("div");
-            goalCategory.className = "goal-category";
-            if (isPopped === "true") {
-                goalCategory.innerHTML = `Category: <span class="editable-value">${goal.category}</span>`;
-                const categoryValue = goalCategory.querySelector(".editable-value");
-                categoryValue.contentEditable = "true";
-                categoryValue.addEventListener("blur", () => {
-                    updateGoalField(type, index, "category", categoryValue.textContent.trim());
-                });
-                categoryValue.addEventListener("keydown", (e) => handleKeydown(e, type, index, "category", categoryValue));
-            } else {
-                goalCategory.innerHTML = `Category: ${goal.category}`;
+        // Add "No goals" message if no saved goals
+        if (savedGoals.length === 0) {
+            const noGoalsMessage = document.createElement("div");
+            noGoalsMessage.className = "no-goals";
+            noGoalsMessage.textContent = "(No goals yet)";
+            sectionElement.appendChild(noGoalsMessage);
+        } else {
+            if (isPopped == "true") {
+                const sectionHeader = document.createElement("div");
+                sectionHeader.className = "section-header";
+                sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Next Milestone</div>";
+                sectionElement.appendChild(sectionHeader);
             }
-            goalElement.appendChild(goalCategory);
 
-            // Milestone (Editable Value Only)
-            const goalMilestone = document.createElement("div");
-            if (goal.milestone) {
-                goalMilestone.className = "goal-milestone";
+            savedGoals.forEach((goal, index) => {
+                const goalElement = document.createElement("div");
+                goalElement.className = "goal";
+
+                if (isPopped == "false") {
+                    goalElement.classList.add("glance-view");
+                }
+
+                // Goal Title (Editable in Popped View)
+                const goalTitle = document.createElement("div");
+                goalTitle.className = "goal-title";
                 if (isPopped === "true") {
-                    goalMilestone.innerHTML = `Next Milestone: <span class="editable-value">${goal.milestone}</span>`;
+                    goalTitle.innerHTML = `<span class="editable-value title">${goal.name}</span>`;
+                    const titleValue = goalTitle.querySelector(".editable-value");
+                    titleValue.contentEditable = "true";
+                    titleValue.addEventListener("blur", () => {
+                        updateGoalField(type, index, "name", titleValue.textContent.trim());
+                    });
+                    titleValue.addEventListener("keydown", (e) => handleKeydown(e, type, index, "name", titleValue));
+                } else {
+                    goalTitle.innerHTML = goal.name;
+                }
+                goalElement.appendChild(goalTitle);
+
+                // Category (Editable Value Only)
+                const goalCategory = document.createElement("div");
+                goalCategory.className = "goal-category";
+                if (isPopped === "true") {
+                    goalCategory.innerHTML = `<span class="editable-value">${goal.category}</span>`;
+                    const categoryValue = goalCategory.querySelector(".editable-value");
+                    categoryValue.contentEditable = "true";
+                    categoryValue.addEventListener("blur", () => {
+                        updateGoalField(type, index, "category", categoryValue.textContent.trim());
+                    });
+                    categoryValue.addEventListener("keydown", (e) => handleKeydown(e, type, index, "category", categoryValue));
+                } else {
+                    goalCategory.innerHTML = `${goal.category}`;
+                }
+                goalElement.appendChild(goalCategory);
+
+                // Milestone (Editable Value Only)
+                if (isPopped === "true") {
+                    const goalMilestone = document.createElement("div");
+                    goalMilestone.className = "goal-milestone";
+        
+                    if (goal.milestone) {
+                        goalMilestone.innerHTML = `<span class="editable-value">${goal.milestone}</span>`;
+                    } else {
+                        goalMilestone.innerHTML = '<span class="editable-value">_</span>';
+                    }
                     const milestoneValue = goalMilestone.querySelector(".editable-value");
                     milestoneValue.contentEditable = "true";
                     milestoneValue.addEventListener("blur", () => {
                         updateGoalField(type, index, "milestone", milestoneValue.textContent.trim());
                     });
                     milestoneValue.addEventListener("keydown", (e) => handleKeydown(e, type, index, "milestone", milestoneValue));
-                } else {
-                    goalMilestone.innerHTML = `Next Milestone: ${goal.milestone}`;
+                    goalElement.appendChild(goalMilestone);
                 }
-                goalElement.appendChild(goalMilestone);
-            }
 
-            // Buttons (Only in Popped View)
-            const buttonContainer = document.createElement("div");
-            buttonContainer.classList.add("goal-actions");
+                // Buttons (Only in Popped View)
+                if (isPopped === "true") {
+                    const buttonContainer = document.createElement("div");
+                    buttonContainer.classList.add("goal-actions");
 
-            if (isPopped === "true") {
-                const promoteButton = document.createElement("button");
-                promoteButton.innerHTML = "&#8613;";
-                promoteButton.addEventListener("click", () => promoteGoal(type, index));
-                buttonContainer.appendChild(promoteButton);
+                    const promoteButton = document.createElement("button");
+                    promoteButton.innerHTML = "&#8613;";
+                    promoteButton.addEventListener("click", () => promoteGoal(type, index));
+                    buttonContainer.appendChild(promoteButton);
 
-                const demoteButton = document.createElement("button");
-                demoteButton.innerHTML = "&#8615;";
-                demoteButton.addEventListener("click", () => demoteGoal(type, index));
-                buttonContainer.appendChild(demoteButton);
+                    const demoteButton = document.createElement("button");
+                    demoteButton.innerHTML = "&#8615;";
+                    demoteButton.addEventListener("click", () => demoteGoal(type, index));
+                    buttonContainer.appendChild(demoteButton);
 
-                const completeButton = document.createElement("button");
-                completeButton.innerHTML = "&#9745;";
-                completeButton.addEventListener("click", () => completeGoal(type, index));
-                buttonContainer.appendChild(completeButton);
+                    const completeButton = document.createElement("button");
+                    completeButton.innerHTML = "&#9745;";
+                    completeButton.addEventListener("click", () => completeGoal(type, index));
+                    buttonContainer.appendChild(completeButton);
 
-                const removeButton = document.createElement("button");
-                removeButton.innerHTML = "&#10006;";
-                removeButton.addEventListener("click", () => removeGoal(type, index));
-                buttonContainer.appendChild(removeButton);
-            }
+                    const removeButton = document.createElement("button");
+                    removeButton.className = "action-remove";
+                    removeButton.innerHTML = "&#10006;";
+                    removeButton.addEventListener("click", () => removeGoal(type, index));
+                    buttonContainer.appendChild(removeButton);
 
-            goalElement.appendChild(buttonContainer);
-            sectionElement.appendChild(goalElement);
-        });
+                    goalElement.appendChild(buttonContainer);
+                }
+
+                sectionElement.appendChild(goalElement);
+            });
+        }
 
         // Add Goal Section for Popped View
         if (isPopped === "true") {
@@ -143,16 +196,19 @@ function loadGoals() {
             // Unique Inputs for Name, Category, and Milestone
             const nameInput = document.createElement("input");
             nameInput.type = "text";
+            nameInput.className = "flex-name-input";
             nameInput.id = `goal-name-input-${type}`;
             nameInput.placeholder = "Goal Name";
         
             const categoryInput = document.createElement("input");
             categoryInput.type = "text";
+            categoryInput.className = "flex-category-input";
             categoryInput.id = `goal-category-input-${type}`;
             categoryInput.placeholder = "Category";
         
             const milestoneInput = document.createElement("input");
             milestoneInput.type = "text";
+            milestoneInput.className = "flex-milestone-input";
             milestoneInput.id = `goal-milestone-input-${type}`;
             milestoneInput.placeholder = "Next Milestone (Optional)";
         
@@ -186,7 +242,7 @@ function addGoal(goalType) {
     const milestone = milestoneInput.value.trim();
 
     if (!name || !category) {
-        alert("Both Name and Category are required to add a goal.");
+        alert("Both Goal Name and Category are required to add a goal.");
         return;
     }
 
