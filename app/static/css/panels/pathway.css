@@ -224,7 +224,6 @@ body {
     background-color: transparent;
     color: var(--modetext2);
     border: none;
-    border-radius: 4px;
     cursor: pointer;
     font-size: 22px;
     padding: 0;
