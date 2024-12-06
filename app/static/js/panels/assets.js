@@ -1,8 +1,75 @@
 window.addEventListener("load", function () {
     renderAccounts();
     updateNetWorth();
+    updateLastUpdate();
     toggleMoneyVisibility(false);
+
+    const { isPopped } = getUrlParams();
+    if (isPopped !== "true") {
+        restrictView();
+    }
+
+    const goalInputField = document.getElementById("goal-value");
+    goalInputField.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            addGoal();
+        }
+    });
 });
+
+
+function getUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return { isPopped: urlParams.get("popped") };
+}
+
+
+const restrictView = () => {
+    const poppedElements = document.querySelectorAll(".popped-element");
+    poppedElements.forEach(el => el.style.display = "none");
+
+    document.getElementById("capital-container").style.border = "none";
+    document.getElementById("capital-debt-container").style.marginTop = "20px";
+
+    const goalsList = document.getElementById("goals-list");
+    const goals = goalsList.querySelectorAll("li");
+    goals.forEach((goal, index) => {
+        if (index === 0) {
+            goal.style.display = "flex";
+            goal.querySelector(".goal-action").style.display = "none";
+            goal.querySelector(".goal-date").style.display = "none";
+            goal.querySelector(".goal-eta").style.marginRight = 0;
+        } else {
+            goal.style.display = "none";
+        }
+    });
+};
+
+
+const updateLastUpdate = () => {
+    let lastUpdateDate = localStorage.getItem('lastUpdateDate') ? new Date(localStorage.getItem('lastUpdateDate')) : null;
+    const currentDate = new Date();
+    const diffDays = lastUpdateDate ? Math.floor((currentDate - lastUpdateDate) / (1000 * 3600 * 24)) : 0;
+    const dueETA = 7 - diffDays;
+    const dueBtn = document.querySelector("#due-btn");
+
+    if (dueETA == 1) {
+        dueBtn.innerHTML = "Update in <span id='update-time'>" + dueETA + "</span> Day";
+    } else {
+        dueBtn.innerHTML = "Update in <span id='update-time'>" + dueETA + "</span> Days";
+    }
+
+    if (dueETA == 0) {
+        dueBtn.innerHTML = "Update <span id='update-time'>Now</span>";
+        dueBtn.classList.add("due");
+    } else if (dueETA < 0) {
+        dueBtn.textContent = "Update Overdue";
+        dueBtn.classList.add("overdue");
+    } else {
+        dueBtn.classList.remove("due");
+        dueBtn.classList.remove("overdue");
+    }
+};
 
 
 const toggleMoneyVisibility = (toggled=true) => {
@@ -15,11 +82,34 @@ const toggleMoneyVisibility = (toggled=true) => {
     
     const moneyElements = document.querySelectorAll(".money-value");
     moneyElements.forEach(el => {
+        const account = el.parentElement.id;
         const value = parseFloat(el.dataset.value);
-        el.innerHTML = hideMoney ? formatHiddenCurrency(value) : formatCurrency(value);
+        el.outerHTML = hideMoney ? formatHiddenCurrency(value) : formatCurrency(value, account);
     });
 
-    document.getElementById("toggle-money").textContent = hideMoney ? "Show Money" : "Hide Money";
+    document.getElementById("toggle-money").innerHTML = hideMoney ? "&#9737;" : "&#9737;<span id='eye-cross'>&#9747;</span>";
+};
+
+
+const calculateWeeklyRate = (accountHistory) => {
+    if (accountHistory.length < 2) {
+        return "";
+    }
+
+    const latestValue = accountHistory[accountHistory.length - 1].value;
+    const secondLatestValue = accountHistory[accountHistory.length - 2].value;
+
+    if (secondLatestValue === 0) {
+        return latestValue === 0 
+            ? `<span class="weekly-rate popped-element">(0.00%)</span>` 
+            : `<span class="weekly-rate positive popped-element">(Infinity%)</span>`;
+    }
+
+    const weeklyRate = ((latestValue - secondLatestValue) / Math.abs(secondLatestValue)) * 100;
+
+    return weeklyRate < 0 
+        ? `<span class="weekly-rate negative popped-element">(${weeklyRate.toFixed(2)}%)</span>` 
+        : `<span class="weekly-rate positive popped-element">(${weeklyRate.toFixed(2)}%)</span>`;
 };
 
 
@@ -29,18 +119,24 @@ const formatHiddenCurrency = (amount) => {
 };
 
 
-const formatCurrency = (amount) => {
+const formatCurrency = (amount, account=null) => {
     const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD"
     }).format(Math.abs(amount));
-    return amount < 0 ? `<span class="negative" data-value="${amount}">-${formatted}</span>` : `<span class="money-value" data-value="${amount}">${formatted}</span>`;
+
+    let weeklyRate = "";
+    if (account && account == "net-worth") {
+        const accountHistory = JSON.parse(localStorage.getItem(account) || "[]");
+        weeklyRate = calculateWeeklyRate(accountHistory);
+    }
+    return amount < 0 ? `<span class="negative money-value" data-value="${amount}">-${formatted}${weeklyRate}</span></span>` : `<span class="money-value" data-value="${amount}">${formatted}${weeklyRate}</span></span>`;
 };
 
 
-const getFormattedCurrency = (amount) => {
+const getFormattedCurrency = (amount, account=null) => {
     const hideMoney = JSON.parse(localStorage.getItem("hideMoney")) || false;
-    return hideMoney ? formatHiddenCurrency(amount) : formatCurrency(amount);
+    return hideMoney ? formatHiddenCurrency(amount) : formatCurrency(amount, account);
 };
 
 
@@ -64,7 +160,7 @@ const updateNetWorth = () => {
 
     const netWorthElement = document.getElementById("net-worth");
     netWorthElement.dataset.value = netWorth;
-    netWorthElement.innerHTML = getFormattedCurrency(netWorth);
+    netWorthElement.innerHTML = getFormattedCurrency(netWorth, "net-worth");
 };
 
 
@@ -100,7 +196,6 @@ const addAccount = (type) => {
 };
 
 
-
 const renderAccounts = () => {
     ["capital", "debt"].forEach((type) => {
         const listElement = document.getElementById(`${type}-list`);
@@ -113,7 +208,7 @@ const renderAccounts = () => {
             const accountItem = document.createElement("li");
             accountItem.innerHTML = `
                 ${name} ${getFormattedCurrency(lastValue)}
-                <button onclick="deleteAccount('${type}', '${name}')">Delete</button>
+                <button class="popped-element remove-button" onclick="deleteAccount('${type}', '${name}')">&#10006;</button>
             `;
             listElement.appendChild(accountItem);
         }
@@ -121,7 +216,7 @@ const renderAccounts = () => {
         const totalElement = document.getElementById(`${type}-total`);
         const totalValue = JSON.parse(localStorage.getItem(`total-${type}`)) || [];
         const latestValue = totalValue.length ? totalValue[totalValue.length - 1].value : 0;
-        totalElement.innerHTML = getFormattedCurrency(latestValue);
+        totalElement.innerHTML = "["+getFormattedCurrency(latestValue)+"]";
     });
 
     updateDerivedValues();
@@ -165,10 +260,20 @@ const updateBalances = () => {
                 day: "numeric"
             });
 
+            const formattedValue = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD"
+            }).format(Math.abs(lastValue));
+
             const newValue = prompt(
-                `Account: ${name}\n` +
-                `Balance as of ${lastDateFormatted}: ${formatCurrency(lastValue)}\n\n` +
-                "Enter the updated balance, or press OK to keep the same value:"
+                `━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+                `     ✨ Account Update ✨     \n` +
+                `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+                `📂 Account: ${name}\n` +
+                `💰 Last Balance (as of ${lastDateFormatted}): ${formattedValue}\n\n` +
+                `➡️ Enter the updated balance below,\n` +
+                `   or press OK to keep the same value.\n\n` +
+                `━━━━━━━━━━━━━━━━━━━━━━━━━`
             );
 
             const parsedValue = newValue === null || newValue.trim() === "" ? lastValue : parseFloat(newValue);
@@ -189,6 +294,10 @@ const updateBalances = () => {
     renderAccounts();
     updateNetWorth();
     toggleMoneyVisibility(false);
+
+    const currentDate = new Date();
+    localStorage.setItem('lastUpdateDate', currentDate.toISOString());
+    updateLastUpdate();
 };
 
 
@@ -242,7 +351,7 @@ const renderGoalsDropdown = () => {
         for (const name of Object.keys(accounts)) {
             const option = document.createElement("option");
             option.value = `${type}-${name}`;
-            option.textContent = `${name} (${type.charAt(0).toUpperCase() + type.slice(1)})`;
+            option.textContent = `${name}`;
             dropdown.appendChild(option);
         }
     });
@@ -341,10 +450,10 @@ const renderGoals = () => {
         const goalItem = document.createElement("li");
         const dateText = etaDateText === "" ? "N/A" : etaDateText;
         goalItem.innerHTML = `
-            <div class="goal-title">${displayName}${isSpecialGoal ? "" : ` (${goal.account.split("-")[0].charAt(0).toUpperCase() + goal.account.split("-")[0].slice(1)})`} to ${getFormattedCurrency(goal.value)}</div>
+            <div class="goal-title">${getFormattedCurrency(goal.value)} <span class="goal-account-name">-- ${displayName}</span></div>
             <div class="goal-eta">${etaText}</div>
             <div class="goal-date">${dateText}</div>
-            <div class="goal-action"><button onclick="deleteGoal('${goal.id}')">&#10006;</button></div>
+            <div class="goal-action"><button class="popped-element remove-button" onclick="deleteGoal('${goal.id}')">&#10006;</button></div>
         `;
         goalsList.appendChild(goalItem);
     });

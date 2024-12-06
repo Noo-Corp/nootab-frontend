@@ -1,42 +1,176 @@
+#main-container {
+    padding-bottom: 0;
+    height: calc(100% - 60px);
+    overflow: auto;
+}
+
+#assets-container {
+    height: calc(100vh - 60px);
+}
+
+#title-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    height: 44px;
+    background: var(--bodyback);
+    left: 0;
+    width: calc(100% - 34px);
+    padding-right: 34px;
+    overflow: auto;
+    border-top: 2px solid var(--modeback);
+}
+
+#main-title {
+    color: var(--modetext2);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 8px;
+    padding-right: 6px;
+    margin-left: 2px;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+#due-btn {
+    cursor: pointer;
+    background-color: transparent;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: fit-content;
+    border: none;
+    font-size: 16px;
+    color: var(--modetext);
+}
+
+#update-time {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#due-btn:hover {
+    color: var(--main);
+}
+
+#due-btn.due {
+    color: var(--secondary);
+    font-weight: bold;
+}
+
+#due-btn.due:hover {
+    color: var(--secondaryhover);
+}
+
+#due-btn.overdue {
+    color: #ff5353;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#due-btn.overdue:hover {
+    color: #e71313;
+}
+
 .negative {
-    color: red;
+    color: #ff5353;
     display: contents;
 }
 
-.summary {
-    padding: 10px 0;
-    text-align: center;
-    background: #f0f0f0;
-    margin-bottom: 20px;
-    border-radius: 4px;
-}
-
-.section {
-    margin-bottom: 20px;
-}
-
-button {
-    background: #007bff;
-    color: white;
-    padding: 10px;
+#toggle-money {
+    background: transparent;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+    transform: scaleX(1.5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 12px;
+    color: var(--modetext2);
 }
 
-button:hover {
-    background: #0056b3;
+#toggle-money:hover {
+    color: var(--modetext);
+}
+
+#eye-cross {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scale(1.2);
+    opacity: 0.5;
+    top: 5%;
+}
+
+.account-title-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+#net-worth-text {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--modetext2);
+    margin-top: 8px;
+    border-bottom: 1px solid var(--modetext2);
+    padding-bottom: 8px;
+}
+
+#net-worth {
+    font-size: 24px;
+    line-height: 1.4;
+    padding: 0 36px;
+}
+
+.weekly-rate {
+    font-size: 13px;
+    font-weight: initial;
+    margin-left: 5px;
 }
 
 #capital-debt-container {
     display: flex;
-    gap: 20px;
+    width: 100%;
     justify-content: space-between;
+    margin-top: 30px;
+    text-align: center;
+    padding-bottom: 10px;
 }
 
 #capital-container, #debt-container {
-    flex: 1;
+    width: 100%;
+    position: relative;
+}
+
+#capital-container {
+    border-right: 2px solid var(--secondary);
+    padding-right: 8px;
+}
+
+#debt-container {
+    padding-left: 8px;
+}
+
+#capital-text, #debt-text {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--modetext);
+}
+
+#capital-total, #debt-total {
+    font-weight: bold;
+}
+
+#goals-list {
+    margin-top: 10px;
+}
+
+#capital-list, #debt-list {
+    margin: 8px 0;
 }
 
 ul {
@@ -51,22 +185,55 @@ li {
     border: 1px solid var(--modetext2);
     margin-bottom: 7px;
     border-radius: 4px;
+    font-size: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+#goals-list li {
+    border-color: var(--secondary);
+    background-color: transparent;
+}
+
+.goals-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+#goal-header {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--modetext2);
+    margin-right: 6px;
+    font-weight: bold;
+}
+
+.goal-title {
+    flex: 3;
+    text-transform: capitalize;
+    font-size: 14px;
+    word-break: break-word;
+    margin-right: 10px;
+}
+
+.goal-date {
+    margin-right: 0;
+}
+
 .goal-title, .goal-eta, .goal-date {
-    flex: 1;
     overflow: auto;
-    margin: 0 10px;
  }
 
  .goal-eta, .goal-date {
+    flex: 2;
+    margin: 0 10px;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: bold;
 }
 
@@ -75,7 +242,29 @@ li {
     margin-left: 20px;
 }
 
-.goal-action button {
+#goal-account {
+    cursor: pointer;
+}
+
+#goal-account:hover {
+    border: 1px solid var(--backtext);
+}
+
+#goal-account, #goal-value {
+    background: var(--modeback);
+    color: var(--modetext);
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+}
+
+.goal-account-name {
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.remove-button {
     background-color: transparent;
     color: #ff5353;
     font-size: 18px;
@@ -85,32 +274,32 @@ li {
     font-weight: bold;
 }
 
-.goal-action button:hover {
+.remove-button:hover {
     color: #e71313;
 }
 
-.section-header {
-    color: var(--main);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-top: -8px;
-    padding-bottom: 2px;
+.add-button {
+    background-color: transparent;
+    color: var(--secondary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--secondary);
+    font-size: 16px;
+    margin-left: 2px;
 }
 
-.section-header div {
-    flex: 1;
-    margin: 0 14px;
+.add-button.add-accounts {
+    padding: 0 6px;
+    position: absolute;
+    right: 0;
 }
 
-.section-header .header-category {
-    position: relative;
-    left: 4px;
+.add-button.add-accounts.c {
+    margin-right: 8px;
 }
 
-.section-header .header-next {
-    margin-right: 149px;
+.add-button:hover {
+    background-color: var(--secondary);
+    color: var(--secondarytext);
 }

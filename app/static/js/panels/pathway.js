@@ -243,10 +243,12 @@ function loadGoals() {
     });
 
     if (!hasGoals) {
-        const noGoalsOverallMessage = document.createElement("div");
-        noGoalsOverallMessage.className = "no-goals-overall";
-        noGoalsOverallMessage.innerHTML = "No ongoing or current goals<br>Click <span>&#10063;</span> to add goals";
-        goalsListElement.appendChild(noGoalsOverallMessage);
+        if(isPopped == "false") {
+            const noGoalsOverallMessage = document.createElement("div");
+            noGoalsOverallMessage.className = "no-goals-overall";
+            noGoalsOverallMessage.innerHTML = "No ongoing or current goals<br>Click <span>&#10063;</span> to add goals";
+            goalsListElement.appendChild(noGoalsOverallMessage);
+        }
     }
 }
 

@@ -3,37 +3,42 @@
 <script type="text/javascript" src="../static/js/panels/common.js"></script>
 <script type="text/javascript" src="../static/js/panels/assets.js"></script>
 
-<div>
-    <button id="toggle-money" onclick="toggleMoneyVisibility()">Hide Money</button>
-</div>
 
-<div>
-    <h1>Net Worth<span id="net-worth">$0.00</span></h1>
-</div>
+<div id="main-container">
+    <div id="assets-container">
+        <button id="toggle-money" onclick="toggleMoneyVisibility()">Hide Money</button>
+        <div id="net-worth-text"><div id="net-worth">$0.00</div>Net Worth</div>
+    
+        <div id="capital-debt-container">
+            <div id="capital-container">
+                <div class="account-title-container">
+                    <div id="capital-text">Capital <span id="capital-total">[$0.00]</span></div>
+                    <button class="popped-element add-button add-accounts c" onclick="addAccount('capital')">+</button>
+                </div>
+                <ul class="popped-element" id="capital-list"></ul>
+            </div>
+            <div id="debt-container">
+                <div class="account-title-container">
+                    <div id="debt-text">Debt <span id="debt-total">[$0.00]</span></div>
+                    <button class="popped-element add-button add-accounts" onclick="addAccount('debt')">+</button>
+                </div>
+                <ul class="popped-element" id="debt-list"></ul>
+            </div>
+        </div>
+        
+        <div>
+            <div class="popped-element goals-container">
+                <div id="goal-header">Add goal</div>
+                <select id="goal-account"></select>
+                <input id="goal-value" placeholder="Enter goal value">
+                <button class="add-button" onclick="addGoal()">+</button>
+            </div>
+            <ul id="goals-list"></ul>
+        </div>
+    </div>
 
-<div id="capital-debt-container">
-    <div id="capital-container">
-        <h2>Capital<span id="capital-total">$0.00</span></h2>
-        <button onclick="addAccount('capital')">Add</button>
-        <ul id="capital-list"></ul>
+    <div id="title-container">
+        <div id="main-title">ASSETS</div>
+        <button id="due-btn" onclick="updateBalances()">Update</button>
     </div>
-    <div id="debt-container">
-        <h2>Debt<span id="debt-total">$0.00</span></h2>
-        <button onclick="addAccount('debt')">Add</button>
-        <ul id="debt-list"></ul>
-    </div>
-</div>
-
-<div>
-    <h2>Goals</h2>
-    <select id="goal-account"></select>
-    <input id="goal-value" type="number" step="0.01" placeholder="Enter goal value">
-    <button onclick="addGoal()">Add Goal</button>
-    <div class="section-header">
-        <div></div><div class='header-eta'>ETA</div><div class='header-date'>Date</div>
-    </div>
-    <ul id="goals-list"></ul>
-</div>
-<div>
-    <button onclick="updateBalances()">Update Balances</button>
 </div>
