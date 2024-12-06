@@ -30,6 +30,7 @@ const restrictView = () => {
 
     document.getElementById("capital-container").style.border = "none";
     document.getElementById("capital-debt-container").style.marginTop = "20px";
+    document.getElementById("due-btn").style.marginLeft = "4px";
 
     const goalsList = document.getElementById("goals-list");
     const goals = goalsList.querySelectorAll("li");
@@ -298,6 +299,11 @@ const updateBalances = () => {
     const currentDate = new Date();
     localStorage.setItem('lastUpdateDate', currentDate.toISOString());
     updateLastUpdate();
+
+    const { isPopped } = getUrlParams();
+    if (isPopped !== "true") {
+        restrictView();
+    }
 };
 
 

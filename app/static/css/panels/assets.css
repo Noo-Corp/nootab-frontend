@@ -1,6 +1,6 @@
 #main-container {
     padding-bottom: 0;
-    height: calc(100% - 60px);
+    height: 100%;
     overflow: auto;
 }
 
@@ -16,7 +16,7 @@
     height: 44px;
     background: var(--bodyback);
     left: 0;
-    width: calc(100% - 34px);
+    width: calc(100% - 36px);
     padding-right: 34px;
     overflow: auto;
     border-top: 2px solid var(--modeback);
@@ -27,7 +27,7 @@
     font-size: 12px;
     font-weight: bold;
     padding: 8px;
-    padding-right: 6px;
+    padding-right: 8px;
     margin-left: 2px;
     width: fit-content;
     white-space: nowrap;
@@ -110,7 +110,6 @@
 }
 
 #net-worth-text {
-    font-weight: bold;
     text-align: center;
     text-transform: uppercase;
     font-size: 12px;
@@ -124,6 +123,8 @@
     font-size: 24px;
     line-height: 1.4;
     padding: 0 36px;
+    color: var(--modetext);
+    font-weight: bold;
 }
 
 .weekly-rate {
@@ -158,11 +159,13 @@
 #capital-text, #debt-text {
     text-transform: uppercase;
     font-size: 12px;
-    color: var(--modetext);
+    margin-bottom: 4px;
+    color: var(--modetext2);
 }
 
 #capital-total, #debt-total {
     font-weight: bold;
+    color: var(--modetext);
 }
 
 #goals-list {
@@ -262,6 +265,7 @@ li {
 .goal-account-name {
     font-size: 12px;
     vertical-align: top;
+    color: var(--modetext2);
 }
 
 .remove-button {
@@ -290,7 +294,8 @@ li {
 }
 
 .add-button.add-accounts {
-    padding: 0 6px;
+    font-size: 14px;
+    padding: 0 4px;
     position: absolute;
     right: 0;
 }
