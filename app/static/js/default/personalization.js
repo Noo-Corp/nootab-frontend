@@ -110,6 +110,12 @@ window.addEventListener("load", function() {
         localStorage.setItem('colour-secondary-hover', document.documentElement.style.getPropertyValue('--secondaryhover'));
 		localStorage.setItem('colour-secondary-text', document.documentElement.style.getPropertyValue('--secondarytext'));
 
+		const asset_panel = document.querySelector(".panel.assets") || null;
+		if (asset_panel) {
+			const iframe = asset_panel.querySelector("iframe");
+			iframe.src = iframe.src;
+		}
+
 		colourPickerContent.classList.remove('show');
 		document.getElementById("modalOverlay").style.display = "none";
 	});
@@ -173,6 +179,12 @@ window.addEventListener("load", function() {
 
 	darkmode_button.addEventListener("click", function(event) {
 		event.preventDefault();
+
+		const asset_panel = document.querySelector(".panel.assets") || null;
+		if (asset_panel) {
+			const iframe = asset_panel.querySelector("iframe");
+			iframe.src = iframe.src;
+		}
 
 		const mode_back = localStorage.getItem("colour-mode-back");
 

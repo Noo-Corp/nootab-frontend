@@ -66,7 +66,6 @@ function loadGoals() {
                 const goalSection = sectionElement.querySelectorAll(".goal");
                 const addGoalContainer = sectionElement.querySelector(".add-goal-container");
                 const noGoalContainer = sectionElement.querySelector(".no-goals");
-                const sectionHeader = sectionElement.querySelector(".section-header");
                 const isCollapsed = goalChevron.textContent == "▶";
             
                 goalChevron.innerHTML = isCollapsed ? "&#9660;" : "&#9654;";
@@ -79,9 +78,6 @@ function loadGoals() {
                 if (noGoalContainer) {
                     noGoalContainer.style.display = isCollapsed ? "block" : "none";
                 }
-                if (sectionHeader) {
-                    sectionHeader.style.display = isCollapsed ? "flex" : "none";
-                }
             });
             sectionElement.appendChild(goalHeader);
         }
@@ -93,17 +89,6 @@ function loadGoals() {
             noGoalsMessage.textContent = "(No goals yet)";
             sectionElement.appendChild(noGoalsMessage);
         } else {
-            if (isPopped == "true") {
-                const sectionHeader = document.createElement("div");
-                sectionHeader.className = "section-header";
-                if (type == "pathway-goals-past") {
-                    sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Result</div>";
-                } else {
-                    sectionHeader.innerHTML = "<div></div><div class='header-category'>Category</div><div class='header-next'>Next Milestone</div>";
-                }
-                sectionElement.appendChild(sectionHeader);
-            }
-
             savedGoals.forEach((goal, index) => {
                 const goalElement = document.createElement("div");
                 goalElement.className = "goal";

@@ -942,10 +942,9 @@
             }
             toggle() {
                 let t = this.state.isPopupVisible;
-                if(!t) {
-                    window.setTimeout(() => {
-                        (this.state.isPopupVisible = !t), nt(this.cid);
-                    }, 0);
+                if (!t) {
+                    this.state.isPopupVisible = !t;
+                    nt(this.cid);
                 }
             }
             onKeyDown(t) {

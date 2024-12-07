@@ -1,11 +1,15 @@
 #main-container {
     padding-bottom: 0;
-    height: 100%;
+    height: 92vh;
     overflow: auto;
 }
 
 #assets-container {
-    height: calc(100vh - 60px);
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 30px);
 }
 
 #title-container {
@@ -22,32 +26,26 @@
     border-top: 2px solid var(--modeback);
 }
 
-#main-title {
-    color: var(--modetext2);
-    font-size: 12px;
-    font-weight: bold;
-    padding: 8px;
-    padding-right: 8px;
-    margin-left: 2px;
-    width: fit-content;
-    white-space: nowrap;
-}
-
 #due-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
     background-color: transparent;
-    left: 50%;
-    position: absolute;
-    transform: translateX(-50%);
     width: fit-content;
     border: none;
-    font-size: 16px;
-    color: var(--modetext);
+    font-size: 14px;
+    color: var(--modetext2);
+    padding: 8px;
+    margin-left: 2px;
+    white-space: nowrap;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 #update-time {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 #due-btn:hover {
@@ -78,6 +76,14 @@
     display: contents;
 }
 
+#toggle-money-container {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+    margin-bottom: -41px;
+    height: 41px;
+}
+
 #toggle-money {
     background: transparent;
     border: none;
@@ -85,10 +91,10 @@
     font-size: 20px;
     font-weight: bold;
     transform: scaleX(1.5);
-    position: absolute;
+    position: relative;
     top: 0;
     right: 0;
-    margin: 12px;
+    margin-right: -2px;
     color: var(--modetext2);
 }
 
@@ -128,6 +134,7 @@
 }
 
 .weekly-rate {
+    display: inline;
     font-size: 13px;
     font-weight: initial;
     margin-left: 5px;
@@ -148,7 +155,6 @@
 }
 
 #capital-container {
-    border-right: 2px solid var(--secondary);
     padding-right: 8px;
 }
 
@@ -169,7 +175,7 @@
 }
 
 #goals-list {
-    margin-top: 10px;
+    margin: 10px 0;
 }
 
 #capital-list, #debt-list {
@@ -195,7 +201,7 @@ li {
 }
 
 #goals-list li {
-    border-color: var(--secondary);
+    border-color: var(--main);
     background-color: transparent;
 }
 
@@ -204,14 +210,6 @@ li {
     justify-content: center;
     align-items: center;
     margin-top: 24px;
-}
-
-#goal-header {
-    font-size: 13px;
-    text-transform: uppercase;
-    color: var(--modetext2);
-    margin-right: 6px;
-    font-weight: bold;
 }
 
 .goal-title {
@@ -266,6 +264,8 @@ li {
     font-size: 12px;
     vertical-align: top;
     color: var(--modetext2);
+    overflow: auto;
+    white-space: nowrap;
 }
 
 .remove-button {
@@ -294,17 +294,133 @@ li {
 }
 
 .add-button.add-accounts {
-    font-size: 14px;
-    padding: 0 4px;
-    position: absolute;
-    right: 0;
-}
-
-.add-button.add-accounts.c {
-    margin-right: 8px;
+    position: relative;
+    font-size: 18px;
+    border: none;
+    margin-bottom: 5px;
+    padding: 0 5px;
+    margin-left: 2px;
 }
 
 .add-button:hover {
     background-color: var(--secondary);
     color: var(--secondarytext);
+}
+
+.height-limit {
+    max-height: 450px;
+    overflow: auto;
+}
+
+#graph-container {
+    margin-top: 34px;
+    padding: 8px;
+    padding-bottom: 0;
+    flex-grow: 1;
+}
+
+#graph-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#account-selector {
+    background: var(--modeback);
+    color: var(--modetext);
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#account-selector:hover {
+    border: 1px solid var(--backtext);
+}
+
+#toggle-log-view {
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--secondary);
+    padding: 4px 6px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 6px;
+    display: flex;
+    align-items: baseline;
+    height: 1.4em;
+}
+
+#toggle-log-view:hover {
+    background-color: var(--secondary);
+    color: var(--secondarytext);
+}
+
+.log-view-pad {
+    padding: 3px 6px !important;
+    transform: rotate(270deg);
+}
+
+#graph-data {
+    height: 96%;
+    display: flex;
+    justify-content: center;
+}
+
+#account-graph {
+    height: 100%;
+    max-height: 450px;
+}
+
+#log-table {
+    margin-top: 6px;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    color: var(--modetext);
+    font-size: 14px;
+}
+
+#log-table thead {
+    background-color: var(--main);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--text);
+}
+
+#log-table th,
+#log-table td {
+    padding: 10px 15px;
+}
+
+#log-table tbody tr:first-child {
+    font-weight: bold;
+}
+
+#log-table tbody tr:hover {
+    outline: 1px solid var(--backtext);
+}
+
+.highest {
+    background-color: #00ff0825;
+}
+
+.lowest {
+    background-color: #ff000025;
+}
+
+@-moz-document url-prefix() {
+    #toggle-log-view {
+        padding: 0 8px;
+        margin-left: 4px;
+    }
+
+    .log-view-pad {
+        padding: 2px 8px !important;
+        transform: rotate(270deg);
+    }
 }

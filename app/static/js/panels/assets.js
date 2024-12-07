@@ -4,6 +4,13 @@ window.addEventListener("load", function () {
     updateLastUpdate();
     toggleMoneyVisibility(false);
 
+    populateGraphDropdown();
+
+    const accountHistory = JSON.parse(localStorage.getItem("net-worth") || "[]");
+    if (accountHistory.length != 0) {
+        renderGraph();
+    }
+
     const { isPopped } = getUrlParams();
     if (isPopped !== "true") {
         restrictView();
@@ -28,9 +35,20 @@ const restrictView = () => {
     const poppedElements = document.querySelectorAll(".popped-element");
     poppedElements.forEach(el => el.style.display = "none");
 
+    const dueBtn = document.getElementById("due-btn");
+
     document.getElementById("capital-container").style.border = "none";
     document.getElementById("capital-debt-container").style.marginTop = "20px";
-    document.getElementById("due-btn").style.marginLeft = "4px";
+    dueBtn.style.position = "relative";
+    dueBtn.style.left = "initial";
+    dueBtn.style.transform = "initial";
+    dueBtn.style.fontSize = "12px";
+    document.getElementById("graph-container").style.marginTop = 0;
+    document.getElementById("graph-container").style.overflow = "hidden";
+    document.getElementById("graph-data").style.height = "100%";
+    document.getElementById("assets-container").style.marginLeft = 0;
+    document.getElementById("assets-container").style.marginRight = 0;
+    document.getElementById("toggle-money").style.margin = "4px 8px";
 
     const goalsList = document.getElementById("goals-list");
     const goals = goalsList.querySelectorAll("li");
@@ -88,6 +106,18 @@ const toggleMoneyVisibility = (toggled=true) => {
         el.outerHTML = hideMoney ? formatHiddenCurrency(value) : formatCurrency(value, account);
     });
 
+    const graphContainer = document.getElementById("graph-container");
+    if (hideMoney) {
+        graphContainer.style.display = 'none';
+    } else {
+        graphContainer.style.display = 'block';
+    }
+
+    const { isPopped } = getUrlParams();
+    if (isPopped !== "true") {
+        restrictView();
+    }
+
     document.getElementById("toggle-money").innerHTML = hideMoney ? "&#9737;" : "&#9737;<span id='eye-cross'>&#9747;</span>";
 };
 
@@ -103,14 +133,14 @@ const calculateWeeklyRate = (accountHistory) => {
     if (secondLatestValue === 0) {
         return latestValue === 0 
             ? `<span class="weekly-rate popped-element">(0.00%)</span>` 
-            : `<span class="weekly-rate positive popped-element">(Infinity%)</span>`;
+            : `<span class="weekly-rate popped-element">(Infinity%)</span>`;
     }
 
     const weeklyRate = ((latestValue - secondLatestValue) / Math.abs(secondLatestValue)) * 100;
 
     return weeklyRate < 0 
         ? `<span class="weekly-rate negative popped-element">(${weeklyRate.toFixed(2)}%)</span>` 
-        : `<span class="weekly-rate positive popped-element">(${weeklyRate.toFixed(2)}%)</span>`;
+        : `<span class="weekly-rate popped-element">(${weeklyRate.toFixed(2)}%)</span>`;
 };
 
 
@@ -193,6 +223,8 @@ const addAccount = (type) => {
 
     renderAccounts();
     updateNetWorth();
+    populateGraphDropdown();
+    renderGraphLog();
     toggleMoneyVisibility(false);
 };
 
@@ -243,6 +275,8 @@ const deleteAccount = (type, name) => {
         renderAccounts();
         updateNetWorth();
         renderGoals();
+        populateGraphDropdown();
+        renderGraphLog();
         toggleMoneyVisibility(false);
     }
 };
@@ -294,6 +328,7 @@ const updateBalances = () => {
     updateDerivedValues();
     renderAccounts();
     updateNetWorth();
+    renderGraphLog();
     toggleMoneyVisibility(false);
 
     const currentDate = new Date();
@@ -492,4 +527,319 @@ const deleteGoal = (goalId) => {
     localStorage.setItem("goals", JSON.stringify(updatedGoals));
     renderGoals();
     toggleMoneyVisibility(false);
+};
+
+
+const populateGraphDropdown = () => {
+    const dropdown = document.getElementById("account-selector");
+    dropdown.innerHTML = "";
+
+    const specialOptions = [
+        { value: "net-worth", label: "Net Worth" },
+        { value: "total-capital", label: "Total Capital" },
+        { value: "total-debt", label: "Total Debt" }
+    ];
+
+    specialOptions.forEach(option => {
+        const specialOption = document.createElement("option");
+        specialOption.value = option.value;
+        specialOption.textContent = option.label;
+        dropdown.appendChild(specialOption);
+    });
+
+    ["capital", "debt"].forEach((type) => {
+        const accounts = JSON.parse(localStorage.getItem(type)) || {};
+        for (const name of Object.keys(accounts)) {
+            const option = document.createElement("option");
+            option.value = `${type}-${name}`;
+            option.textContent = `${name}`;
+            dropdown.appendChild(option);
+        }
+    });
+};
+
+
+const toggleGraphLogView = () => {
+    let isLogView = document.getElementById("account-graph") === null;
+    
+    isLogView = !isLogView;
+    if (isLogView) {
+        document.getElementById("graph-data").classList.add("height-limit");
+        renderLogs();
+    } else {
+        document.getElementById("graph-data").classList.remove("height-limit");
+        renderGraph();
+    }
+    const logView = document.getElementById('toggle-log-view');
+    if (isLogView) {
+        logView.innerHTML = "&#9736;";
+        logView.classList.add("log-view-pad");
+    } else {
+        logView.innerHTML = "&#9776;";
+        logView.classList.remove("log-view-pad");
+    }
+}
+
+
+const renderGraphLog = () => {
+    const isLogView = document.getElementById("account-graph") === null;
+
+    if (isLogView) {
+        document.getElementById("graph-data").classList.add("height-limit");
+        renderLogs();
+    } else {
+        document.getElementById("graph-data").classList.remove("height-limit");
+        renderGraph();
+    }
+}
+
+
+const renderGraph = () => {
+    const graphContainer = document.getElementById("graph-data");
+    graphContainer.innerHTML = '<canvas id="account-graph"></canvas>';
+
+    const dropdown = document.getElementById("account-selector");
+    const selectedAccount = dropdown.value;
+
+    const accountsData = {
+        ...JSON.parse(localStorage.getItem("capital") || "{}"),
+        ...JSON.parse(localStorage.getItem("debt") || "{}"),
+        "net-worth": JSON.parse(localStorage.getItem("net-worth") || "[]"),
+        "total-capital": JSON.parse(localStorage.getItem("total-capital") || "[]"),
+        "total-debt": JSON.parse(localStorage.getItem("total-debt") || "[]"),
+    };
+
+    const isSpecialGoal = ["net-worth", "total-capital", "total-debt"].includes(selectedAccount);
+
+    let accountHistory;
+
+    if (isSpecialGoal) {
+        accountHistory = accountsData[selectedAccount] || [];
+    } else {
+        accountHistory = accountsData[selectedAccount.split("-")[1]] || [];
+    }
+
+    if (accountHistory.length === 0) {
+        alert("Not enough data available for this account.");
+        return;
+    }
+
+    const labels = accountHistory.map(entry => entry.date);
+    const data = accountHistory.map(entry => entry.value);
+
+    const canvas = document.getElementById("account-graph");
+    const ctx = canvas.getContext("2d");
+
+    if (canvas.dataset.chartInstance) {
+        const existingChart = Chart.getChart(canvas);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+    }
+
+    const linearRegression = (x, y) => {
+        const n = x.length;
+        const sumX = x.reduce((acc, val) => acc + val, 0);
+        const sumY = y.reduce((acc, val) => acc + val, 0);
+        const sumXY = x.reduce((acc, val, idx) => acc + (val * y[idx]), 0);
+        const sumX2 = x.reduce((acc, val) => acc + (val * val), 0);
+
+        const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+        const intercept = (sumY - slope * sumX) / n;
+
+        return { slope, intercept };
+    };
+
+    const xValues = accountHistory.map(entry => new Date(entry.date).getTime());
+    const yValues = accountHistory.map(entry => entry.value);
+
+    const { slope, intercept } = linearRegression(xValues, yValues);
+    
+    const regressionLine = xValues.map(xVal => ({
+        x: xVal,
+        y: slope * xVal + intercept
+    }));
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const modeText = rootStyles.getPropertyValue('--modetext').trim();
+    const mainColur = rootStyles.getPropertyValue('--main').trim();
+    const mainColurHover = rootStyles.getPropertyValue('--hover').trim();
+    const secondaryColour = rootStyles.getPropertyValue('--secondary').trim();
+
+    const accountChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "",
+                data: data,
+                borderColor: mainColur,
+                backgroundColor: mainColurHover,
+                borderWidth: 2,
+                tension: 0
+            }, {
+                label: "Linear Fit",
+                data: regressionLine,
+                borderColor: secondaryColour,
+                borderWidth: 2,
+                fill: false,
+                showLine: true,
+                pointRadius: 0,
+                borderDash: [5, 5]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'll',
+                        displayFormats: {
+                            day: 'MMM D'
+                        }
+                    },
+                    title: {
+                        display: false
+                    },
+                    grid: {
+                        color: "rgba(111, 111, 111, 0.4)",
+                    },
+                    ticks: {
+                        color: modeText,
+                    }
+                },
+                y: {
+                    title: {
+                        display: false
+                    },
+                    beginAtZero: true,
+                    grid: {
+                        color: "rgba(111, 111, 111, 0.4)",
+                    },
+                    ticks: {
+                        color: modeText,
+                        callback: function(value) {
+                            return '$' + new Intl.NumberFormat().format(value.toFixed(2));
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    canvas.dataset.chartInstance = accountChart.id;
+};
+
+
+const generateLogRows = (accountHistory, debtAccount=false) => {
+    let rows = '';
+    for (let i = accountHistory.length - 1; i >= 0; i--) {
+        const entry = accountHistory[i];
+        const nextEntry = i > 0 ? accountHistory[i - 1] : null;
+
+        let absoluteChange = nextEntry ? entry.value - nextEntry.value : 0;
+        let relativeChange = nextEntry ? (absoluteChange / nextEntry.value) * 100 : 0;
+
+        const formattedAbs = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD"
+        }).format(Math.abs(absoluteChange));
+
+        // Highlight the highest and lowest values
+        let isHighest = i === accountHistory.findIndex(e => e.value === Math.max(...accountHistory.map(a => a.value)));
+        let isLowest = i === accountHistory.findIndex(e => e.value === Math.min(...accountHistory.map(a => a.value)));
+
+        if (debtAccount) {
+            let tempVar = isHighest;
+            isHighest = isLowest;
+            isLowest = tempVar;
+        
+            absoluteChange = absoluteChange == 0
+            ? `<span>${formattedAbs}</span>`
+            : absoluteChange > 0
+            ? `<span class="negative">${formattedAbs}</span>`
+            : `<span>-${formattedAbs}</span>`;
+
+            relativeChange = relativeChange > 0 
+            ? `<span class="negative">${relativeChange.toFixed(2)}%</span>` 
+            : `<span>${relativeChange.toFixed(2)}%</span>`;
+        } else {
+            absoluteChange = absoluteChange < 0
+            ? `<span class="negative">-${formattedAbs}</span>`
+            : `<span>${formattedAbs}</span>`;
+
+            relativeChange = relativeChange < 0 
+            ? `<span class="negative">${relativeChange.toFixed(2)}%</span>` 
+            : `<span>${relativeChange.toFixed(2)}%</span>`;
+        }
+
+        rows += `
+            <tr class="${isHighest ? 'highest' : isLowest ? 'lowest' : ''}">
+                <td>${entry.date}</td>
+                <td>${getFormattedCurrency(entry.value)}</td>
+                <td>${absoluteChange}</td>
+                <td>${relativeChange}</td>
+            </tr>
+        `;
+    }
+    return rows;
+};
+
+
+const renderLogs = () => {
+    const dropdown = document.getElementById("account-selector");
+    const selectedAccount = dropdown.value;
+
+    const accountsData = {
+        ...JSON.parse(localStorage.getItem("capital") || "{}"),
+        ...JSON.parse(localStorage.getItem("debt") || "{}"),
+        "net-worth": JSON.parse(localStorage.getItem("net-worth") || "[]"),
+        "total-capital": JSON.parse(localStorage.getItem("total-capital") || "[]"),
+        "total-debt": JSON.parse(localStorage.getItem("total-debt") || "[]"),
+    };
+
+    const isSpecialGoal = ["net-worth", "total-capital", "total-debt"].includes(selectedAccount);
+
+    let accountHistory;
+
+    if (isSpecialGoal) {
+        accountHistory = accountsData[selectedAccount] || [];
+    } else {
+        accountHistory = accountsData[selectedAccount.split("-")[1]] || [];
+    }
+
+    let debtAccount = false;
+
+    if (selectedAccount == "total-debt" || selectedAccount.split("-")[0] == "debt") {
+        debtAccount = true;
+    }
+
+    if (accountHistory.length === 0) {
+        alert("Not enough data available for this account.");
+        return;
+    }
+
+    const logContainer = document.getElementById("graph-data");
+    logContainer.innerHTML = `
+        <table id="log-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Value</th>
+                    <th>Absolute &#916;</th>
+                    <th>Relative &#916;</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${generateLogRows(accountHistory, debtAccount)}
+            </tbody>
+        </table>
+    `;
 };

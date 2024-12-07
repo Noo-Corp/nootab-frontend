@@ -261,32 +261,6 @@ body {
    margin: 0 10px;
 }
 
-.section-header {
-    color: var(--main);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-top: -8px;
-    padding-bottom: 2px;
-}
-
-.section-header div {
-    flex: 1;
-    margin: 0 14px;
-}
-
-.section-header .header-category {
-    position: relative;
-    left: 4px;
-}
-
-.section-header .header-next {
-    margin-right: 149px;
-}
-
 .goal-category, .goal-milestone {
     text-transform: uppercase;
     display: flex;
@@ -319,6 +293,7 @@ body {
 .no-goals {
     color: var(--modetext2);
     font-size: 14px;
+    margin-left: 2px;
 }
 
 .no-goals-overall {

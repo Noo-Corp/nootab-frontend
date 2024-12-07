@@ -1,44 +1,59 @@
 <link rel="stylesheet" href="../static/css/panels/common.css">
 <link rel="stylesheet" href="../static/css/panels/assets.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
 <script type="text/javascript" src="../static/js/panels/common.js"></script>
 <script type="text/javascript" src="../static/js/panels/assets.js"></script>
 
 
 <div id="main-container">
     <div id="assets-container">
-        <button id="toggle-money" onclick="toggleMoneyVisibility()">Hide Money</button>
-        <div id="net-worth-text"><div id="net-worth">$0.00</div>Net Worth</div>
-    
-        <div id="capital-debt-container">
-            <div id="capital-container">
-                <div class="account-title-container">
-                    <div id="capital-text">Capital <span id="capital-total">[$0.00]</span></div>
-                    <button class="popped-element add-button add-accounts c" onclick="addAccount('capital')">+</button>
-                </div>
-                <ul class="popped-element" id="capital-list"></ul>
+        <div>
+            <div id="toggle-money-container">
+                <button id="toggle-money" onclick="toggleMoneyVisibility()">Hide Money</button>
             </div>
-            <div id="debt-container">
-                <div class="account-title-container">
-                    <div id="debt-text">Debt <span id="debt-total">[$0.00]</span></div>
-                    <button class="popped-element add-button add-accounts" onclick="addAccount('debt')">+</button>
+            <div id="net-worth-text"><div id="net-worth">$0.00</div>Net Worth</div>
+
+            <div id="capital-debt-container">
+                <div id="capital-container">
+                    <div class="account-title-container">
+                        <div id="capital-text">Capital <span id="capital-total">[$0.00]</span></div>
+                        <button class="popped-element add-button add-accounts" onclick="addAccount('capital')">+</button>
+                    </div>
+                    <ul class="popped-element" id="capital-list"></ul>
                 </div>
-                <ul class="popped-element" id="debt-list"></ul>
+                <div id="debt-container">
+                    <div class="account-title-container">
+                        <div id="debt-text">Debt <span id="debt-total">[$0.00]</span></div>
+                        <button class="popped-element add-button add-accounts" onclick="addAccount('debt')">+</button>
+                    </div>
+                    <ul class="popped-element" id="debt-list"></ul>
+                </div>
+            </div>
+            
+            <div>
+                <div class="popped-element goals-container">
+                    <select id="goal-account"></select>
+                    <input id="goal-value" placeholder="Enter goal value">
+                    <button class="add-button" onclick="addGoal()">+</button>
+                </div>
+                <ul id="goals-list"></ul>
             </div>
         </div>
-        
-        <div>
-            <div class="popped-element goals-container">
-                <div id="goal-header">Add goal</div>
-                <select id="goal-account"></select>
-                <input id="goal-value" placeholder="Enter goal value">
-                <button class="add-button" onclick="addGoal()">+</button>
+
+        <div id="graph-container">
+            <div class="popped-element" id="graph-controls">
+                <select id="account-selector" onchange="renderGraphLog()"></select>
+                <button id="toggle-log-view" onclick="toggleGraphLogView()">&#9776;</button>
             </div>
-            <ul id="goals-list"></ul>
+            <div id="graph-data">
+                <canvas id="account-graph"></canvas>
+            </div>
         </div>
     </div>
 
     <div id="title-container">
-        <div id="main-title">ASSETS</div>
         <button id="due-btn" onclick="updateBalances()">Update</button>
     </div>
 </div>
