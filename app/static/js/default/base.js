@@ -88,7 +88,18 @@ function handleFileUpload(event) {
 function clearData() {
     if (confirm('Are you sure you want to clear all data?')) {
         localStorage.clear();
-        location.reload();
+        fetch('/signout', {
+            method: 'POST',
+            headers: {
+                'App': 'all',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.signed_out) {
+                location.reload();
+            }
+        });
     }
 }
 

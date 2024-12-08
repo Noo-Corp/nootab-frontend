@@ -42,7 +42,6 @@ function viewEmail(event, emailId) {
 	fetch(`/view_email/${emailId}`, {
 		method: 'GET',
 		headers: {
-			'Authorization': localStorage.getItem('gmail-token') + ' ' + localStorage.getItem('gmail-refresh-token'),
             'App': 'gmail',
 		}
 	})
@@ -84,26 +83,34 @@ function viewEmail(event, emailId) {
 }
 
 function googleSignout() {
-	localStorage.removeItem('gmail-token');
-	localStorage.removeItem('gmail-refresh-token');
-	document.getElementById("authorize-button").style.display = "inline";
-	document.getElementById("signout-button").style.display = "none";
-	document.getElementById("email-list").innerHTML = "";
-	document.getElementById("main-title").textContent = "";
-    document.getElementById("refresh").style.display = "none";
-    document.getElementById("content").style.display = "none";
-    document.getElementById('gmail-link').style.display = "none";
-    document.getElementById('initial-view').style.display = "block";
+    fetch('/signout', {
+		method: 'POST',
+		headers: {
+            'App': 'gmail',
+		}
+	})
+    .then(response => response.json())
+    .then(data => {
+        if (data.signed_out) {
+            document.getElementById("authorize-button").style.display = "inline";
+            document.getElementById("signout-button").style.display = "none";
+            document.getElementById("email-list").innerHTML = "";
+            document.getElementById("main-title").textContent = "";
+            document.getElementById("refresh").style.display = "none";
+            document.getElementById("content").style.display = "none";
+            document.getElementById('gmail-link').style.display = "none";
+            document.getElementById('initial-view').style.display = "block";
 
-    clearInterval(refreshInterval);
-    refreshInterval = null;
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+    });
 }
 
 function googleAuthorize(check) {
     fetch('/authorize', {
 		method: 'GET',
 		headers: {
-			'Authorization': localStorage.getItem('gmail-token') + ' ' + localStorage.getItem('gmail-refresh-token'),
             'Check': check,
             'App': 'gmail',
 		}
@@ -147,11 +154,6 @@ function googleAuthorize(check) {
             document.getElementById("user-email").textContent = data.user_email;
             document.getElementById("gmail-link").style.display = 'block';
 
-            if (data.gmail_token && data.gmail_refresh_token) {
-                localStorage.setItem('gmail-token', data.gmail_token);
-                localStorage.setItem('gmail-refresh-token', data.gmail_refresh_token);
-            }
-
 			document.getElementById("authorize-button").style.display = "none";
 			document.getElementById("signout-button").style.display = "inline";
 
@@ -175,7 +177,11 @@ function refresh(type, behaviour) {
     const emailList = document.getElementById("email-list");
     const content = document.getElementById("content");
 
-    if (behaviour === "load" && (!localStorage.getItem("gmail-token") || !localStorage.getItem("gmail-refresh-token"))) {
+    const hasTokens = document.cookie.split('; ').some(cookie => {
+        return cookie.startsWith('access_token=') || cookie.startsWith('refresh_token=');
+    });
+
+    if (behaviour === "load" && !hasTokens) {
         emailList.innerHTML = "";
         content.style.display = "none";
         document.getElementById('initial-view').style.display = "block";

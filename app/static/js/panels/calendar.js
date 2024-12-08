@@ -17,32 +17,39 @@ function formatReceivedTime(dateString) {
 }
 
 function googleSignout() {
-	localStorage.removeItem('calendar-token');
-	localStorage.removeItem('calendar-refresh-token');
-	document.getElementById("authorize-button").style.display = "inline";
-	document.getElementById("signout-button").style.display = "none";
-	document.getElementById("main-title").textContent = "";
-    document.getElementById("refresh").style.display = "none";
-    document.getElementById("schedule-container").style.display = "none";
-    document.getElementById('calendar-link').style.display = "none";
-    document.getElementById('initial-view').style.display = "block";
+	fetch('/signout', {
+		method: 'POST',
+		headers: {
+            'App': 'calendar',
+		}
+	})
+    .then(response => response.json())
+    .then(data => {
+        if (data.signed_out) {
+            document.getElementById("authorize-button").style.display = "inline";
+            document.getElementById("signout-button").style.display = "none";
+            document.getElementById("main-title").textContent = "";
+            document.getElementById("refresh").style.display = "none";
+            document.getElementById("schedule-container").style.display = "none";
+            document.getElementById('calendar-link').style.display = "none";
+            document.getElementById('initial-view').style.display = "block";
 
-    clearInterval(refreshInterval);
-    refreshInterval = null;
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+    });
 }
 
 function googleAuthorize(check) {
     fetch('/authorize', {
 		method: 'GET',
 		headers: {
-			'Authorization': localStorage.getItem('calendar-token') + ' ' + localStorage.getItem('calendar-refresh-token'),
             'Check': check,
             'App': 'calendar',
 		}
 	})
 	.then(response => response.json())
 	.then(data => {
-        document.getElementById('loading-container').innerHTML = '';
         document.getElementById("schedule-view").style.display = "none";
 
         if (data.authorized) {
@@ -52,11 +59,6 @@ function googleAuthorize(check) {
 
             document.getElementById("user-email").textContent = data.user_email;
             document.getElementById("calendar-link").style.display = 'block';
-
-            if (data.calendar_token && data.calendar_refresh_token) {
-                localStorage.setItem('calendar-token', data.calendar_token);
-                localStorage.setItem('calendar-refresh-token', data.calendar_refresh_token);
-            }
 
 			document.getElementById("authorize-button").style.display = "none";
 			document.getElementById("signout-button").style.display = "inline";
@@ -153,15 +155,16 @@ function renderSchedule(events) {
 }
 
 function refresh(type, behaviour) {
-    const loadingContainer = document.getElementById("loading-container");
     const scheduleView = document.getElementById("schedule-view");
 
-    if (behaviour === "load" && (!localStorage.getItem("calendar-token") || !localStorage.getItem("calendar-refresh-token"))) {
-        loadingContainer.innerHTML = "";
+    const hasTokens = document.cookie.split('; ').some(cookie => {
+        return cookie.startsWith('access_token=') || cookie.startsWith('refresh_token=');
+    });
+
+    if (behaviour === "load" && !hasTokens) {
         scheduleView.style.display = "none";
         document.getElementById('initial-view').style.display = "block";
     } else if (behaviour === "active") {
-        loadingContainer.innerHTML = "";
         scheduleView.style.display = "none";
     }
 

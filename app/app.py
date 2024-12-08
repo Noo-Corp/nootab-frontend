@@ -26,18 +26,21 @@ def serve_panel(panel_name):
 
 @app.route('/authorize')
 def authorize():
-    token, refresh_token = request.headers.get('Authorization').split(' ')
     check = request.headers.get('Check')
     app = request.headers.get('App')
 
     if app == "gmail":
         SCOPES = GMAIL_SCOPES
+        access_token = request.cookies.get('gmail_access_token')
+        refresh_token = request.cookies.get('gmail_refresh_token')
     elif app == "calendar":
         SCOPES = CALENDAR_SCOPES
+        access_token = request.cookies.get('calendar_access_token')
+        refresh_token = request.cookies.get('calendar_refresh_token')
     else:
         return jsonify({"authorized": False})
     
-    if token == "null" or refresh_token == "null":
+    if not access_token or not refresh_token:
         if check == "1":
             return jsonify({"authorized": False})
 
@@ -52,7 +55,7 @@ def authorize():
                 client_secret = creds_data["installed"]["client_secret"]
                 token_uri = creds_data["installed"]["token_uri"]
         creds = Credentials(
-            token=token,
+            token=access_token,
             refresh_token=refresh_token,
             client_id=client_id,
             client_secret=client_secret,
@@ -64,14 +67,28 @@ def authorize():
         gmail_data = run_gmail_flow(creds)
 
         if gmail_data:
-            return jsonify({"authorized": True, "emails": gmail_data[0], "gmail_token": creds.token, "gmail_refresh_token": creds.refresh_token, "user_email": gmail_data[1]})
+            response = jsonify({
+                "authorized": True,
+                "emails": gmail_data[0],
+                "user_email": gmail_data[1]
+            })
+            response.set_cookie('gmail_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
+            response.set_cookie('gmail_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
+            return response
         else:
             return jsonify({"authorized": False})
     elif app == "calendar":
         calendar_data = run_calendar_flow(creds)
 
         if calendar_data:
-            return jsonify({"authorized": True, "events": calendar_data[0], "calendar_token": creds.token, "calendar_refresh_token": creds.refresh_token, "user_email": calendar_data[1]})
+            response = jsonify({
+                "authorized": True,
+                "events": calendar_data[0],
+                "user_email": calendar_data[1]
+            })
+            response.set_cookie('calendar_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
+            response.set_cookie('calendar_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
+            return response
         else:
             return jsonify({"authorized": False})
     else:
@@ -80,7 +97,8 @@ def authorize():
 
 @app.route('/view_email/<email_id>')
 def view_email(email_id):
-    token, refresh_token = request.headers.get('Authorization').split(' ')
+    access_token = request.cookies.get('gmail_access_token')
+    refresh_token = request.cookies.get('gmail_refresh_token')
     
     with open("credentials.json") as f:
             creds_data = json.load(f)
@@ -88,7 +106,7 @@ def view_email(email_id):
             client_secret = creds_data["installed"]["client_secret"]
             token_uri = creds_data["installed"]["token_uri"]
     creds = Credentials(
-        token=token,
+        token=access_token,
         refresh_token=refresh_token,
         client_id=client_id,
         client_secret=client_secret,
@@ -193,3 +211,24 @@ def run_calendar_flow(creds):
 
     except HttpError:
         return None
+
+
+@app.route('/signout', methods=['POST'])
+def signout():
+    app = request.headers.get('App')
+    
+    def clear_cookie(response, name):
+        response.set_cookie(name, '', expires=0, httponly=True, secure=True, samesite="Strict")
+    
+    response = jsonify({"signed_out": True})
+    
+    tokens = {
+        "gmail": ["gmail_access_token", "gmail_refresh_token"],
+        "calendar": ["calendar_access_token", "calendar_refresh_token"],
+        "all": ["gmail_access_token", "gmail_refresh_token", "calendar_access_token", "calendar_refresh_token"]
+    }
+    
+    for token in tokens.get(app, []):
+        clear_cookie(response, token)
+    
+    return response

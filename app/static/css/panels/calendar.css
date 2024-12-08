@@ -1,5 +1,4 @@
 body {
-    background-color: var(--modeback);
     margin: 0;
     height: 100%;
 }
@@ -18,13 +17,7 @@ body {
     width: 55px;
 }
 
-#initial-auth {
-    color: var(--modetext2);
-    margin-top: 10px;
-}
-
 #main-content {
-    background-color: var(--modeback);
     padding: 8px;
     padding-bottom: 0;
     height: calc(100% - 60px);
@@ -42,6 +35,7 @@ body {
     width: calc(100% - 52px);
     padding-right: 52px;
     overflow: auto;
+    border-top: 2px solid var(--modeback);
 }
 
 #main-title {
@@ -68,24 +62,12 @@ body {
     color: var(--secondary);
 }
 
-#loading {
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    top: 46%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    font-weight: bold;
-    font-size: 14px;
-    color: var(--modetext2);
-}
-
 #calendar-link {
     text-align: center;
     text-decoration: none;
     display: block;
     color: var(--modetext2);
-    background: var(--bodyback);
+    background-color: var(--modeback);
     font-size: 14px;
     padding-top: 4px;
 }
@@ -126,7 +108,7 @@ body {
 }
 
 #signout-button {
-    background-color: var(--bodyback);
+    background-color: var(--modeback);
     color: var(--modetext2);
     padding: 4px 0;
     font-size: 12px;
@@ -145,7 +127,6 @@ body {
 
 #schedule-container {
     margin-top: 48px;
-    background-color: var(--modeback);
     overflow: auto;
 }
 
