@@ -75,6 +75,7 @@
     padding-right: 32px;
     align-items: center;
     position: relative;
+    text-transform: uppercase;
 }
 
 #sidebar-list li:hover {

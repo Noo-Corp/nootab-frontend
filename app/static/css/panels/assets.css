@@ -331,9 +331,9 @@ li {
 }
 
 #graph-data {
-    height: 96%;
     display: flex;
     justify-content: center;
+    margin-bottom: 14px;
 }
 
 #account-graph {
@@ -348,6 +348,7 @@ li {
     text-align: center;
     color: var(--modetext);
     font-size: 14px;
+    margin-bottom: 14px;
 }
 
 #log-table thead {
