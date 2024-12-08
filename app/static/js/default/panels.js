@@ -6,6 +6,8 @@ window.addEventListener("load", () => {
 function loadPanels() {
     const panelContainer = document.getElementById('panelContainer');
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
+    const flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
+
     if(panelOrder == "") {
         var panel = document.createElement('div');
         panel.textContent = "+";
@@ -31,16 +33,30 @@ function loadPanels() {
         } else {
             panel.classList.add('blank');
         }
+
+        if (flippedPanels[index]) {
+            iframe.style.display = "none";
+            panelFlipInitial(panel, index);
+        }
+
         iframe.style.visibility = 'hidden';
         iframe.onload = () => onFrameLoad(iframe, false);
         panel.appendChild(iframe);
 
         if (panelName != "blank") {
-            const button = document.createElement('button');
-            button.className = 'panel-popout';
-            button.onclick = function(event) { panelPopout(event, this); };
-            button.innerHTML = '&#10063;';
-            panel.appendChild(button);
+            const privacyBtn = document.createElement('button');
+            privacyBtn.className = 'panel-privacy';
+            privacyBtn.onclick = function(event) { panelFlip(event, this); };
+            privacyBtn.innerHTML = '&#10551;';
+            panel.appendChild(privacyBtn);
+
+            if (!flippedPanels[index]) {
+                const button = document.createElement('button');
+                button.className = 'panel-popout';
+                button.onclick = function(event) { panelPopout(event, this); };
+                button.innerHTML = '&#10063;';
+                panel.appendChild(button);
+            }
         }
 
         panelContainer.appendChild(panel);
@@ -216,12 +232,14 @@ function updatePanelOrder(oldIndex, newIndex) {
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
     const noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
     const checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+    const flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
 
     if (newIndex < 0 || newIndex >= panelOrder.length || oldIndex === newIndex) return;
 
     const panelNameToMove = panelOrder.splice(oldIndex, 1)[0];
     const panelNoteToMove = noteTextsOrder.splice(oldIndex, 1)[0];
     const panelChecklistToMove = checklistListsOrder.splice(oldIndex, 1)[0];
+    const flippedPanelToMove = flippedPanels.splice(oldIndex, 1)[0];
 
     panelOrder.splice(newIndex, 0, panelNameToMove);
     localStorage.setItem('panel-order', JSON.stringify(panelOrder));
@@ -232,6 +250,9 @@ function updatePanelOrder(oldIndex, newIndex) {
     checklistListsOrder.splice(newIndex, 0, panelChecklistToMove);
     localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
 
+    flippedPanels.splice(newIndex, 0, flippedPanelToMove);
+    localStorage.setItem('flipped-panels', JSON.stringify(flippedPanels));
+
     loadPanels();
     loadPanelOrderList();
 }
@@ -240,6 +261,7 @@ function addToPanelOrder(panelName) {
     let panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
     let noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
     let checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+    let flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
 
     if (panelOrder.length < 8) {
         if (panelOrder.includes(panelName) && ["gmail", "calendar", "pathway", "assets"].includes(panelName)) {
@@ -255,6 +277,9 @@ function addToPanelOrder(panelName) {
         checklistListsOrder.push(null);
         localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
 
+        flippedPanels.push(false);
+        localStorage.setItem('flipped-panels', JSON.stringify(flippedPanels));
+
         loadPanels();
         loadPanelOrderList();
     }
@@ -266,11 +291,13 @@ function deletePanel(event, index) {
     const panelOrder = JSON.parse(localStorage.getItem('panel-order')) || [];
 	const noteTextsOrder = JSON.parse(localStorage.getItem('orders-note')) || [];
     const checklistListsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+    const flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
 
     if (panelOrder.length == 1) {
         localStorage.removeItem('panel-order');
         localStorage.removeItem('orders-note');
         localStorage.removeItem('orders-checklist');
+        localStorage.removeItem('flipped-panels');
         document.getElementById('panelContainer').innerHTML = '';
     } else {
         panelOrder.splice(index, 1);
@@ -281,6 +308,9 @@ function deletePanel(event, index) {
 
         checklistListsOrder.splice(index, 1);
         localStorage.setItem('orders-checklist', JSON.stringify(checklistListsOrder));
+
+        flippedPanels.splice(index, 1);
+        localStorage.setItem('flipped-panels', JSON.stringify(flippedPanels));
     }
 
     loadPanels();
@@ -289,9 +319,65 @@ function deletePanel(event, index) {
 
 function clearPanelOrder() {
     localStorage.removeItem('panel-order');
+    localStorage.removeItem('orders-note');
+    localStorage.removeItem('orders-checklist');
+    localStorage.removeItem('flipped-panels');
     document.getElementById('panelContainer').innerHTML = '';
     loadPanels();
     loadPanelOrderList();
+}
+
+function panelFlipInitial(panel) {
+    const flipText = document.createElement('div');
+    flipText.className = "flip-text";
+    flipText.textContent = panel.className.split(' ')[1];
+    panel.style.backgroundColor = "var(--modeback)";
+    panel.appendChild(flipText);
+
+    panel.classList.add("shifted");
+
+    const poppedButton = panel.querySelector('.panel-popout');
+    if (poppedButton) {
+        poppedButton.remove();
+    }
+}
+
+function panelFlip(event, button) {
+    event.stopPropagation();
+    const mainPanel = button.closest('.panel');
+    const panelIndex = Array.from(mainPanel.parentNode.children).indexOf(mainPanel);
+    let flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
+
+    while (flippedPanels.length < panelIndex + 1) {
+        flippedPanels.push(false);
+    }
+
+    flippedPanels[panelIndex] = !flippedPanels[panelIndex];
+
+    if (flippedPanels[panelIndex]) {
+        mainPanel.querySelector('iframe').style.display = "none";
+        mainPanel.classList.add("shifted");
+        panelFlipInitial(mainPanel);
+    } else {
+        const iframe = mainPanel.querySelector('iframe');
+        mainPanel.style.backgroundColor = "var(--bodyback)";
+        const flipText = mainPanel.querySelector('.flip-text');
+        if (flipText) {
+            flipText.remove();
+        }
+        iframe.style.display = "block";
+        iframe.src = iframe.src;
+
+        mainPanel.classList.remove("shifted");
+
+        const button = document.createElement('button');
+        button.className = 'panel-popout';
+        button.onclick = function(event) { panelPopout(event, this); };
+        button.innerHTML = '&#10063;';
+        mainPanel.appendChild(button);
+    }
+
+    localStorage.setItem('flipped-panels', JSON.stringify(flippedPanels));
 }
 
 function panelPopout(event, button) {
@@ -316,6 +402,7 @@ function panelPopout(event, button) {
             iframe.onload = () => onFrameLoad(iframe, false);
             iframe.src = iframe.src.replace(/([?&])popped=[^&]*/, `$1popped=true`);
             mainPanel.classList.add('popout');
+            mainPanel.querySelector('.panel-privacy').style.display = "none";
         }
     }
 }

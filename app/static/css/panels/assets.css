@@ -20,7 +20,7 @@
     height: 44px;
     background: var(--bodyback);
     left: 0;
-    width: calc(100% - 36px);
+    width: calc(100% - 52px);
     padding-right: 34px;
     overflow: auto;
     border-top: 2px solid var(--modeback);
@@ -74,40 +74,6 @@
 .negative {
     color: #ff5353;
     display: contents;
-}
-
-#toggle-money-container {
-    display: flex;
-    justify-content: end;
-    align-items: start;
-    margin-bottom: -41px;
-    height: 41px;
-}
-
-#toggle-money {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    transform: scaleX(1.5);
-    position: relative;
-    top: 0;
-    right: 0;
-    margin-right: -2px;
-    color: var(--modetext2);
-}
-
-#toggle-money:hover {
-    color: var(--modetext);
-}
-
-#eye-cross {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) scale(1.2);
-    opacity: 0.5;
-    top: 5%;
 }
 
 .account-title-container {

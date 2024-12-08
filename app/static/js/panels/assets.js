@@ -2,7 +2,6 @@ window.addEventListener("load", function () {
     renderAccounts();
     updateNetWorth();
     updateLastUpdate();
-    toggleMoneyVisibility(false);
 
     populateGraphDropdown();
 
@@ -48,7 +47,6 @@ const restrictView = () => {
     document.getElementById("graph-data").style.height = "100%";
     document.getElementById("assets-container").style.marginLeft = 0;
     document.getElementById("assets-container").style.marginRight = 0;
-    document.getElementById("toggle-money").style.margin = "4px 8px";
 
     const goalsList = document.getElementById("goals-list");
     const goals = goalsList.querySelectorAll("li");
@@ -91,37 +89,6 @@ const updateLastUpdate = () => {
 };
 
 
-const toggleMoneyVisibility = (toggled=true) => {
-    let hideMoney = JSON.parse(localStorage.getItem("hideMoney")) || false;
-
-    if (toggled) {
-        hideMoney = !hideMoney;
-        localStorage.setItem("hideMoney", hideMoney);
-    }
-    
-    const moneyElements = document.querySelectorAll(".money-value");
-    moneyElements.forEach(el => {
-        const account = el.parentElement.id;
-        const value = parseFloat(el.dataset.value);
-        el.outerHTML = hideMoney ? formatHiddenCurrency(value) : formatCurrency(value, account);
-    });
-
-    const graphContainer = document.getElementById("graph-container");
-    if (hideMoney) {
-        graphContainer.style.display = 'none';
-    } else {
-        graphContainer.style.display = 'block';
-    }
-
-    const { isPopped } = getUrlParams();
-    if (isPopped !== "true") {
-        restrictView();
-    }
-
-    document.getElementById("toggle-money").innerHTML = hideMoney ? "&#9737;" : "&#9737;<span id='eye-cross'>&#9747;</span>";
-};
-
-
 const calculateWeeklyRate = (accountHistory) => {
     if (accountHistory.length < 2) {
         return "";
@@ -144,12 +111,6 @@ const calculateWeeklyRate = (accountHistory) => {
 };
 
 
-const formatHiddenCurrency = (amount) => {
-    const absAmount = Math.abs(amount).toFixed(2).replace(/[\d.]/g, "*");
-    return `<span class="money-value" data-value="${amount}">$${absAmount}</span>`;
-};
-
-
 const formatCurrency = (amount, account=null) => {
     const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
@@ -161,13 +122,7 @@ const formatCurrency = (amount, account=null) => {
         const accountHistory = JSON.parse(localStorage.getItem(account) || "[]");
         weeklyRate = calculateWeeklyRate(accountHistory);
     }
-    return amount < 0 ? `<span class="negative money-value" data-value="${amount}">-${formatted}${weeklyRate}</span></span>` : `<span class="money-value" data-value="${amount}">${formatted}${weeklyRate}</span></span>`;
-};
-
-
-const getFormattedCurrency = (amount, account=null) => {
-    const hideMoney = JSON.parse(localStorage.getItem("hideMoney")) || false;
-    return hideMoney ? formatHiddenCurrency(amount) : formatCurrency(amount, account);
+    return amount < 0 ? `<span class="negative" data-value="${amount}">-${formatted}${weeklyRate}</span></span>` : `<span data-value="${amount}">${formatted}${weeklyRate}</span></span>`;
 };
 
 
@@ -191,7 +146,7 @@ const updateNetWorth = () => {
 
     const netWorthElement = document.getElementById("net-worth");
     netWorthElement.dataset.value = netWorth;
-    netWorthElement.innerHTML = getFormattedCurrency(netWorth, "net-worth");
+    netWorthElement.innerHTML = formatCurrency(netWorth, "net-worth");
 };
 
 
@@ -225,7 +180,6 @@ const addAccount = (type) => {
     updateNetWorth();
     populateGraphDropdown();
     renderGraphLog();
-    toggleMoneyVisibility(false);
 };
 
 
@@ -240,7 +194,7 @@ const renderAccounts = () => {
 
             const accountItem = document.createElement("li");
             accountItem.innerHTML = `
-                ${name} ${getFormattedCurrency(lastValue)}
+                ${name} ${formatCurrency(lastValue)}
                 <button class="popped-element remove-button" onclick="deleteAccount('${type}', '${name}')">&#10006;</button>
             `;
             listElement.appendChild(accountItem);
@@ -249,7 +203,7 @@ const renderAccounts = () => {
         const totalElement = document.getElementById(`${type}-total`);
         const totalValue = JSON.parse(localStorage.getItem(`total-${type}`)) || [];
         const latestValue = totalValue.length ? totalValue[totalValue.length - 1].value : 0;
-        totalElement.innerHTML = "["+getFormattedCurrency(latestValue)+"]";
+        totalElement.innerHTML = "["+formatCurrency(latestValue)+"]";
     });
 
     updateDerivedValues();
@@ -277,7 +231,6 @@ const deleteAccount = (type, name) => {
         renderGoals();
         populateGraphDropdown();
         renderGraphLog();
-        toggleMoneyVisibility(false);
     }
 };
 
@@ -329,7 +282,6 @@ const updateBalances = () => {
     renderAccounts();
     updateNetWorth();
     renderGraphLog();
-    toggleMoneyVisibility(false);
 
     const currentDate = new Date();
     localStorage.setItem('lastUpdateDate', currentDate.toISOString());
@@ -491,7 +443,7 @@ const renderGoals = () => {
         const goalItem = document.createElement("li");
         const dateText = etaDateText === "" ? "N/A" : etaDateText;
         goalItem.innerHTML = `
-            <div class="goal-title">${getFormattedCurrency(goal.value)} <span class="goal-account-name">-- ${displayName}</span></div>
+            <div class="goal-title">${formatCurrency(goal.value)} <span class="goal-account-name">-- ${displayName}</span></div>
             <div class="goal-eta">${etaText}</div>
             <div class="goal-date">${dateText}</div>
             <div class="goal-action"><button class="popped-element remove-button" onclick="deleteGoal('${goal.id}')">&#10006;</button></div>
@@ -517,7 +469,6 @@ const addGoal = () => {
     goalInput.value = "";
 
     renderGoals();
-    toggleMoneyVisibility(false);
 };
 
 
@@ -526,7 +477,6 @@ const deleteGoal = (goalId) => {
     const updatedGoals = goals.filter(goal => goal.id !== goalId);
     localStorage.setItem("goals", JSON.stringify(updatedGoals));
     renderGoals();
-    toggleMoneyVisibility(false);
 };
 
 
@@ -578,10 +528,13 @@ const toggleGraphLogView = () => {
         logView.innerHTML = "&#9776;";
         logView.classList.remove("log-view-pad");
     }
+
+    const box = document.getElementById("main-container");
+    box.scrollTop = box.scrollHeight;
 }
 
 
-const renderGraphLog = () => {
+const renderGraphLog = (dropTrigger = false) => {
     const isLogView = document.getElementById("account-graph") === null;
 
     if (isLogView) {
@@ -590,6 +543,11 @@ const renderGraphLog = () => {
     } else {
         document.getElementById("graph-data").classList.remove("height-limit");
         renderGraph();
+    }
+
+    if (dropTrigger) {
+        const box = document.getElementById("main-container");
+        box.scrollTop = box.scrollHeight;
     }
 }
 
@@ -783,7 +741,7 @@ const generateLogRows = (accountHistory, debtAccount=false) => {
         rows += `
             <tr class="${isHighest ? 'highest' : isLowest ? 'lowest' : ''}">
                 <td>${entry.date}</td>
-                <td>${getFormattedCurrency(entry.value)}</td>
+                <td>${formatCurrency(entry.value)}</td>
                 <td>${absoluteChange}</td>
                 <td>${relativeChange}</td>
             </tr>

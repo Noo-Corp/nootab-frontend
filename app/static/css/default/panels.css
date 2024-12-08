@@ -9,9 +9,12 @@ iframe {
     text-align: right;
     margin-right: 25px;
     margin-top: -14px;
+    display: flex;
+    float: right;
+    gap: 4px;
 }
 
-#arrangeButton {
+#arrangeSpacer button {
     border: 2px solid var(--backtext);
     background: transparent;
     color: var(--backtext);
@@ -24,7 +27,7 @@ iframe {
     white-space: nowrap;
 }
 
-#arrangeButton:hover {
+#arrangeSpacer button:hover {
     background: var(--modeback);
 }
 
@@ -174,7 +177,7 @@ iframe {
     border: 2px solid transparent;
 }
 
-.panel-popout {
+.panel-popout, .panel-privacy {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -182,7 +185,6 @@ iframe {
     padding: 0;
     background-color: transparent;
     border: none;
-    color: var(--main);
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
@@ -196,6 +198,36 @@ iframe {
 .panel-popout.popped {
     transform: scaleX(2) rotate(90deg);
     right: 10px;
+}
+
+.panel-popout {
+    color: var(--main);
+}
+
+.panel-privacy {
+    margin-right: 32px;
+    color: var(--secondary);
+}
+
+.panel-privacy:hover {
+    color: var(--secondaryhover);
+}
+
+.panel.shifted .panel-privacy {
+    margin-right: 8px;
+    color: var(--modetext2);
+}
+
+.panel.shifted .panel-privacy:hover {
+    color: var(--modetext);
+}
+
+.flip-text {
+    color: var(--modetext2);
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.4;
 }
 
 .panel.popout {

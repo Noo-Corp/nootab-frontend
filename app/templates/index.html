@@ -87,7 +87,19 @@
 		</div>
 
 		<div id="arrangeSpacer">
+			<button id="dataButton" onclick="openData()">DATA</button>
 			<button id="arrangeButton" onclick="toggleSidePanel(event)">PANELS</button>
+		</div>
+
+		<div id="dataModal">
+			<div id="data-modal-content">
+				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
+				<div id="data-modal-title">Manage Data</div>
+				<button onclick="saveData()">Save Data</button>
+				<button onclick="uploadData()">Upload Data</button>
+				<button onclick="clearData()">Clear Data</button>
+				<input type="file" id="fileInput" style="display: none;" accept="application/json" onchange="handleFileUpload(event)">
+			</div>
 		</div>
 
 		<div id="sidePanel">

@@ -10,9 +10,6 @@
 <div id="main-container">
     <div id="assets-container">
         <div>
-            <div id="toggle-money-container">
-                <button id="toggle-money" onclick="toggleMoneyVisibility()">Hide Money</button>
-            </div>
             <div id="net-worth-text"><div id="net-worth">$0.00</div>Net Worth</div>
 
             <div id="capital-debt-container">
@@ -44,7 +41,7 @@
 
         <div id="graph-container">
             <div class="popped-element" id="graph-controls">
-                <select id="account-selector" onchange="renderGraphLog()"></select>
+                <select id="account-selector" onchange="renderGraphLog(true)"></select>
                 <button id="toggle-log-view" onclick="toggleGraphLogView()">&#9776;</button>
             </div>
             <div id="graph-data">

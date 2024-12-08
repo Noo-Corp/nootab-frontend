@@ -40,3 +40,61 @@ function pulseLogo(logo) {
     void logo.offsetWidth;
     logo.classList.add('pulse');
 }
+
+function openData() {
+    document.getElementById('dataModal').style.display = 'block';
+}
+  
+function closeModal() {
+    document.getElementById('dataModal').style.display = 'none';
+}
+
+function saveData() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'nootab-data.json';
+    link.click();
+}
+
+function uploadData() {
+    document.getElementById('fileInput').click();
+}
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                for (const [key, value] of Object.entries(data)) {
+                    localStorage.setItem(key, value);
+                }
+                location.reload();
+            } catch (error) {
+                alert('Invalid JSON file');
+            }
+        };
+        reader.readAsText(file);
+    }
+  }
+
+function clearData() {
+    if (confirm('Are you sure you want to clear all data?')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
+window.onclick = function (event) {
+    const modal = document.getElementById('dataModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};

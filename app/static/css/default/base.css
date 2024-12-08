@@ -133,3 +133,58 @@ body {
 .close:hover {
 	color: #e71313;
 }
+
+#dataModal {
+    display: none;
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#data-modal-content {
+    position: relative;
+    background-color: var(--modeback);
+    margin: 15% auto;
+    padding: 50px 0px;
+    width: 400px;
+    text-align: center;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+#data-modal-title {
+    font-weight: bold;
+    font-size: 22px;
+    color: var(--modetext);
+    text-transform: uppercase;
+    margin: 18px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+#data-modal-content button {
+    border: 2px solid var(--backtext);
+    background: transparent;
+    color: var(--modetext2);
+    font-size: 15px;
+    font-weight: bold;
+    padding: 0 24px;
+    cursor: pointer;
+    border-radius: 4px;
+    height: 40px;
+    width: 200px;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+#data-modal-content button:hover {
+    background: var(--bodyback);
+}
