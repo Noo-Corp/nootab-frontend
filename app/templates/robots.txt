@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /$
+Allow: /static/
+Disallow: /
+
+Sitemap: https://nootab.com/sitemap.xml
