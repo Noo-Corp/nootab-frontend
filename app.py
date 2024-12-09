@@ -99,6 +99,9 @@ def authorize():
 def oauth_callback():
     app_name = request.args.get('app')
 
+    if not app_name:
+        return jsonify({"error": "Missing required parameters: state, code, or app"}), 400
+
     if app_name == "gmail":
         SCOPES = GMAIL_SCOPES
     elif app_name == "calendar":
