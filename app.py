@@ -54,9 +54,9 @@ def authorize():
     else:
         with open("credentials.json") as f:
                 creds_data = json.load(f)
-                client_id = creds_data["installed"]["client_id"]
-                client_secret = creds_data["installed"]["client_secret"]
-                token_uri = creds_data["installed"]["token_uri"]
+                client_id = creds_data["web"]["client_id"]
+                client_secret = creds_data["web"]["client_secret"]
+                token_uri = creds_data["web"]["token_uri"]
         creds = Credentials(
             token=access_token,
             refresh_token=refresh_token,
@@ -111,7 +111,7 @@ def oauth_callback():
     flow.fetch_token(authorization_response=request.url)
     creds = flow.credentials
 
-    response = jsonify({"authorized": True})
+    response = jsonify({"message": "Authorization successful, you can close this window"})
     if scope == "https://www.googleapis.com/auth/gmail.readonly":
         token_prefix = "gmail"
     else:
@@ -128,9 +128,9 @@ def view_email(email_id):
     
     with open("credentials.json") as f:
             creds_data = json.load(f)
-            client_id = creds_data["installed"]["client_id"]
-            client_secret = creds_data["installed"]["client_secret"]
-            token_uri = creds_data["installed"]["token_uri"]
+            client_id = creds_data["web"]["client_id"]
+            client_secret = creds_data["web"]["client_secret"]
+            token_uri = creds_data["web"]["token_uri"]
     creds = Credentials(
         token=access_token,
         refresh_token=refresh_token,
