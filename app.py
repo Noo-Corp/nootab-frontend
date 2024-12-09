@@ -116,18 +116,21 @@ def oauth_callback():
         token_prefix = "gmail"
     else:
         token_prefix = "calendar"
-    response.set_cookie(f'{token_prefix}_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
-    response.set_cookie(f'{token_prefix}_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
-
-    response.set_data("""
+    response = Response("""
         <script>
+            // Set cookies
+            document.cookie = "access_token=" + "{creds.token}" + "; path=/; secure; samesite=Strict;";
+            document.cookie = "refresh_token=" + "{creds.refresh_token}" + "; path=/; secure; samesite=Strict;";
+            
+            // Refresh the parent window
             if (window.opener) {
                 window.opener.location.reload();
             }
+            // Close the current window
             window.close();
         </script>
-    """)
-
+    """, mimetype='text/html')
+    
     return response
 
 
