@@ -1,1 +1,1 @@
-web: gunicorn nootab.wsgi
+web: gunicorn app:app
