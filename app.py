@@ -5,7 +5,7 @@ import base64
 from flask import Flask, render_template, jsonify, request
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -44,8 +44,10 @@ def authorize():
         if check == "1":
             return jsonify({"authorized": False})
 
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "credentials.json", SCOPES
+        flow = Flow.from_client_secrets_file(
+            "credentials.json",
+            scopes=SCOPES,
+            redirect_uri=request.host_url + 'oauth_callback'
         )
         auth_url, _ = flow.authorization_url(prompt='consent')
         return jsonify({"auth_url": auth_url})
@@ -101,7 +103,11 @@ def oauth_callback():
     elif app_name == "calendar":
         SCOPES = CALENDAR_SCOPES
 
-    flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+    flow = Flow.from_client_secrets_file(
+        "credentials.json",
+        scopes=SCOPES,
+        redirect_uri=request.host_url + 'oauth_callback'
+    )
     flow.fetch_token(authorization_response=request.url)
     creds = flow.credentials
 

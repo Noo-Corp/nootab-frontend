@@ -75,7 +75,9 @@ function googleAuthorize(check) {
 		} else {
 			document.getElementById("authorize-button").style.display = "inline";
 			document.getElementById("signout-button").style.display = "none";
-            window.open(data.auth_url, "_blank", "width=600,height=800");
+            if (check == "0") {
+                window.open(data.auth_url, "_blank", "width=600,height=800");
+            }
 		}
 	})
 }
