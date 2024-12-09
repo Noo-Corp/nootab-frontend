@@ -47,7 +47,8 @@ def authorize():
         flow = InstalledAppFlow.from_client_secrets_file(
             "credentials.json", SCOPES
         )
-        creds = flow.run_local_server(port=0)
+        auth_url, _ = flow.authorization_url(prompt='consent')
+        return jsonify({"auth_url": auth_url})
     else:
         with open("credentials.json") as f:
                 creds_data = json.load(f)
@@ -72,8 +73,6 @@ def authorize():
                 "emails": gmail_data[0],
                 "user_email": gmail_data[1]
             })
-            response.set_cookie('gmail_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
-            response.set_cookie('gmail_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
             return response
         else:
             return jsonify({"authorized": False})
@@ -86,13 +85,31 @@ def authorize():
                 "events": calendar_data[0],
                 "user_email": calendar_data[1]
             })
-            response.set_cookie('calendar_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
-            response.set_cookie('calendar_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
             return response
         else:
             return jsonify({"authorized": False})
     else:
         return jsonify({"authorized": False})
+
+
+@app.route('/oauth_callback')
+def oauth_callback():
+    app_name = request.args.get('app')
+
+    if app_name == "gmail":
+        SCOPES = GMAIL_SCOPES
+    elif app_name == "calendar":
+        SCOPES = CALENDAR_SCOPES
+
+    flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+    flow.fetch_token(authorization_response=request.url)
+    creds = flow.credentials
+
+    response = jsonify({"authorized": True})
+    token_prefix = "gmail" if app_name == "gmail" else "calendar"
+    response.set_cookie(f'{token_prefix}_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
+    response.set_cookie(f'{token_prefix}_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
+    return response
 
 
 @app.route('/view_email/<email_id>')
