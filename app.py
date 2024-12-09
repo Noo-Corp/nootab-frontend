@@ -111,13 +111,23 @@ def oauth_callback():
     flow.fetch_token(authorization_response=request.url)
     creds = flow.credentials
 
-    response = jsonify({"message": "Authorization successful, you can close this window"})
+    response = jsonify({"message": "Authorization successful"})
     if scope == "https://www.googleapis.com/auth/gmail.readonly":
         token_prefix = "gmail"
     else:
         token_prefix = "calendar"
     response.set_cookie(f'{token_prefix}_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
     response.set_cookie(f'{token_prefix}_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
+
+    response.set_data("""
+        <script>
+            if (window.opener) {
+                window.opener.location.reload();
+            }
+            window.close();
+        </script>
+    """)
+
     return response
 
 
