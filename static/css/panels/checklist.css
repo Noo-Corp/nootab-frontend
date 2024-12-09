@@ -47,6 +47,7 @@ html {
     margin: 0;
     flex-grow: 1;
     overflow-y: auto;
+    height: 50%;
 }
 
 #checklist-list li {
