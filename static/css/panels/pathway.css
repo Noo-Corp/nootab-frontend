@@ -192,10 +192,11 @@ body {
 .goal-section.ongoing.glance-view .goal {
     background-color: var(--ongoing);
     color: #000;
+    padding: 6px;
 }
 
 .goal.glance-view {
-    padding: 6px;
+    padding: 8px 6px;
     border: none;
     font-size: 14px;
 }

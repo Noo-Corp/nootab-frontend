@@ -148,6 +148,22 @@
     margin: 8px 0;
 }
 
+#capital-list li div, #debt-list li div {
+    flex: 1;
+    overflow: auto;
+    margin: 0 8px;
+}
+
+#capital-list li div:first-child, #debt-list li div:first-child {
+    text-align: left;
+    margin-left: 0;
+}
+
+#capital-list li div:last-child, #debt-list li div:last-child {
+    text-align: right;
+    margin-right: 0;
+}
+
 ul {
     list-style: none;
     padding: 0;

@@ -176,8 +176,10 @@ const addAccount = (type) => {
     accounts[name] = [{ date: new Date().toLocaleDateString('en-US'), value: initialValue }];
     localStorage.setItem(type, JSON.stringify(accounts));
 
+    updateDerivedValues();
     renderAccounts();
     updateNetWorth();
+    renderGoals();
     populateGraphDropdown();
     renderGraphLog();
 };
@@ -194,8 +196,9 @@ const renderAccounts = () => {
 
             const accountItem = document.createElement("li");
             accountItem.innerHTML = `
-                ${name} ${formatCurrency(lastValue)}
-                <button class="popped-element remove-button" onclick="deleteAccount('${type}', '${name}')">&#10006;</button>
+                <div>${name}</div>
+                <div>${formatCurrency(lastValue)}</div>
+                <div><button class="popped-element remove-button" onclick="deleteAccount('${type}', '${name}')">&#10006;</button></div>
             `;
             listElement.appendChild(accountItem);
         }
