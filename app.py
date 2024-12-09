@@ -50,7 +50,6 @@ def authorize():
             redirect_uri=request.host_url + 'oauth_callback'
         )
         auth_url, _ = flow.authorization_url(prompt='consent')
-        auth_url = f"{auth_url}&app={app}"
         return jsonify({"auth_url": auth_url})
     else:
         with open("credentials.json") as f:
@@ -97,14 +96,11 @@ def authorize():
 
 @app.route('/oauth_callback')
 def oauth_callback():
-    app_name = request.args.get('app')
+    scope = request.args.get('scope')
 
-    if not app_name:
-        return jsonify({"error": "Missing required parameters: state, code, or app"}), 400
-
-    if app_name == "gmail":
+    if scope == "https://www.googleapis.com/auth/gmail.readonly":
         SCOPES = GMAIL_SCOPES
-    elif app_name == "calendar":
+    elif scope == "https://www.googleapis.com/auth/calendar.readonly":
         SCOPES = CALENDAR_SCOPES
 
     flow = Flow.from_client_secrets_file(
@@ -116,7 +112,10 @@ def oauth_callback():
     creds = flow.credentials
 
     response = jsonify({"authorized": True})
-    token_prefix = "gmail" if app_name == "gmail" else "calendar"
+    if scope == "https://www.googleapis.com/auth/gmail.readonly":
+        token_prefix = "gmail"
+    else:
+        token_prefix = "calendar"
     response.set_cookie(f'{token_prefix}_access_token', creds.token, httponly=True, secure=True, samesite="Strict")
     response.set_cookie(f'{token_prefix}_refresh_token', creds.refresh_token, httponly=True, secure=True, samesite="Strict")
     return response
