@@ -50,6 +50,7 @@ def authorize():
             redirect_uri=request.host_url + 'oauth_callback'
         )
         auth_url, _ = flow.authorization_url(prompt='consent')
+        auth_url = f"{auth_url}&app={app}"
         return jsonify({"auth_url": auth_url})
     else:
         with open("credentials.json") as f:
