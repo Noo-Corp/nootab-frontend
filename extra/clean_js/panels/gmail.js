@@ -137,7 +137,6 @@ function googleAuthorize(check) {
                 shadowRoot.innerHTML = `
                     <div style="
                         width: 100%;
-                        background-color: var(--modeback);
                         color: var(--secondary);
                         font-weight: bold;
                         font-size: 12px;

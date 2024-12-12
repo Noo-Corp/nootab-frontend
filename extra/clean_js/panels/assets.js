@@ -1,7 +1,6 @@
 window.addEventListener("load", function () {
     renderAccounts();
     updateNetWorth();
-    updateLastUpdate();
 
     populateGraphDropdown();
 
