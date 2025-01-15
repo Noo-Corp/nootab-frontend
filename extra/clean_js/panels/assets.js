@@ -1,5 +1,5 @@
 window.addEventListener("load", function () {
-    renderAccounts();
+    renderAccounts("load");
     updateNetWorth();
     updateLastUpdate();
 
@@ -185,7 +185,7 @@ const addAccount = (type) => {
 };
 
 
-const renderAccounts = () => {
+const renderAccounts = (state) => {
     ["capital", "debt"].forEach((type) => {
         const listElement = document.getElementById(`${type}-list`);
         listElement.innerHTML = "";
@@ -209,7 +209,9 @@ const renderAccounts = () => {
         totalElement.innerHTML = "["+formatCurrency(latestValue)+"]";
     });
 
-    updateDerivedValues();
+    if (state != "load") {
+        updateDerivedValues();
+    }
     renderGoalsDropdown();
     renderGoals();
 };
