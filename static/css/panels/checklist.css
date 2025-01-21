@@ -106,6 +106,8 @@ html {
     font-size: 16px;
     color: var(--modetext);
     word-wrap: anywhere;
+    padding-right: 28px;
+    width: min-content;
 }
 
 #checklist-list li button {
