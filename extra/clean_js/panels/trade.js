@@ -80,9 +80,9 @@ function updateStatsTable(data) {
 
         nameElement.textContent = bestAlgorithm.Algorithm;
         gainElement.innerHTML = `${formatValue(bestAlgorithm["Gain"], "money")} <span id="best-algorithm-percent-gain">(${formatValue(bestAlgorithm["Percent Gain"], "percent")})</span>`;
-        avgSellElement.textContent = formatValue(bestAlgorithm["Average Sell Gain"], "money");
-        winRateElement.textContent = formatValue(bestAlgorithm["Win Rate"], "percent");
-        profitFactorElement.textContent = bestAlgorithm["Profit Factor"];
+        avgSellElement.innerHTML = formatValue(bestAlgorithm["Average Sell Gain"], "money");
+        winRateElement.innerHTML = formatValue(bestAlgorithm["Win Rate"], "win_rate");
+        profitFactorElement.innerHTML = formatValue(bestAlgorithm["Profit Factor"], "profit_factor");
     } else {
         statsContainer.style.display = "block";
         panel.style.display = "none";
@@ -97,8 +97,8 @@ function updateStatsTable(data) {
                 <td>${formatValue(row["Percent Gain"], "percent")}</td>
                 <td>${row.Sells}</td>
                 <td>${formatValue(row["Average Sell Gain"], "money")}</td>
-                <td>${formatValue(row["Win Rate"], "percent")}</td>
-                <td>${row["Profit Factor"]}</td>
+                <td>${formatValue(row["Win Rate"], "win_rate")}</td>
+                <td>${formatValue(row["Profit Factor"], "profit_factor")}</td>
             `;
             statsBody.appendChild(tr);
         });
@@ -113,12 +113,27 @@ function formatValue(value, type) {
     if (type === "money") {
         const number = parseFloat(value);
         if (number < 0) {
-            return `-$${Math.abs(number).toFixed(2)}`;
+            return `<span class="negative">-$${Math.abs(number).toFixed(2)}</span>`;
         }
         return `$${number.toFixed(2)}`;
-    }
-    if (type === "percent") {
+    } else if (type === "percent") {
+        const number = parseFloat(value);
+        if (number < 0) {
+            return `<span class="negative">${(parseFloat(value) * 100).toFixed(2)}%</span>`;
+        }
         return `${(parseFloat(value) * 100).toFixed(2)}%`;
+    } else if (type === "win_rate") {
+        const number = parseFloat(value);
+        if (number < 0.5) {
+            return `<span class="negative">${(parseFloat(value) * 100).toFixed(2)}%</span>`;
+        }
+        return `${(parseFloat(value) * 100).toFixed(2)}%`;
+    } else if (type === "profit_factor") {
+        const number = parseFloat(value);
+        if (number < 1) {
+            return `<span class="negative">${(parseFloat(value)).toFixed(2)}</span>`;
+        }
+        return `${(parseFloat(value)).toFixed(2)}`;
     }
     return value;
 }
@@ -140,7 +155,11 @@ function saveApiKey() {
         if (response.ok) {
             localStorage.setItem("trade-api-key", apiKey);
             document.getElementById("api-key-input").style.display = "none";
+            document.getElementById("best-algorithm-panel").style.display = "block";
+            document.getElementById("graph-container").style.display = "block";
+            document.getElementById("stats-container").style.display = "block";
             startFetchingStats();
+            startFetchingGraph();
         }
     })
 }
@@ -148,14 +167,15 @@ function saveApiKey() {
 
 function startFetchingStats() {
     const apiKey = localStorage.getItem("trade-api-key");
-    if (!apiKey) {
-        document.getElementById("api-key-input").style.display = "block";
-        return;
-    }
-
-    document.getElementById("api-key-input").style.display = "none";
     fetchStats(apiKey);
     setInterval(() => fetchStats(apiKey), 5000);
+}
+
+
+function startFetchingGraph() {
+    const apiKey = localStorage.getItem("trade-api-key");
+    fetchGraph(apiKey);
+    setInterval(() => fetchGraph(apiKey), 150000);
 }
 
 
@@ -231,7 +251,13 @@ function renderGraph(data) {
                         color: "rgba(111, 111, 111, 0.4)",
                     },
                     ticks: {
-                        color: modeText,
+                        color: function(c) {
+                            if (c['tick']['value'] < 0) {
+                                return '#ff5353';
+                            } else {
+                                return modeText;
+                            }
+                        },
                         font: {
                             size: isPoppedView ? 12 : 10,
                         },
@@ -261,16 +287,6 @@ function renderGraph(data) {
 }
 
 
-function startFetchingGraph() {
-    const apiKey = localStorage.getItem("trade-api-key");
-    if (!apiKey) {
-        return;
-    }
-    fetchGraph(apiKey);
-    setInterval(() => fetchGraph(apiKey), 150000);
-}
-
-
 function expandView() {
     const graphContainer = document.getElementById('graph-container');
     graphContainer.style.height = "60%";
@@ -286,6 +302,15 @@ function getUrlParams() {
 
 
 window.onload = () => {
+    const apiKey = localStorage.getItem("trade-api-key");
+    if (!apiKey) {
+        document.getElementById("api-key-input").style.display = "flex";
+        document.getElementById("best-algorithm-panel").style.display = "none";
+        document.getElementById("graph-container").style.display = "none";
+        document.getElementById("stats-container").style.display = "none";
+        return;
+    }
+
     startFetchingStats();
     startFetchingGraph();
 
