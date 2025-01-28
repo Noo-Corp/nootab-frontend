@@ -264,7 +264,7 @@ function addToPanelOrder(panelName) {
     let flippedPanels = JSON.parse(localStorage.getItem('flipped-panels')) || [];
 
     if (panelOrder.length < 8) {
-        if (panelOrder.includes(panelName) && ["gmail", "calendar", "pathway", "assets"].includes(panelName)) {
+        if (panelOrder.includes(panelName) && ["gmail", "calendar", "pathway", "assets", "trade"].includes(panelName)) {
             return
         }
 

@@ -625,8 +625,8 @@ const renderGraph = () => {
 
     const rootStyles = getComputedStyle(document.documentElement);
     const modeText = rootStyles.getPropertyValue('--modetext').trim();
-    const mainColur = rootStyles.getPropertyValue('--main').trim();
-    const mainColurHover = rootStyles.getPropertyValue('--hover').trim();
+    const mainColour = rootStyles.getPropertyValue('--main').trim();
+    const mainColourHover = rootStyles.getPropertyValue('--hover').trim();
     const secondaryColour = rootStyles.getPropertyValue('--secondary').trim();
 
     const accountChart = new Chart(ctx, {
@@ -636,8 +636,8 @@ const renderGraph = () => {
             datasets: [{
                 label: "",
                 data: data,
-                borderColor: mainColur,
-                backgroundColor: mainColurHover,
+                borderColor: mainColour,
+                backgroundColor: mainColourHover,
                 borderWidth: 2,
                 tension: 0
             }, {
@@ -689,7 +689,10 @@ const renderGraph = () => {
                     ticks: {
                         color: modeText,
                         callback: function(value) {
-                            return '$' + new Intl.NumberFormat().format(value.toFixed(2));
+                            if (value < 0) {
+                                return `-$${Math.abs(value).toFixed(2)}`;
+                            }
+                            return `$${value.toFixed(2)}`;
                         }
                     }
                 }

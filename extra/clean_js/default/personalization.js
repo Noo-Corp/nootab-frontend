@@ -116,6 +116,12 @@ window.addEventListener("load", function() {
 			iframe.src = iframe.src;
 		}
 
+		const trade_panel = document.querySelector(".panel.trade") || null;
+		if (trade_panel) {
+			const iframe = trade_panel.querySelector("iframe");
+			iframe.src = iframe.src;
+		}
+
 		colourPickerContent.classList.remove('show');
 		document.getElementById("modalOverlay").style.display = "none";
 	});
@@ -183,6 +189,12 @@ window.addEventListener("load", function() {
 		const asset_panel = document.querySelector(".panel.assets") || null;
 		if (asset_panel) {
 			const iframe = asset_panel.querySelector("iframe");
+			iframe.src = iframe.src;
+		}
+
+		const trade_panel = document.querySelector(".panel.trade") || null;
+		if (trade_panel) {
+			const iframe = trade_panel.querySelector("iframe");
 			iframe.src = iframe.src;
 		}
 

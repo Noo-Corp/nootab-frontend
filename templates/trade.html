@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="../static/css/panels/common.css">
+<link rel="stylesheet" href="../static/css/panels/trade.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+<script type="text/javascript" src="../static/js/panels/common.js"></script>
+<script type="text/javascript" src="../static/js/panels/trade.js"></script>
+
+<div id="server-status" style="display: none;">
+    <span id="server-indicator">OFFLINE</span>
+</div>
+
+<div id="main-container">
+    <div id="trade-container">
+        <div id="title-container">
+            <div id="main-title">NOO TRADE</div>
+        </div>
+
+        <div id="api-key-input" style="display: none;">
+            <input type="text" id="apiKey" placeholder="Enter API Key">
+            <button onclick="saveApiKey()">Submit</button>
+        </div>
+
+        <div id="graph-container">
+            <canvas id="algorithm-graph"></canvas>
+        </div>
+
+        <div id="best-algorithm-panel">
+            <div id="best-algorithm-header">
+                <p id="best-algorithm-name"></p>
+                <p id="best-algorithm-gain"></p>
+            </div>
+        
+            <div id="best-algorithm-details">
+                <div>
+                    <p class="best-algorithm-value">Avg Sell Gain</p>
+                    <p id="best-algorithm-avg-sell"></p>
+                </div>
+                <div>
+                    <p class="best-algorithm-value">Win Rate</p>
+                    <p id="best-algorithm-win-rate"></p>
+                </div>
+                <div>
+                    <p class="best-algorithm-value">Profit Factor</p>
+                    <p id="best-algorithm-profit-factor"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="stats-container">
+            <table id="stats-table">
+                <thead>
+                    <tr>
+                        <th>Algorithm</th>
+                        <th>Gain</th>
+                        <th>Trade Gain</th>
+                        <th>Investment Gain</th>
+                        <th>Percent Gain</th>
+                        <th>Sells</th>
+                        <th>Average Sell Gain</th>
+                        <th>Win Rate</th>
+                        <th>Profit Factor</th>
+                    </tr>
+                </thead>
+                <tbody id="stats-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="title-container">
+        <div id="main-title">NOO TRADE</div>
+    </div>
+</div>
