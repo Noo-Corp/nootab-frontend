@@ -115,6 +115,17 @@ body {
     filter: contrast(94%);
 }
 
+#stats-table td.holdings-cell {
+    color: var(--secondary);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#stats-table td.holdings-cell:hover {
+    background-color: var(--secondary);
+    color: var(--secondarytext);
+}
+
 #api-key-input {
     display: flex;
     height: calc(100% - 60px);

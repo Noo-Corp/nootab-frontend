@@ -82,7 +82,7 @@ function updateStatsTable(data) {
         gainElement.innerHTML = `${formatValue(bestAlgorithm["Gain"], "money")} <span id="best-algorithm-percent-gain">(${formatValue(bestAlgorithm["Percent Gain"], "percent")})</span>`;
         avgSellElement.innerHTML = formatValue(bestAlgorithm["Average Sell Gain"], "money");
         winRateElement.innerHTML = formatValue(bestAlgorithm["Win Rate"], "win_rate");
-        profitFactorElement.innerHTML = formatValue(bestAlgorithm["Profit Factor"], "profit_factor");
+        profitFactorElement.innerHTML = formatValue(bestAlgorithm["Profit Factor"], "number", "profit_factor");
     } else {
         statsContainer.style.display = "block";
         panel.style.display = "none";
@@ -90,6 +90,7 @@ function updateStatsTable(data) {
         data.forEach(row => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
+                <td class="holdings-cell">&#9776;</td>
                 <td>${row.Algorithm}</td>
                 <td>${formatValue(row["Gain"], "money")}</td>
                 <td>${formatValue(row["Trade Gain"], "money")}</td>
@@ -98,27 +99,54 @@ function updateStatsTable(data) {
                 <td>${row.Sells}</td>
                 <td>${formatValue(row["Average Sell Gain"], "money")}</td>
                 <td>${formatValue(row["Win Rate"], "win_rate")}</td>
-                <td>${formatValue(row["Profit Factor"], "profit_factor")}</td>
+                <td>${formatValue(row["Profit Factor"], "number", "profit_factor")}</td>
             `;
+
+            const holdingsCell = tr.querySelector('.holdings-cell');
+            holdingsCell.addEventListener('click', () => {
+                let holdings = JSON.parse(row["Holdings"].replace(/'/g, '"'));
+                let holdingsInfo = '';
+
+                holdings.forEach(holding => {
+                    holdingsInfo += `
+                        Symbol: ${holding[0]}
+                        Units: ${formatValue(holding[1], "number", "no-css")}
+                        Value: ${formatValue(holding[2], "money", "no-css")}
+                        Avg Buy: ${formatValue(holding[3], "money", "no-css")}
+                        Gain: ${formatValue(holding[4], "money", "no-css")}
+                        Percent Gain: ${formatValue(holding[5], "percent", "no-css")}
+                        
+                    `;
+                });
+
+                alert(`HOLDINGS\n\n${holdingsInfo}`);
+            });
+
             statsBody.appendChild(tr);
         });
     }
 }
 
 
-function formatValue(value, type) {
+function formatValue(value, type, flag=null) {
     if (value === "N/A") {
         return value;
     }
     if (type === "money") {
         const number = parseFloat(value);
         if (number < 0) {
+            if (flag == "no-css") {
+                return `-$${Math.abs(number).toFixed(2)}`;
+            }
             return `<span class="negative">-$${Math.abs(number).toFixed(2)}</span>`;
         }
         return `$${number.toFixed(2)}`;
     } else if (type === "percent") {
         const number = parseFloat(value);
         if (number < 0) {
+            if (flag == "no-css") {
+                return `${(parseFloat(value) * 100).toFixed(2)}%`;
+            }
             return `<span class="negative">${(parseFloat(value) * 100).toFixed(2)}%</span>`;
         }
         return `${(parseFloat(value) * 100).toFixed(2)}%`;
@@ -128,9 +156,20 @@ function formatValue(value, type) {
             return `<span class="negative">${(parseFloat(value) * 100).toFixed(2)}%</span>`;
         }
         return `${(parseFloat(value) * 100).toFixed(2)}%`;
-    } else if (type === "profit_factor") {
+    } else if (type === "number") {
         const number = parseFloat(value);
-        if (number < 1) {
+
+        if (flag == "profit_factor") {
+            if (number < 1) {
+                return `<span class="negative">${(parseFloat(value)).toFixed(2)}</span>`;
+            }
+            return `${(parseFloat(value)).toFixed(2)}`;
+        }
+
+        if (number < 0) {
+            if (flag == "no-css") {
+                return `${(parseFloat(value)).toFixed(2)}`;
+            }
             return `<span class="negative">${(parseFloat(value)).toFixed(2)}</span>`;
         }
         return `${(parseFloat(value)).toFixed(2)}`;
