@@ -110,7 +110,7 @@ function updateStatsTable(data) {
                 holdings.forEach(holding => {
                     holdingsInfo += `
                         Symbol: ${holding[0]}
-                        Units: ${formatValue(holding[1], "number", "no-css")}
+                        Units: ${holding[1]}
                         Value: ${formatValue(holding[2], "money", "no-css")}
                         Avg Buy: ${formatValue(holding[3], "money", "no-css")}
                         Gain: ${formatValue(holding[4], "money", "no-css")}
