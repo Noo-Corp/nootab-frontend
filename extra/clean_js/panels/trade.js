@@ -229,7 +229,9 @@ function renderGraph(data) {
     const colours = [
         "#4CAF50", "#2196F3", "#FFC107", "#E91E63", "#9C27B0",
         "#FF5722", "#009688", "#3F51B5", "#CDDC39", "#FF9800",
-        "#673AB7", "#00BCD4", "#8BC34A", "#607D8B", "#795548"
+        "#673AB7", "#00BCD4", "#8BC34A", "#607D8B", "#795548",
+        "#FFEB3B", "#03A9F4", "#F44336", "#8E24AA", "#FFB74D",
+        "#1B5E20", "#00ACC1", "#C2185B", "#5D4037", "#DCE775"
     ];
 
     const { isPopped } = getUrlParams();
