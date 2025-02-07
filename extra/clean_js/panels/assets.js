@@ -629,6 +629,9 @@ const renderGraph = () => {
     const mainColourHover = rootStyles.getPropertyValue('--hover').trim();
     const secondaryColour = rootStyles.getPropertyValue('--secondary').trim();
 
+    const { isPopped } = getUrlParams();
+    const isPoppedView = isPopped == "true";
+
     const accountChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -675,6 +678,7 @@ const renderGraph = () => {
                         color: "rgba(111, 111, 111, 0.4)",
                     },
                     ticks: {
+                        maxTicksLimit: isPoppedView ? 28 : 7,
                         color: modeText,
                     }
                 },
@@ -687,7 +691,16 @@ const renderGraph = () => {
                         color: "rgba(111, 111, 111, 0.4)",
                     },
                     ticks: {
-                        color: modeText,
+                        color: function(c) {
+                            if (c['tick']['value'] < 0) {
+                                return '#ff5353';
+                            } else {
+                                return modeText;
+                            }
+                        },
+                        font: {
+                            size: isPoppedView ? 12 : 10,
+                        },
                         callback: function(value) {
                             if (value < 0) {
                                 return `-$${Math.abs(value).toFixed(2)}`;
