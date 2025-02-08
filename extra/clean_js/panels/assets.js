@@ -678,7 +678,7 @@ const renderGraph = () => {
                         color: "rgba(111, 111, 111, 0.4)",
                     },
                     ticks: {
-                        maxTicksLimit: isPoppedView ? 28 : 7,
+                        maxTicksLimit: isPoppedView ? 28 : 5,
                         color: modeText,
                     }
                 },
