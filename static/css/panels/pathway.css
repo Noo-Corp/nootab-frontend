@@ -279,7 +279,7 @@ body {
     font-weight: initial;
     text-decoration: underline;
     text-decoration-style: dashed;
-    text-decoration-color: var(--modetext2);
+    text-decoration-color: var(--backtext);
     text-underline-offset: 2px;
 }
 
