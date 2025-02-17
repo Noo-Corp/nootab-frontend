@@ -40,7 +40,7 @@ body {
     background: var(--bodyback);
     left: 0;
     width: calc(100% - 52px);
-    padding-right: 34px;
+    padding-right: 51px;
     overflow: auto;
     border-top: 2px solid var(--modeback);
 }

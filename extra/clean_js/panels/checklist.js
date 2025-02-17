@@ -38,7 +38,11 @@ function loadChecklist() {
                 if (task.checked) {
                     li.classList.add('checked');
                 }
-        
+
+                if (task.focused) {
+                    li.classList.add('focused');
+                }
+
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.checked = task.checked;
@@ -46,6 +50,14 @@ function loadChecklist() {
         
                 const span = document.createElement('span');
                 span.textContent = task.text;
+
+                const focusBtn = document.createElement('button');
+                focusBtn.innerHTML = '&#9678;';
+                focusBtn.classList.add('priority-btn');
+                focusBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    focusTask(panelIndex, index);
+                });
         
                 const removeBtn = document.createElement('button');
                 removeBtn.innerHTML = '&#10006;';
@@ -57,6 +69,7 @@ function loadChecklist() {
         
                 li.appendChild(checkbox);
                 li.appendChild(span);
+                li.appendChild(focusBtn);
                 li.appendChild(removeBtn);
         
                 li.addEventListener('click', (event) => {
@@ -124,6 +137,31 @@ function addTask(panelIndex) {
 
     localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
     localStorage.setItem("orders-checklist", JSON.stringify(checklistsOrder));
+
+    loadChecklist();
+}
+
+
+function focusTask(panelIndex, index) {
+    let savedChecklists = JSON.parse(localStorage.getItem('vals-checklist')) || [];
+    let checklistsOrder = JSON.parse(localStorage.getItem('orders-checklist')) || [];
+
+    let checklist = savedChecklists[checklistsOrder[panelIndex] - 1][1];
+    
+    let task = checklist[index];
+
+    task.focused = !task.focused;
+
+    checklist.splice(index, 1);
+
+    if (task.focused) {
+        checklist.unshift(task);
+    } else {
+        checklist.push(task);
+    }
+
+    savedChecklists[checklistsOrder[panelIndex] - 1][1] = checklist;
+    localStorage.setItem("vals-checklist", JSON.stringify(savedChecklists));
 
     loadChecklist();
 }

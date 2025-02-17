@@ -41,6 +41,18 @@ html {
     background-color: var(--secondaryhover);
 }
 
+#checklist-list li .priority-btn {
+    margin-right: 25px;
+    color: var(--modetext2);
+    font-size: 18px;
+    font-weight: bold;
+    padding: 2px 5px;
+}
+
+#checklist-list li .priority-btn:hover {
+    color: var(--secondary);
+}
+
 #checklist-list {
     list-style-type: none;
     padding: 0;
@@ -72,6 +84,10 @@ html {
 
 #checklist-list li.checked span {
     text-decoration: line-through;
+}
+
+#checklist-list li.focused {
+    border: 1px solid var(--secondary);
 }
 
 #checklist-list li input[type="checkbox"] {

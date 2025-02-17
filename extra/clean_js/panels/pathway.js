@@ -20,13 +20,144 @@ const goalTypeHeaders = {
 
 
 window.addEventListener("load", function () {
-    loadGoals();
+    const bingoTitle = document.getElementById("bingo-title");
+    bingoTitle.textContent = new Date().getFullYear() + " BINGO";
+
+    const viewType = localStorage.getItem("pathway-view");
+
+    if (!viewType || viewType == "pathway") {
+        goalStart();
+    } else if (viewType == "bingo") {
+        bingoStart();
+    }
 });
+
+
+function goalStart() {
+    document.getElementById("main-title").classList.add("current-title");
+    document.getElementById("bingo-title").classList.remove("current-title");
+    document.getElementById("main-container").style.height = "calc(100% - 60px)";
+    document.getElementById("title-container").style.borderTop = "2px solid var(--modeback)";
+    loadGoals();
+}
+
+
+function bingoStart() {
+    document.getElementById("main-title").classList.remove("current-title");
+    document.getElementById("bingo-title").classList.add("current-title");
+    document.getElementById("main-container").style.height = "calc(100% - 45px)";
+    document.getElementById("title-container").style.borderTop = "none";
+    loadBingo();
+}
 
 
 function getUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
     return { isPopped: urlParams.get("popped") };
+}
+
+
+function setView(view) {
+    localStorage.setItem("pathway-view", view);
+
+    if (view === "pathway") {
+        goalStart();
+    } else if (view === "bingo") {
+        bingoStart();
+    }
+}
+
+
+function loadBingo() {
+    let bingoContainer = document.getElementById("goals-list");
+    bingoContainer.innerHTML = "";
+
+    const boardSize = 5;
+    let bingoData = JSON.parse(localStorage.getItem("bingo-data")) || {
+        checked: Array(boardSize).fill().map(() => Array(boardSize).fill(false)),
+        texts: Array(boardSize).fill().map(() => Array(boardSize).fill("_")),
+    };
+
+    const table = document.createElement("table");
+    table.classList.add("bingo-table");
+
+    for (let row = 0; row < boardSize; row++) {
+        const tr = document.createElement("tr");
+
+        for (let col = 0; col < boardSize; col++) {
+            const td = document.createElement("td");
+            td.classList.add("bingo-cell");
+            td.dataset.row = row;
+            td.dataset.col = col;
+
+            const span = document.createElement("span");
+            span.classList.add("bingo-text");
+            span.textContent = bingoData.texts[row][col];
+            span.contentEditable = true;
+            span.spellcheck = false;
+
+            if (row === 2 && col === 2) {
+                span.textContent = "Free";
+                span.contentEditable = false;
+                td.classList.add("checked", "checked-free");
+                bingoData.checked[row][col] = true;
+            }
+
+            span.addEventListener("click", function(e) {
+                e.stopPropagation();
+            })
+
+            span.addEventListener("input", function () {
+                bingoData.texts[row][col] = this.textContent;
+                localStorage.setItem("bingo-data", JSON.stringify(bingoData));
+            });
+
+            td.addEventListener("click", function () {
+                if (row === 2 && col === 2) return;
+
+                bingoData.checked[row][col] = !bingoData.checked[row][col];
+                localStorage.setItem("bingo-data", JSON.stringify(bingoData));
+
+                this.classList.toggle("checked");
+                checkBingo(bingoData.checked);
+            });
+
+            if (bingoData.checked[row][col]) {
+                td.classList.add("checked");
+            }
+
+            td.appendChild(span);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+
+    bingoContainer.appendChild(table);
+    checkBingo(bingoData.checked);
+}
+
+
+function checkBingo(checkedCells) {
+    const boardSize = 5;
+    let bingoCount = 0;
+
+    for (let i = 0; i < boardSize; i++) {
+        if (checkedCells[i].every(cell => cell)) bingoCount++;
+        if (checkedCells.map(row => row[i]).every(cell => cell)) bingoCount++;
+    }
+
+    if (checkedCells.map((row, i) => row[i]).every(cell => cell)) bingoCount++;
+    if (checkedCells.map((row, i) => row[boardSize - 1 - i]).every(cell => cell)) bingoCount++;
+
+    if (bingoCount == 0) {
+        document.querySelector(".bingo-cell.checked.checked-free").innerText = "FREE";
+    } else if (bingoCount == 1) {
+        document.querySelector(".bingo-cell.checked.checked-free").innerText = "BINGO";
+    } else if (bingoCount == 12) {
+        document.querySelector(".bingo-cell.checked.checked-free").innerText = "FULL BINGO";
+    } else {
+        document.querySelector(".bingo-cell.checked.checked-free").innerText = "BINGO x" + bingoCount;
+    }
 }
 
 
