@@ -53,7 +53,7 @@ function loadChecklist() {
 
                 const focusBtn = document.createElement('button');
                 focusBtn.innerHTML = '&#9678;';
-                focusBtn.classList.add('priority-btn');
+                focusBtn.classList.add('focus-btn');
                 focusBtn.addEventListener('click', (event) => {
                     event.stopPropagation();
                     focusTask(panelIndex, index);

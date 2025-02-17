@@ -41,7 +41,11 @@ html {
     background-color: var(--secondaryhover);
 }
 
-#checklist-list li .priority-btn {
+#checklist-list li.focused .focus-btn {
+    color: var(--secondary);
+}
+
+#checklist-list li .focus-btn {
     margin-right: 25px;
     color: var(--modetext2);
     font-size: 18px;
@@ -49,8 +53,8 @@ html {
     padding: 2px 5px;
 }
 
-#checklist-list li .priority-btn:hover {
-    color: var(--secondary);
+#checklist-list li .focus-btn:hover {
+    color: var(--secondaryhover);
 }
 
 #checklist-list {
