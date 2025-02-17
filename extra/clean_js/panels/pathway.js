@@ -75,7 +75,7 @@ function loadBingo() {
     const boardSize = 5;
     let bingoData = JSON.parse(localStorage.getItem("bingo-data")) || {
         checked: Array(boardSize).fill().map(() => Array(boardSize).fill(false)),
-        texts: Array(boardSize).fill().map(() => Array(boardSize).fill("_")),
+        texts: Array(boardSize).fill().map(() => Array(boardSize).fill("...")),
     };
 
     const table = document.createElement("table");
