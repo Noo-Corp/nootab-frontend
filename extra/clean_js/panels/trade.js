@@ -111,10 +111,10 @@ function updateStatsTable(data) {
                     holdingsInfo += `
                         Symbol: ${holding[0]}
                         Units: ${holding[1]}
-                        Value: ${formatValue(holding[2], "money", "no-css")}
-                        Avg Buy: ${formatValue(holding[3], "money", "no-css")}
-                        Gain: ${formatValue(holding[4], "money", "no-css")}
-                        Percent Gain: ${formatValue(holding[5], "percent", "no-css")}
+                        Value: ${formatValue(holding[4], "money", "no-css")}
+                        Avg Buy: ${formatValue(holding[2], "money", "no-css")}
+                        Gain: ${formatValue(holding[5], "money", "no-css")}
+                        Percent Gain: ${formatValue(holding[6], "percent", "no-css")}
                         
                     `;
                 });
