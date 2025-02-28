@@ -12,10 +12,10 @@ const STATS_ENDPOINT="https://trade.nootab.com/stats",GRAPH_ENDPOINT="https://tr
 `;let n=e.querySelector(".holdings-cell");n.addEventListener("click",()=>{let e=JSON.parse(t.Holdings.replace(/'/g,'"')),a="";e.forEach(t=>{a+=`
             Symbol: ${t[0]}
             Units: ${t[1]}
-            Value: ${formatValue(t[2],"money","no-css")}
-            Avg Buy: ${formatValue(t[3],"money","no-css")}
-            Gain: ${formatValue(t[4],"money","no-css")}
-            Percent Gain: ${formatValue(t[5],"percent","no-css")}
+            Value: ${formatValue(t[4],"money","no-css")}
+            Avg Buy: ${formatValue(t[2],"money","no-css")}
+            Gain: ${formatValue(t[5],"money","no-css")}
+            Percent Gain: ${formatValue(t[6],"percent","no-css")}
             
         `}),alert(`HOLDINGS
 
