@@ -5,7 +5,7 @@ const STATS_ENDPOINT="https://trade.nootab.com/stats",GRAPH_ENDPOINT="https://tr
     <td>${formatValue(t["Trade Gain"],"money")}</td>
     <td>${formatValue(t["Investment Gain"],"money")}</td>
     <td>${formatValue(t["Percent Gain"],"percent")}</td>
-    <td>${t.Sells}</td>
+    <td>${parseInt(t.Sells)}</td>
     <td>${formatValue(t["Average Sell Gain"],"money")}</td>
     <td>${formatValue(t["Win Rate"],"win_rate")}</td>
     <td>${formatValue(t["Profit Factor"],"number","profit_factor")}</td>
