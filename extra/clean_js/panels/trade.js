@@ -96,7 +96,7 @@ function updateStatsTable(data) {
                 <td>${formatValue(row["Trade Gain"], "money")}</td>
                 <td>${formatValue(row["Investment Gain"], "money")}</td>
                 <td>${formatValue(row["Percent Gain"], "percent")}</td>
-                <td>${row.Sells}</td>
+                <td>${parseInt(row.Sells)}</td>
                 <td>${formatValue(row["Average Sell Gain"], "money")}</td>
                 <td>${formatValue(row["Win Rate"], "win_rate")}</td>
                 <td>${formatValue(row["Profit Factor"], "number", "profit_factor")}</td>
