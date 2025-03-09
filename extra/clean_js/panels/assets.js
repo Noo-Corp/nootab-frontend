@@ -724,7 +724,19 @@ const generateLogRows = (accountHistory, debtAccount=false) => {
         const nextEntry = i > 0 ? accountHistory[i - 1] : null;
 
         let absoluteChange = nextEntry ? entry.value - nextEntry.value : 0;
-        let relativeChange = nextEntry ? (absoluteChange / nextEntry.value) * 100 : 0;
+        let relativeChange = 0;
+
+        if (nextEntry) {
+            if (entry.value < 0 && nextEntry.value < 0) {
+                relativeChange = (absoluteChange / Math.abs(nextEntry.value)) * 100;
+            } else if (entry.value > 0 && nextEntry.value > 0) {
+                relativeChange = (absoluteChange / nextEntry.value) * 100;
+            } else if (entry.value < 0 && nextEntry.value > 0) {
+                relativeChange = (absoluteChange / nextEntry.value) * 100;
+            } else if (entry.value > 0 && nextEntry.value < 0) {
+                relativeChange = (Math.abs(absoluteChange) / Math.abs(nextEntry.value)) * 100;
+            }
+        }
 
         const formattedAbs = new Intl.NumberFormat("en-US", {
             style: "currency",
