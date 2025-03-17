@@ -327,10 +327,21 @@ function clearPanelOrder() {
     loadPanelOrderList();
 }
 
-function panelFlipInitial(panel) {
+function panelFlipInitial(panel, panelIndex) {
     const flipText = document.createElement('div');
     flipText.className = "flip-text";
-    flipText.textContent = panel.className.split(' ')[1];
+
+    const panelClass = panel.className.split(' ')[1];
+    if (panelClass === "notes") {
+        const noteTextsOrder = JSON.parse(localStorage.getItem('orders-note'));
+        const noteVals = JSON.parse(localStorage.getItem('vals-note'));
+        const noteTitle = noteVals[noteTextsOrder[panelIndex]-1]?.[0];
+
+        flipText.textContent = noteTitle || panelClass;
+    } else {
+        flipText.textContent = panelClass;
+    }
+
     panel.style.backgroundColor = "var(--modeback)";
     panel.appendChild(flipText);
 
@@ -357,7 +368,7 @@ function panelFlip(event, button) {
     if (flippedPanels[panelIndex]) {
         mainPanel.querySelector('iframe').style.display = "none";
         mainPanel.classList.add("shifted");
-        panelFlipInitial(mainPanel);
+        panelFlipInitial(mainPanel, panelIndex);
     } else {
         const iframe = mainPanel.querySelector('iframe');
         mainPanel.style.backgroundColor = "var(--bodyback)";
