@@ -1,4 +1,140 @@
-var refreshInterval=null;function updateRefreshedAtTime(){let e=document.getElementById("main-title"),t=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});e.textContent=`Refreshed at ${t}`}function formatReceivedTime(e){let t=new Date(e);return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:!0}).format(t)}function displayEmails(e){let t=document.getElementById("email-list");t.innerHTML="<span>- UNREAD EMAILS -</span><ul>"+e.map(e=>{let t=e.subject?e.subject:"(no subject)",n=formatReceivedTime(e.received_time);return`<li onclick="viewEmail(event, '${e.id}')">${t} - ${e.from} - <span>${n}</span></li>`}).join("")+"</ul>"}function viewEmail(e,t){let n=e.target.closest("li");if(n.classList.contains("opened")){n.classList.remove("opened"),document.getElementById("content").style.display="none";return}let l=document.querySelectorAll("#email-list ul li");l.forEach(e=>{e.classList.remove("opened")}),n.classList.add("opened"),fetch(`/view_email/${t}`,{method:"GET",headers:{App:"gmail"}}).then(e=>e.json()).then(e=>{let t=document.getElementById("content");if(e.error){t.shadowRoot?t.shadowRoot.innerHTML="":t.attachShadow({mode:"open"});let n=t.shadowRoot;n.innerHTML=e.error,t.style.display="table"}else if(e.content){if('<div dir="auto"></div>\r\n'==e.content)t.innerText="(no content)";else{t.shadowRoot?t.shadowRoot.innerHTML="":t.attachShadow({mode:"open"}),e.content=e.content.replace(/<div\s+dir=["']auto["'](.*?)>/,'<div dir="auto"$1 style="padding: 22px 0;">');let l=t.shadowRoot;l.innerHTML=e.content}t.style.display="table"}})}function googleSignout(){fetch("/signout",{method:"POST",headers:{App:"gmail"}}).then(e=>e.json()).then(e=>{e.signed_out&&(document.getElementById("authorize-button").style.display="inline",document.getElementById("signout-button").style.display="none",document.getElementById("email-list").innerHTML="",document.getElementById("main-title").textContent="",document.getElementById("refresh").style.display="none",document.getElementById("content").style.display="none",document.getElementById("gmail-link").style.display="none",document.getElementById("initial-view").style.display="block",clearInterval(refreshInterval),refreshInterval=null)})}function googleAuthorize(e){fetch("/authorize",{method:"GET",headers:{Check:e,App:"gmail"}}).then(e=>e.json()).then(t=>{let n=document.getElementById("content");if(document.getElementById("email-list").innerHTML="",n.style.display="none",t.authorized){if(document.getElementById("initial-view").style.display="none",t.emails.length>0)displayEmails(t.emails);else{n.shadowRoot?n.shadowRoot.innerHTML="":n.attachShadow({mode:"open"});let l=n.shadowRoot;l.innerHTML=`
+var refreshInterval = null;
+
+window.onload = function() {
+	refresh("1", "load");
+};
+
+function updateRefreshedAtTime() {
+    const refreshedAtElement = document.getElementById("main-title");
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    refreshedAtElement.textContent = `Refreshed at ${currentTime}`;
+}
+
+function formatReceivedTime(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
+function displayEmails(emails) {
+	const emailListDiv = document.getElementById("email-list");
+	emailListDiv.innerHTML = "<span>- UNREAD EMAILS -</span><ul>" + emails.map(email => {
+        const subject = email.subject ? email.subject : "(no subject)";
+        const formattedTime = formatReceivedTime(email.received_time);
+        return `<li onclick="viewEmail(event, '${email.id}')">${subject} - ${email.from} - <span>${formattedTime}</span></li>`;
+    }).join('') + "</ul>";
+}
+
+function viewEmail(event, emailId) {
+    const listItem = event.target.closest('li');
+    if (listItem.classList.contains('opened')) {
+        listItem.classList.remove('opened');
+        document.getElementById("content").style.display = "none";
+        return;
+    }
+
+    const allEmails = document.querySelectorAll('#email-list ul li');
+    allEmails.forEach(email => {
+        email.classList.remove('opened');
+    });
+    listItem.classList.add('opened');
+
+	fetch(`/view_email/${emailId}`, {
+		method: 'GET',
+		headers: {
+            'App': 'gmail',
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+        const contentDiv = document.getElementById("content");
+
+        if (data.error) {
+            if (contentDiv.shadowRoot) {
+                contentDiv.shadowRoot.innerHTML = "";
+            } else {
+                contentDiv.attachShadow({ mode: 'open' });
+            }
+            const shadowRoot = contentDiv.shadowRoot;
+            shadowRoot.innerHTML = data.error;
+            contentDiv.style.display = "table";
+        } else if (data.content) {
+            if (data.content == '<div dir="auto"></div>\r\n') {
+                contentDiv.innerText = "(no content)";
+            } else {
+                if (contentDiv.shadowRoot) {
+                    contentDiv.shadowRoot.innerHTML = "";
+                } else {
+                    contentDiv.attachShadow({ mode: 'open' });
+                }
+
+                data.content = data.content.replace(
+                    /<div\s+dir=["']auto["'](.*?)>/,
+                    '<div dir="auto"$1 style="padding: 22px 0;">'
+                );
+
+                
+                const shadowRoot = contentDiv.shadowRoot;
+                shadowRoot.innerHTML = data.content;
+            }
+            contentDiv.style.display = "table";
+		}
+	})
+}
+
+function googleSignout() {
+    fetch('/signout', {
+		method: 'POST',
+		headers: {
+            'App': 'gmail',
+		}
+	})
+    .then(response => response.json())
+    .then(data => {
+        if (data.signed_out) {
+            document.getElementById("authorize-button").style.display = "inline";
+            document.getElementById("signout-button").style.display = "none";
+            document.getElementById("email-list").innerHTML = "";
+            document.getElementById("main-title").textContent = "";
+            document.getElementById("refresh").style.display = "none";
+            document.getElementById("content").style.display = "none";
+            document.getElementById('gmail-link').style.display = "none";
+            document.getElementById('initial-view').style.display = "block";
+
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+    });
+}
+
+function googleAuthorize(check) {
+    fetch('/authorize', {
+		method: 'GET',
+		headers: {
+            'Check': check,
+            'App': 'gmail',
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+        const contentDiv = document.getElementById("content");
+
+        document.getElementById('email-list').innerHTML = '';
+        contentDiv.style.display = "none";
+
+        if (data.authorized) {
+            document.getElementById('initial-view').style.display = "none";
+
+			if (data.emails.length > 0) {
+				displayEmails(data.emails);
+			} else {
+                if (contentDiv.shadowRoot) {
+                    contentDiv.shadowRoot.innerHTML = "";
+                } else {
+                    contentDiv.attachShadow({ mode: 'open' });
+                }
+                const shadowRoot = contentDiv.shadowRoot;
+                shadowRoot.innerHTML = `
                     <div style="
                         width: 100%;
                         color: var(--secondary);
@@ -10,4 +146,58 @@ var refreshInterval=null;function updateRefreshedAtTime(){let e=document.getElem
                         transform: translateY(-50%);
                     ">
                         NO UNREAD EMAILS
-                    </div>`,n.style.display="table"}document.getElementById("user-email").textContent=t.user_email,document.getElementById("gmail-link").style.display="block",document.getElementById("authorize-button").style.display="none",document.getElementById("signout-button").style.display="inline",updateRefreshedAtTime(),document.getElementById("refresh").style.display="block",refreshInterval||(refreshInterval=setInterval(()=>{refresh("1","passive")},3e5))}else if(document.getElementById("authorize-button").style.display="inline",document.getElementById("signout-button").style.display="none","0"==e){let i=window.open(t.auth_url,"_blank","width=600,height=800"),o=setInterval(()=>{i.closed&&(clearInterval(o),window.location.reload())},500)}})}function refresh(e,t){let n=document.getElementById("email-list"),l=document.getElementById("content"),i=document.cookie.split("; ").some(e=>e.startsWith("access_token=")||e.startsWith("refresh_token="));"load"!==t||i?"active"===t&&(n.innerHTML="",l.style.display="none"):(n.innerHTML="",l.style.display="none",document.getElementById("initial-view").style.display="block"),googleAuthorize(e)}window.onload=function(){refresh("1","load")};
+                    </div>`;
+                contentDiv.style.display = "table";
+			}
+
+            document.getElementById("user-email").textContent = data.user_email;
+            document.getElementById("gmail-link").style.display = 'block';
+
+			document.getElementById("authorize-button").style.display = "none";
+			document.getElementById("signout-button").style.display = "inline";
+
+            updateRefreshedAtTime();
+
+            document.getElementById("refresh").style.display = "block";
+        
+            if (!refreshInterval) {
+                refreshInterval = setInterval(() => {
+                    refresh('1', 'passive');
+                }, 5 * 60 * 1000);
+            }
+		} else {
+			document.getElementById("authorize-button").style.display = "inline";
+			document.getElementById("signout-button").style.display = "none";
+            if (check == "0") {
+                const oauthWindow = window.open(data.auth_url, "_blank", "width=600,height=800");
+
+                const interval = setInterval(() => {
+                    if (oauthWindow.closed) {
+                        clearInterval(interval);
+                        window.location.reload();
+                    }
+                }, 500);
+            }
+		}
+	})
+}
+
+function refresh(type, behaviour) {
+    const emailList = document.getElementById("email-list");
+    const content = document.getElementById("content");
+
+    const hasTokens = document.cookie.split('; ').some(cookie => {
+        return cookie.startsWith('access_token=') || cookie.startsWith('refresh_token=');
+    });
+
+    if (behaviour === "load" && !hasTokens) {
+        emailList.innerHTML = "";
+        content.style.display = "none";
+        document.getElementById('initial-view').style.display = "block";
+    } else if (behaviour === "active") {
+        emailList.innerHTML = "";
+        content.style.display = "none";
+    }
+
+    googleAuthorize(type);
+}

@@ -1,1 +1,318 @@
-function initUrls(){let{urls:t,values:e,launch:l}=getUrlsFromStorage(),n=document.getElementById("urlButtons"),s=document.getElementById("bookmarkTableBody");n.innerHTML="",s.innerHTML="",t.forEach((r,o)=>{let a=document.createElement("tr"),i=document.createElement("td"),u=document.createElement("button");!0==l[o]?u.innerHTML="&#9733;":u.innerHTML="&#9734;",u.onclick=t=>toggleLaunch(t,o),u.classList.add("launch-link"),i.appendChild(u),a.appendChild(i);let d=document.createElement("td"),c=document.createElement("input");c.value=o+1,c.className="orderInput",d.appendChild(c),a.appendChild(d),$(c).spinner({step:-1,min:1,max:t.length}).siblings(".ui-spinner-up, .ui-spinner-down").addClass("spinner-bookmark-button"),$(c).on("change",function(){let t=parseInt(this.value)-1;updateOrder(o,t)}),$(c).on("keydown",function(t){if("ArrowUp"===t.key||"ArrowDown"===t.key){let e=parseInt(this.value)-1;updateOrder(o,e)}});let p=document.createElement("td");p.innerText=e[o],a.appendChild(p);let m=document.createElement("td"),g=document.createElement("button");g.innerHTML="&#9998;",g.onclick=t=>editBookmark(t,o),g.classList.add("edit-link"),m.appendChild(g);let h=document.createElement("button");h.innerHTML="&#10006;",h.onclick=t=>deleteUrl(t,o),h.classList.add("delete-link"),m.appendChild(h),a.appendChild(m),s.appendChild(a);let y=document.createElement("button");y.className="urlButton",!0==l[o]&&y.classList.add("wide"),setupUrlButtons(y,r,e[o]),n.append(y)}),$(".spinner-bookmark-button").click(function(t){t.stopPropagation(),$(this).siblings("input").change()}),updateURLVisibility()}function addUrlButton(t){t.stopPropagation();var e=prompt("Enter Bookmark URL:");if(null!=e&&""!==e.trim()){var l=prompt("Enter Bookmark Name (Optional):");(""==l.trim()||null==l)&&(l=e.replace(/^(https?:\/\/)?(www\.)?/,"").substring(0,8),e.length>8&&(l+=".."));let n=document.createElement("button");n.className="urlButton",setupUrlButtons(n,e,l);let{urls:s,values:r,launch:o}=getUrlsFromStorage();s.push(e),r.push(l),o.push(!1),saveUrlsToStorage(s,r,o)}initUrls(),updateURLVisibility()}function setupUrlButtons(t,e,l){t.dataset.value=l,t.dataset.url=e;var n=e;e.startsWith("http://")||e.startsWith("https://")||(n="https://"+e),t.onclick=function(){window.location.href=n},t.innerText=l}function updateOrder(t,e){let{urls:l,values:n,launch:s}=getUrlsFromStorage();if(e<0||e>=l.length||t===e)return;let r=l.splice(t,1)[0],o=n.splice(t,1)[0],a=s.splice(t,1)[0];l.splice(e,0,r),n.splice(e,0,o),s.splice(e,0,a),saveUrlsToStorage(l,n,s),initUrls()}function getUrlsFromStorage(){let t=JSON.parse(localStorage.getItem("urls"))||[],e=JSON.parse(localStorage.getItem("url_values"))||[],l=JSON.parse(localStorage.getItem("url_launch"))||[];return{urls:t,values:e,launch:l}}function saveUrlsToStorage(t,e,l){localStorage.setItem("urls",JSON.stringify(t)),localStorage.setItem("url_values",JSON.stringify(e)),localStorage.setItem("url_launch",JSON.stringify(l))}function updateURLVisibility(){let t=document.getElementById("urlButtons"),e=t.getElementsByClassName("urlButton").length>0;e?(t.classList.add("hasSeturlButtons"),document.getElementById("openAllUrlsButton").style.display="block",document.getElementById("urlDivider").style.display="block"):(t.classList.remove("hasSeturlButtons"),document.getElementById("openAllUrlsButton").style.display="none",document.getElementById("urlDivider").style.display="none")}function goToUrl(t){var e=prompt("Enter the URL:");if(""!==e&&null!=e){var l=prompt("(Optional) Enter the name:");(""==l||null==l)&&(l=e.replace(/^(https?:\/\/)?(www\.)?/,"").substring(0,8),e.length>8&&(l+="..")),setupUrlButtons(t,e,l);let{urls:n,values:s,launch:r}=getUrlsFromStorage();n.push(e),s.push(l),saveUrlsToStorage(n,s,r)}}function openAllUrls(){let{urls:t,values:e,launch:l}=getUrlsFromStorage(),n=document.querySelectorAll(".urlButton");if(n.length>0){for(let s=0;s<n.length;s++)if(!0==l[s]){var r=n[s].dataset.url;""!==r&&null!=r&&(r.startsWith("http://")||r.startsWith("https://")||(r="https://"+r),window.open(r,"_blank"))}}}function toggleLaunch(t,e){t.stopPropagation();let{urls:l,values:n,launch:s}=getUrlsFromStorage();s[e]=!s[e],localStorage.setItem("url_launch",JSON.stringify(s)),initUrls()}function editBookmark(t,e){t.stopPropagation();let{urls:l,values:n,launch:s}=getUrlsFromStorage(),r=prompt("Edit Bookmark URL:",l[e]),o=prompt("Edit Bookmark Name:",n[e]);r&&""!==r&&(l[e]=r,n[e]=o||o.replace(/^(https?:\/\/)?(www\.)?/,"").substring(0,8),saveUrlsToStorage(l,n,s),initUrls())}function deleteUrl(t,e){t.stopPropagation();let{urls:l,values:n,launch:s}=getUrlsFromStorage();l.splice(e,1),n.splice(e,1),s.splice(e,1),saveUrlsToStorage(l,n,s),initUrls()}window.addEventListener("load",function(){let t=document.querySelector("#editUrlButton"),e=document.querySelector("#bookmarksContent"),l=document.querySelector("#close-links");initUrls(),t.addEventListener("click",function(){e.classList.add("show"),document.getElementById("modalOverlay").style.display="block"}),l.addEventListener("click",function(t){t.preventDefault(),e.classList.remove("show"),document.getElementById("modalOverlay").style.display="none"}),document.addEventListener("click",function(t){let e=document.querySelector("#bookmarksContent"),l=e.classList.contains("show");if(l){let n=t.target.closest("#bookmarksContent")||"editUrlButton"===t.target.id;n||(e.classList.remove("show"),document.getElementById("modalOverlay").style.display="none")}}),document.addEventListener("keydown",function(t){let e=document.querySelector("#bookmarksContent");"Escape"===t.key&&e.classList.contains("show")&&(e.classList.remove("show"),document.getElementById("modalOverlay").style.display="none")})});
+window.addEventListener("load", function() {
+	const editBtn = document.querySelector("#editUrlButton");
+	const bookmarksContent = document.querySelector('#bookmarksContent');
+	const linksClose = document.querySelector('#close-links');
+
+    initUrls();
+
+	editBtn.addEventListener('click', function() {
+		bookmarksContent.classList.add('show');
+		document.getElementById("modalOverlay").style.display = "block";
+	});
+
+	linksClose.addEventListener('click', function(event) {
+		event.preventDefault();
+		bookmarksContent.classList.remove('show');
+		document.getElementById("modalOverlay").style.display = "none";
+	});
+
+	document.addEventListener('click', function (e) {
+		const bookmarksContent = document.querySelector('#bookmarksContent');
+		const isBookmarksOpen = bookmarksContent.classList.contains('show');
+	
+		if (isBookmarksOpen) {
+			const isClickInsideModal = e.target.closest('#bookmarksContent') || 
+										e.target.id === 'editUrlButton';
+	
+			if (!isClickInsideModal) {
+				bookmarksContent.classList.remove('show');
+				document.getElementById("modalOverlay").style.display = "none";
+			}
+		}
+	});
+	
+	document.addEventListener('keydown', function (event) {
+		const bookmarksContent = document.querySelector('#bookmarksContent');
+	
+		if (event.key === 'Escape' && bookmarksContent.classList.contains('show')) {
+			bookmarksContent.classList.remove('show');
+			document.getElementById("modalOverlay").style.display = "none";
+		}
+	});
+});
+
+function initUrls() {
+	const {
+		urls,
+		values,
+		launch
+	} = getUrlsFromStorage();
+	const buttons = document.getElementById("urlButtons");
+	const bookmarkTableBody = document.getElementById("bookmarkTableBody");
+    buttons.innerHTML = '';
+	bookmarkTableBody.innerHTML = '';
+
+	urls.forEach((url, index) => {
+		// Bookmarks Table
+        const row = document.createElement("tr");
+
+        const launchCell = document.createElement("td");
+        const launchBtn = document.createElement("button");
+		if (launch[index] == true) {
+			launchBtn.innerHTML = "&#9733;";
+		} else {
+			launchBtn.innerHTML = "&#9734;";
+		}
+        launchBtn.onclick = (event) => toggleLaunch(event, index);
+		launchBtn.classList.add("launch-link");
+        launchCell.appendChild(launchBtn);
+        row.appendChild(launchCell);
+
+        const orderCell = document.createElement("td");
+        const orderInput = document.createElement("input");
+        orderInput.value = index + 1; // Display as 1-based index
+		orderInput.className = "orderInput";
+        orderCell.appendChild(orderInput);
+        row.appendChild(orderCell);
+
+		$(orderInput).spinner({
+			step: -1,
+			min: 1,
+			max: urls.length
+		}).siblings('.ui-spinner-up, .ui-spinner-down').addClass("spinner-bookmark-button");
+
+		$(orderInput).on('change', function() {
+			const newIndex = parseInt(this.value) - 1;
+			updateOrder(index, newIndex);
+		});
+
+		$(orderInput).on('keydown', function(event) {
+			if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+				const newIndex = parseInt(this.value) - 1;
+				updateOrder(index, newIndex);
+			}
+		});
+
+        const nameCell = document.createElement("td");
+        nameCell.innerText = values[index];
+        row.appendChild(nameCell);
+
+        const actionsCell = document.createElement("td");
+        const editBtn = document.createElement("button");
+        editBtn.innerHTML = "&#9998;";
+		editBtn.onclick = (event) => editBookmark(event, index);
+		editBtn.classList.add("edit-link");
+        actionsCell.appendChild(editBtn);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "&#10006;";
+        deleteBtn.onclick = (event) => deleteUrl(event, index);
+		deleteBtn.classList.add("delete-link");
+        actionsCell.appendChild(deleteBtn);
+        row.appendChild(actionsCell);
+
+        bookmarkTableBody.appendChild(row);
+		
+		// Bookmarks
+		const newButton = document.createElement("button");
+		newButton.className = "urlButton";
+
+		if (launch[index] == true) {
+			newButton.classList.add("wide");
+		}
+		
+		setupUrlButtons(newButton, url, values[index]);
+
+		buttons.append(newButton);
+	});
+
+	$('.spinner-bookmark-button').click(function(event) {
+		event.stopPropagation();
+		$(this).siblings('input').change();
+	});
+
+	updateURLVisibility();
+}
+
+function addUrlButton(event) {
+	event.stopPropagation();
+	var url = prompt("Enter Bookmark URL:");
+	if (url != null && url.trim() !== "") {
+		var value = prompt("Enter Bookmark Name (Optional):");
+
+		if (value.trim() == "" || value == null) {
+			value = url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 8);
+			if (url.length > 8) {
+				value += "..";
+			}
+		}
+
+		const newButton = document.createElement("button");
+		newButton.className = "urlButton";
+		
+		setupUrlButtons(newButton, url, value);
+
+		const {
+			urls,
+			values,
+			launch
+		} = getUrlsFromStorage();
+		urls.push(url);
+		values.push(value);
+		launch.push(false);
+		saveUrlsToStorage(urls, values, launch);
+	}
+
+	initUrls();
+	updateURLVisibility();
+}
+
+function setupUrlButtons(button, url, value) {
+	button.dataset.value = value;
+	button.dataset.url = url;
+
+	var urlHref = url;
+
+	if (!url.startsWith("http://") && !url.startsWith("https://")) {
+		urlHref = "https://" + url;
+	}
+
+	button.onclick = function() {
+		window.location.href = urlHref;
+	};
+
+	button.innerText = value;
+}
+
+function updateOrder(oldIndex, newIndex) {
+    const { urls, values, launch } = getUrlsFromStorage();
+    if (newIndex < 0 || newIndex >= urls.length || oldIndex === newIndex) return;
+
+    // Move the item in the arrays
+    const urlToMove = urls.splice(oldIndex, 1)[0];
+    const valueToMove = values.splice(oldIndex, 1)[0];
+	const launchToMove = launch.splice(oldIndex, 1)[0];
+    urls.splice(newIndex, 0, urlToMove);
+    values.splice(newIndex, 0, valueToMove);
+	launch.splice(newIndex, 0, launchToMove);
+
+    saveUrlsToStorage(urls, values, launch);
+    initUrls(); // Refresh the table
+}
+
+function getUrlsFromStorage() {
+	const urls = JSON.parse(localStorage.getItem("urls")) || [];
+	const values = JSON.parse(localStorage.getItem("url_values")) || [];
+	const launch = JSON.parse(localStorage.getItem("url_launch")) || [];
+	return {
+		urls,
+		values,
+		launch
+	};
+}
+
+function saveUrlsToStorage(urls, values, launch) {
+	localStorage.setItem("urls", JSON.stringify(urls));
+	localStorage.setItem("url_values", JSON.stringify(values));
+	localStorage.setItem("url_launch", JSON.stringify(launch));
+}
+
+function updateURLVisibility() {
+	const buttons = document.getElementById("urlButtons");
+	const hasSeturlButtons = buttons.getElementsByClassName("urlButton").length > 0;
+
+	if (hasSeturlButtons) {
+		buttons.classList.add("hasSeturlButtons");
+
+		document.getElementById("openAllUrlsButton").style.display = "block";
+		document.getElementById("urlDivider").style.display = "block";
+	} else {
+		buttons.classList.remove("hasSeturlButtons");
+		document.getElementById("openAllUrlsButton").style.display = "none";
+		document.getElementById("urlDivider").style.display = "none";
+	}
+}
+
+function goToUrl(button) {
+	var url = prompt("Enter the URL:");
+
+	if (url !== "" && url != null) {
+		var value = prompt("(Optional) Enter the name:");
+		
+		if (value == "" || value == null) {
+			value = url.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 8);
+			if (url.length > 8) {
+				value += "..";
+			}
+		}
+		
+		setupUrlButtons(button, url, value);
+
+		const {
+			urls,
+			values,
+			launch
+		} = getUrlsFromStorage();
+		urls.push(url);
+		values.push(value);
+		saveUrlsToStorage(urls, values, launch);
+	}
+}
+
+function openAllUrls() {
+	const {
+		urls,
+		values,
+		launch
+	} = getUrlsFromStorage();
+
+	const setUrlButtons = document.querySelectorAll(".urlButton");
+	if (setUrlButtons.length > 0) {
+		for (let i = 0; i < setUrlButtons.length; i++) {
+			if (launch[i] == true) {
+				var url = setUrlButtons[i].dataset.url;
+				if (url !== "" && url != null) {
+					if (!url.startsWith("http://") && !url.startsWith("https://")) {
+						url = "https://" + url;
+					}
+					window.open(url, '_blank');
+				}
+			}
+		}
+	}
+}
+
+function toggleLaunch(event, index) {
+	event.stopPropagation();
+
+    const { urls, values, launch } = getUrlsFromStorage();
+	launch[index] = !launch[index];
+    localStorage.setItem("url_launch", JSON.stringify(launch));
+	initUrls(); // Refresh the table
+}
+
+function editBookmark(event, index) {
+    event.stopPropagation();
+
+    const { urls, values, launch } = getUrlsFromStorage();
+    const newUrl = prompt("Edit Bookmark URL:", urls[index]);
+    const newValue = prompt("Edit Bookmark Name:", values[index]);
+
+    if (newUrl && newUrl !== "") {
+        urls[index] = newUrl;
+        values[index] = newValue || newValue.replace(/^(https?:\/\/)?(www\.)?/, '').substring(0, 8);
+        saveUrlsToStorage(urls, values, launch);
+        initUrls(); // Refresh the table
+    }
+}
+
+function deleteUrl(event, index) {
+	event.stopPropagation();
+
+    const { urls, values, launch } = getUrlsFromStorage();
+    urls.splice(index, 1);
+    values.splice(index, 1);
+	launch.splice(index, 1);
+    saveUrlsToStorage(urls, values, launch);
+    initUrls(); // Refresh the table
+}

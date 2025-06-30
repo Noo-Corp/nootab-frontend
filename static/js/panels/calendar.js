@@ -1,7 +1,182 @@
-var refreshInterval=null;function updateRefreshedAtTime(){let e=document.getElementById("main-title"),t=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});e.textContent=`Refreshed at ${t}`}function formatReceivedTime(e){let t=new Date(e);return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:!0}).format(t)}function googleSignout(){fetch("/signout",{method:"POST",headers:{App:"calendar"}}).then(e=>e.json()).then(e=>{e.signed_out&&(document.getElementById("authorize-button").style.display="inline",document.getElementById("signout-button").style.display="none",document.getElementById("main-title").textContent="",document.getElementById("refresh").style.display="none",document.getElementById("schedule-container").style.display="none",document.getElementById("calendar-link").style.display="none",document.getElementById("initial-view").style.display="block",clearInterval(refreshInterval),refreshInterval=null)})}function googleAuthorize(e){fetch("/authorize",{method:"GET",headers:{Check:e,App:"calendar"}}).then(e=>e.json()).then(t=>{if(document.getElementById("schedule-view").style.display="none",t.authorized)document.getElementById("initial-view").style.display="none",renderSchedule(t.events),document.getElementById("user-email").textContent=t.user_email,document.getElementById("calendar-link").style.display="block",document.getElementById("authorize-button").style.display="none",document.getElementById("signout-button").style.display="inline",updateRefreshedAtTime(),document.getElementById("refresh").style.display="block",refreshInterval||(refreshInterval=setInterval(()=>{refresh("1","passive")},3e5));else if(document.getElementById("authorize-button").style.display="inline",document.getElementById("signout-button").style.display="none","0"==e){let n=window.open(t.auth_url,"_blank","width=600,height=800"),l=setInterval(()=>{n.closed&&(clearInterval(l),window.location.reload())},500)}})}function updateScheduleDate(){let e=document.getElementById("schedule-date"),t=new Date,n=new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric"}).format(t);e.textContent=`- ${n} -`}function formatEventTime(e,t){let n=new Date(e),l=new Date(t),i=new Intl.DateTimeFormat("en-US",{hour:"2-digit",minute:"2-digit",hour12:!0}).format(n),a=new Intl.DateTimeFormat("en-US",{hour:"2-digit",minute:"2-digit",hour12:!0}).format(l),d=n.toDateString()===l.toDateString();if(d)return`${i} - ${a}`;{let o=new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(l);return`${i} - ${o}, ${a}`}}function renderSchedule(e){let t=document.getElementById("schedule-view");t.innerHTML="",updateScheduleDate();let n=e.filter(e=>!e.start.includes("T")),l=e.filter(e=>e.start.includes("T")),i=new Date;n.length>0&&n.forEach(e=>{let n=document.createElement("div");n.className="schedule-event all-day",n.innerHTML=`
-                <div class="event-title">${e.title}</div>
+var refreshInterval = null;
+
+window.onload = function() {
+	refresh("1", "load");
+};
+
+function updateRefreshedAtTime() {
+    const refreshedAtElement = document.getElementById("main-title");
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    refreshedAtElement.textContent = `Refreshed at ${currentTime}`;
+}
+
+function formatReceivedTime(dateString) {
+    const date = new Date(dateString);
+    const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
+function googleSignout() {
+	fetch('/signout', {
+		method: 'POST',
+		headers: {
+            'App': 'calendar',
+		}
+	})
+    .then(response => response.json())
+    .then(data => {
+        if (data.signed_out) {
+            document.getElementById("authorize-button").style.display = "inline";
+            document.getElementById("signout-button").style.display = "none";
+            document.getElementById("main-title").textContent = "";
+            document.getElementById("refresh").style.display = "none";
+            document.getElementById("schedule-container").style.display = "none";
+            document.getElementById('calendar-link').style.display = "none";
+            document.getElementById('initial-view').style.display = "block";
+
+            clearInterval(refreshInterval);
+            refreshInterval = null;
+        }
+    });
+}
+
+function googleAuthorize(check) {
+    fetch('/authorize', {
+		method: 'GET',
+		headers: {
+            'Check': check,
+            'App': 'calendar',
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+        document.getElementById("schedule-view").style.display = "none";
+
+        if (data.authorized) {
+            document.getElementById('initial-view').style.display = "none";
+
+            renderSchedule(data.events);
+
+            document.getElementById("user-email").textContent = data.user_email;
+            document.getElementById("calendar-link").style.display = 'block';
+
+			document.getElementById("authorize-button").style.display = "none";
+			document.getElementById("signout-button").style.display = "inline";
+
+            updateRefreshedAtTime();
+
+            document.getElementById("refresh").style.display = "block";
+        
+            if (!refreshInterval) {
+                refreshInterval = setInterval(() => {
+                    refresh('1', 'passive');
+                }, 5 * 60 * 1000);
+            }
+		} else {
+			document.getElementById("authorize-button").style.display = "inline";
+			document.getElementById("signout-button").style.display = "none";
+            if (check == "0") {
+                const oauthWindow = window.open(data.auth_url, "_blank", "width=600,height=800");
+
+                const interval = setInterval(() => {
+                    if (oauthWindow.closed) {
+                        clearInterval(interval);
+                        window.location.reload();
+                    }
+                }, 500);
+            }
+		}
+	})
+}
+
+function updateScheduleDate() {
+    const scheduleDateElement = document.getElementById('schedule-date');
+    const currentDate = new Date();
+    const options = { month: 'long', day: 'numeric', year: 'numeric' };
+    const formattedDate = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+    scheduleDateElement.textContent = `- ${formattedDate} -`;
+}
+
+function formatEventTime(start, end) {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    const startFormatted = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(startDate);
+    const endFormatted = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(endDate);
+
+    const sameDay = startDate.toDateString() === endDate.toDateString();
+
+    if (sameDay) {
+        return `${startFormatted} - ${endFormatted}`;
+    } else {
+        const options = { month: 'short', day: 'numeric' };
+        const formattedEndDate = new Intl.DateTimeFormat('en-US', options).format(endDate);
+        return `${startFormatted} - ${formattedEndDate}, ${endFormatted}`;
+    }
+}
+
+function renderSchedule(events) {
+    const scheduleView = document.getElementById('schedule-view');
+    scheduleView.innerHTML = '';
+
+    updateScheduleDate();
+
+    const allDayEvents = events.filter(event => !event.start.includes('T'));
+    const timeSpecificEvents = events.filter(event => event.start.includes('T'));
+
+    const now = new Date();
+
+    if (allDayEvents.length > 0) {
+        allDayEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'schedule-event all-day';
+            eventElement.innerHTML = `
+                <div class="event-title">${event.title}</div>
                 <div class="event-time">All Day</div>
-            `,t.appendChild(n)}),l.length>0&&l.forEach(e=>{let n=document.createElement("div");n.className="schedule-event";let l=new Date(e.end);i>l&&n.classList.add("ended");let a=formatEventTime(e.start,e.end);n.innerHTML=`
-                <div>${e.title}</div>
-                <div class="event-time">${a}</div>
-            `,t.appendChild(n)}),0===e.length&&(t.innerHTML='<div class="schedule-event">No events for today</div>'),t.style.display="block"}function refresh(e,t){let n=document.getElementById("schedule-view"),l=document.cookie.split("; ").some(e=>e.startsWith("access_token=")||e.startsWith("refresh_token="));"load"!==t||l?"active"===t&&(n.style.display="none"):(n.style.display="none",document.getElementById("initial-view").style.display="block"),googleAuthorize(e)}window.onload=function(){refresh("1","load")};
+            `;
+            scheduleView.appendChild(eventElement);
+        });
+    }
+
+    if (timeSpecificEvents.length > 0) {
+        timeSpecificEvents.forEach(event => {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'schedule-event';
+
+            const eventEndTime = new Date(event.end);
+            if (now > eventEndTime) {
+                eventElement.classList.add('ended');
+            }
+
+            const eventTime = formatEventTime(event.start, event.end);
+            eventElement.innerHTML = `
+                <div>${event.title}</div>
+                <div class="event-time">${eventTime}</div>
+            `;
+            scheduleView.appendChild(eventElement);
+        });
+    }
+
+    if (events.length === 0) {
+        scheduleView.innerHTML = '<div class="schedule-event">No events for today</div>';
+    }
+
+    scheduleView.style.display = "block";
+}
+
+function refresh(type, behaviour) {
+    const scheduleView = document.getElementById("schedule-view");
+
+    const hasTokens = document.cookie.split('; ').some(cookie => {
+        return cookie.startsWith('access_token=') || cookie.startsWith('refresh_token=');
+    });
+
+    if (behaviour === "load" && !hasTokens) {
+        scheduleView.style.display = "none";
+        document.getElementById('initial-view').style.display = "block";
+    } else if (behaviour === "active") {
+        scheduleView.style.display = "none";
+    }
+
+    googleAuthorize(type);
+}
