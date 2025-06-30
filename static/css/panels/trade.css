@@ -58,8 +58,8 @@ body {
 
 #trade-container {
     overflow: auto;
-    height: 100%;
     padding: 16px 8px;
+    padding-bottom: 0;
 }
 
 #graph-container {
