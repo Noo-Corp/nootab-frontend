@@ -37,7 +37,7 @@ const restrictView = () => {
     const dueBtn = document.getElementById("due-btn");
 
     document.getElementById("capital-container").style.border = "none";
-    document.getElementById("capital-debt-container").style.marginTop = "20px";
+    document.getElementById("capital-debt-container").style.marginTop = "17px";
     dueBtn.style.position = "relative";
     dueBtn.style.left = "initial";
     dueBtn.style.transform = "initial";

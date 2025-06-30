@@ -17,8 +17,9 @@ function formatReceivedTime(dateString) {
 }
 
 function googleSignout() {
-	fetch('/signout', {
+	fetch('https://nootab-backend-159a708a7b1c.herokuapp.com/signout', {
 		method: 'POST',
+        credentials: "include",
 		headers: {
             'App': 'calendar',
 		}
@@ -41,8 +42,9 @@ function googleSignout() {
 }
 
 function googleAuthorize(check) {
-    fetch('/authorize', {
+    fetch('https://nootab-backend-159a708a7b1c.herokuapp.com/authorize', {
 		method: 'GET',
+        credentials: "include",
 		headers: {
             'Check': check,
             'App': 'calendar',

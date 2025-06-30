@@ -173,7 +173,7 @@ body {
 
 #email-container {
     text-align: center;
-    display: block ruby;
+    display: block;
     background-color: #FFF;
     margin: 22px 0;
 }
