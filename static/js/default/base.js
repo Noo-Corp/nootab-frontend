@@ -88,7 +88,7 @@ function handleFileUpload(event) {
 function clearData() {
     if (confirm('Are you sure you want to clear all data?')) {
         localStorage.clear();
-        fetch('https://nootab-backend-159a708a7b1c.herokuapp.com/signout', {
+        fetch('https://api.nootab.com/signout', {
             method: 'POST',
             credentials: "include",
             headers: {

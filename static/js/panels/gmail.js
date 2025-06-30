@@ -39,7 +39,7 @@ function viewEmail(event, emailId) {
     });
     listItem.classList.add('opened');
 
-	fetch(`https://nootab-backend-159a708a7b1c.herokuapp.com/view_email/${emailId}`, {
+	fetch(`https://api.nootab.com/view_email/${emailId}`, {
 		method: 'GET',
         credentials: "include",
 		headers: {
@@ -84,7 +84,7 @@ function viewEmail(event, emailId) {
 }
 
 function googleSignout() {
-    fetch('https://nootab-backend-159a708a7b1c.herokuapp.com/signout', {
+    fetch('https://api.nootab.com/signout', {
 		method: 'POST',
         credentials: "include",
 		headers: {
@@ -110,7 +110,7 @@ function googleSignout() {
 }
 
 function googleAuthorize(check) {
-    fetch('https://nootab-backend-159a708a7b1c.herokuapp.com/authorize', {
+    fetch('https://api.nootab.com/authorize', {
 		method: 'GET',
         credentials: "include",
 		headers: {
