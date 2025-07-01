@@ -33,10 +33,13 @@ iframe {
 
 #sidePanel {
     position: fixed;
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
     top: 0;
     right: -320px;
     width: 250px;
-    height: 100%;
+    height: calc(100% - 70px);
     background-color: var(--bodyback);
     box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
@@ -44,13 +47,36 @@ iframe {
     z-index: 5;
 }
 
+.sidepanel-footer {
+    font-size: 12px;
+    color: var(--backtext);
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--backtext);
+}
+
+.sidepanel-footer a {
+    color: var(--backtext);
+    text-decoration: none;
+    margin: 0 4px;
+    font-size: 12px;
+}
+
+.sidepanel-footer a:hover {
+    color: var(--modetext2);
+    text-decoration: underline;
+}
+
 #panelControls {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
 #panelControls button {
-    margin: 10px;
+    margin: 5px;
     padding: 10px;
     font-size: 16px;
     cursor: pointer;
@@ -101,7 +127,7 @@ iframe {
     border-bottom: 2px solid var(--backtext);
     margin-top: 20px;
     margin-bottom: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .panel-name-cell {
