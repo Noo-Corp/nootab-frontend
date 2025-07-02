@@ -14,6 +14,7 @@ body {
 }
 
 #main-container {
+    height: 100%;
     padding-bottom: 0;
     height: calc(100% - 60px);
     overflow: auto;
@@ -59,7 +60,12 @@ body {
 }
 
 #goals-container {
+    height: 100%;
     overflow: auto;
+}
+
+#goals-list {
+    height: 100%;
 }
 
 .goal-section {
