@@ -334,6 +334,24 @@ body {
     color: var(--main);
 }
 
+#bingo-dropdown {
+    color: var(--hover);
+    background-color: transparent;
+    font-weight: bold;  
+    border: none;
+    text-align: right;
+}
+
+#bingo-dropdown:hover {
+    cursor: pointer;
+    color: var(--main);
+}
+
+#bingo-dropdown option {
+    text-align: center;
+    color: black;
+}
+
 .bingo-table {
     width: 100%;
     height: 100%;
