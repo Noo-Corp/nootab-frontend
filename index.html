@@ -35,7 +35,6 @@
 		<script src="static/js/default/jquery-ui.js"></script>
 	</head>
 	<body>
-		<div id="modalOverlay"></div>
 		<div id="header">
 			<div id="logo">
 				<img src="static/images/logo-awake.png">
@@ -51,16 +50,6 @@
 				<div id="urlDivider"></div>
 				<button id="editUrlButton">&#x270E;</button>
 				<button id="openAllUrlsButton" onclick="openAllUrls()">LAUNCH</button>
-			</div>
-
-			<div id="bookmarksContent">
-				<span class="close" id="close-links">&times;</span>
-				<h1>BOOKMARKS</h1>
-				<p id="launch-hint">All <span id="launch-link-text">&#9733;</span> bookmarks open when clicking <span id="launch-text">LAUNCH</span></p>
-				<table id="bookmarkTable">
-					<tbody id="bookmarkTableBody"></tbody>
-				</table>
-				<button id="addUrlButton" onclick="addUrlButton(event)">+</button>
 			</div>
 
 			<button id="darkmode-button"><img src="static/images/dark-mode.png"></button><button class="colour-picker-button"><img id="colour-picker-image" src="static/images/colour-wheel.png"></button>
@@ -88,18 +77,63 @@
 		</div>
 
 		<div id="arrangeSpacer">
-			<button id="dataButton" onclick="openData()">DATA</button>
+			<button id="dataButton" onclick="openModal('dataModal')">DATA</button>
 			<button id="arrangeButton" onclick="toggleSidePanel(event)">PANELS</button>
 		</div>
 
-		<div id="dataModal">
-			<div id="data-modal-content">
+		<div id="modalOverlay">
+			<div id="bookmarksModal">
+				<span class="close" id="close-links">&times;</span>
+				<h1>BOOKMARKS</h1>
+				<p id="launch-hint">All <span id="launch-link-text">&#9733;</span> bookmarks open when clicking <span id="launch-text">LAUNCH</span></p>
+				<table id="bookmarkTable">
+					<tbody id="bookmarkTableBody"></tbody>
+				</table>
+				<button id="addUrlButton" onclick="addUrlButton(event)">+</button>
+			</div>
+
+			<div id="dataModal" class="modal-content">
 				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
-				<div id="data-modal-title">Manage Data</div>
+				<div class="modal-title">Manage Data</div>
 				<button onclick="saveData()">Save Data</button>
 				<button onclick="uploadData()">Upload Data</button>
 				<button onclick="clearData()">Clear Data</button>
 				<input type="file" id="fileInput" style="display: none;" accept="application/json" onchange="handleFileUpload(event)">
+			</div>
+
+			<div id="supportModal" class="modal-content">
+				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
+				<div class="modal-title">Support Noo Tab ❤️</div>
+				<p>Noo Tab is made possible through the community's support, helping it grow and stay free for everyone.</p>
+				<p>If it's been useful to you, consider making a small donation—every bit helps.</p>
+
+				<div>
+					<div class="crypto-key-box">
+						<img src="static/images/bitcoin.svg" alt="Bitcoin" class="crypto-icon">BTC
+						<input
+						class="coin-address"
+						onclick="this.select()"
+						readonly
+						spellcheck="false"
+						type="text"
+						value="bc1q0kthv9j5ahekgvqx0pxuyp8xjjlptz3nmvd4lf"
+						/>
+					</div>
+
+					<div class="crypto-key-box">
+						<img src="static/images/ethereum.svg" alt="Ethereum" class="crypto-icon">ETH
+						<input
+						class="coin-address"
+						onclick="this.select()"
+						readonly
+						spellcheck="false"
+						type="text"
+						value="0xb230CdfD067b5bb950eECEDC448761829f57493c"
+						/>
+					</div>
+				</div>
+
+				<p>Thank you for your support!</p>
 			</div>
 		</div>
 
@@ -118,7 +152,10 @@
 				<button id="clearButton" onclick="clearPanelOrder()">Clear</button>
 			</div>
 			<div class="sidepanel-footer">
-				<a href="/terms.html" target="_blank">Terms & Conditions</a> | <a href="/privacy.html" target="_blank">Privacy Policy</a>
+				<span id="supportNT" onclick="openModal('supportModal')">Support Noo Tab ❤️</span>
+				<div id="sidepanel-footer-links">
+					<a href="/terms.html" target="_blank">Terms & Conditions</a> | <a href="/privacy.html" target="_blank">Privacy Policy</a>
+				</div>
 			</div>
 		</div>
 		

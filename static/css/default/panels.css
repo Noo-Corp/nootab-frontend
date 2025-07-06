@@ -39,11 +39,13 @@ iframe {
     top: 0;
     right: -320px;
     width: 250px;
-    height: calc(100% - 70px);
+    height: calc(100% - 40px);
     background-color: var(--bodyback);
     box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
     padding: 35px;
+    padding-top: 30px;
+    padding-bottom: 10px;
     z-index: 5;
 }
 
@@ -53,8 +55,6 @@ iframe {
     text-align: center;
     margin-top: auto;
     margin-bottom: 0;
-    padding-top: 10px;
-    border-top: 1px solid var(--backtext);
 }
 
 .sidepanel-footer a {
@@ -69,10 +69,31 @@ iframe {
     text-decoration: underline;
 }
 
+#sidepanel-footer-links {
+    padding-top: 8px;
+    margin-top: 10px;
+    border-top: 1px solid var(--backtext);
+}
+
+#supportNT {
+    color: var(--modetext2);
+    background-color: var(--modeback);
+    border-radius: 6px;
+    padding: 5px;
+    font-weight: bold;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#supportNT:hover {
+    cursor: pointer;
+    background-color: var(--main);
+    color: var(--text);
+}
+
 #panelControls {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 
 #panelControls button {

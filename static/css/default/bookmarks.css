@@ -81,7 +81,7 @@
     white-space: nowrap;
 }
 
-#bookmarksContent {
+#bookmarksModal {
     display: none;
     width: 90%;
     max-width: 600px;
@@ -90,7 +90,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: fixed;
     left: 50%;
-    bottom: 52%;
+    bottom: 65%;
     transform: translate(-50%, 50%);
     background: var(--modeback);
     color: var(--modetext);
@@ -100,12 +100,12 @@
     z-index: 5;
 }
 
-#bookmarksContent.show {
+#bookmarksModal.show {
     display: block;
     opacity: 1;
 }
 
-#bookmarksContent h1 {
+#bookmarksModal h1 {
     padding-top: 10px;
     padding-bottom: 8px;
     margin: 0;
