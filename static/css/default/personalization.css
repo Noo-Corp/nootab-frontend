@@ -84,18 +84,19 @@
 
 #colourPickerContent {
     display: none;
-    width: 375px;
     position: fixed;
     left: 50%;
     bottom: 52%;
     transform: translate(-50%, 50%);
-    background: var(--modeback);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: var(--modeback);
     color: var(--modetext);
-    border: 1px solid var(--modetext);
+    padding: 25px 0px;
+    width: 90%;
+    max-width: 375px;
+    border-radius: 4px;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
-    z-index: 5;
+    z-index: 10;
 }
 
 #colourPickerContent.show {

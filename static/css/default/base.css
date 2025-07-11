@@ -18,7 +18,8 @@ body {
 }
 
 #modalOverlay {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
     position: fixed;
     z-index: 5;
     left: 0;
@@ -27,6 +28,12 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+#modalOverlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 #logo {
@@ -138,8 +145,62 @@ body {
 	color: #e71313;
 }
 
-#dataModal, #supportModal {
+#dataModal, #supportModal, #tutorialModal {
     display: none;
+}
+
+#tutorialModal {
+    width:80%;
+    max-width: 670px;
+    text-align: justify;
+    align-items: start;
+    padding: 38px 30px;
+    gap: 0;
+    margin: 6% auto;
+}
+
+#tutorialModal .modal-title {
+    margin: 0;
+    text-transform: none;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 18px;
+    color: var(--modetext);
+}
+
+.tutorial-section {
+    margin-bottom: 18px;
+}
+
+.tutorial-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.tutorial-section h3 {
+    margin-bottom: 8px;
+    color: var(--modetext2);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.tutorial-section p {
+    margin: 0.4rem 0;
+    color: var(--modetext2);
+    line-height: 1.5;
+}
+
+.tutorial-section p strong {
+    color: var(--modetext);
+}
+
+.tutorial-section a {
+    color: var(--secondary);
+    text-decoration: none;
+}
+
+.tutorial-section a:hover {
+    color: var(--secondaryhover);
+    text-decoration: underline;
 }
 
 .modal-content {
@@ -147,7 +208,8 @@ body {
     background-color: var(--modeback);
     margin: 12% auto;
     padding: 50px 0px;
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     text-align: center;
     border-radius: 4px;
     display: flex;
@@ -192,6 +254,10 @@ body {
     text-align: justify;
 }
 
+#crypto-key-box-container {
+    max-width: 95%;
+}
+
 .crypto-key-box {
     display: flex;
     align-items: center;
@@ -199,6 +265,7 @@ body {
     margin: 14px 0;
     justify-content: center;
     color: var(--modetext);
+    overflow: auto;
 }
 
 .crypto-icon {

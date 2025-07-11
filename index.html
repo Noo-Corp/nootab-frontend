@@ -92,6 +92,33 @@
 				<button id="addUrlButton" onclick="addUrlButton(event)">+</button>
 			</div>
 
+			<div id="tutorialModal" class="modal-content">
+				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
+				<div class="modal-title">Welcome to Noo Tab</div>
+
+				<div class="tutorial-section">
+					<p>Noo Tab is a customizable new tab page designed for productivity. Add the tools you need — notes, checklists, trackers, and more — in modular panels that run independently.</p>
+				</div>
+
+				<div class="tutorial-section">
+					<h3>Getting Started</h3>
+					<p>To add your first panel, click the red square with a plus (+), or use the "Panels" button in the top right. You can add, remove, and rearrange panels at any time.</p>
+				</div>
+
+				<div class="tutorial-section">
+					<h3>Managing Your Data</h3>
+					<p>All data is stored locally in your browser — nothing is sent or synced externally. Use the "Data" button to download, upload, or clear your data whenever you like.<br><br><strong>Warning:</strong> Clearing your cookies or history may erase Noo Tab data. Download your data first.</p>
+				</div>
+
+				<div class="tutorial-section">
+					<h3>Setting Noo Tab as Your New Tab Page</h3>
+					<p><strong>Firefox:</strong> Install the <a href="https://addons.mozilla.org/en-CA/firefox/addon/noo-tab/" target="_blank">Noo Tab Add-on</a></p>
+					<p><strong>Chrome:</strong> Use an extension like <a href="https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna" target="_blank">New Tab Redirect</a></p>
+					<p><strong>Safari:</strong> Go to Settings → General and set your Homepage to nootab.com, then set "New tabs open with" to "Homepage"</p>
+				</div>
+			</div>
+
+
 			<div id="dataModal" class="modal-content">
 				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
 				<div class="modal-title">Manage Data</div>
@@ -107,7 +134,7 @@
 				<p>Noo Tab is made possible through the community's support, helping it grow and stay free for everyone.</p>
 				<p>If you've been finding it useful, consider backing its ongoing development.</p>
 
-				<div>
+				<div id="crypto-key-box-container">
 					<div class="crypto-key-box">
 						<img src="static/images/bitcoin.svg" alt="Bitcoin" class="crypto-icon">BTC
 						<input
