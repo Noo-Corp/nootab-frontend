@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/png" href="static/images/favicon.ico">
-
   <title>Noo Tab | Privacy Policy</title>
 </head>
 
@@ -14,23 +13,42 @@
   </div>
 
   <p>Effective Date: June 30, 2025</p>
+  <p>Updated on: July 18, 2025</p>
 
   <p><strong><u>Overview</u></strong><br>
-  Noo Tab does not collect or store any personal data on our servers. All data used by the application stays in your browser (local storage or cookies).</p>
+  Noo Tab does not collect or store personal data on any server. All application data is stored locally in the user’s browser using local storage and cookies.</p>
 
-  <p><strong><u>Google Services</u></strong><br>
-  If you connect your Google account to view Gmail or Calendar data, authorization is handled securely via Google OAuth. Noo Tab does not store your credentials or data from your Google account. All access happens locally in your browser.</p>
+  <p><strong><u>Google User Data Access</u></strong><br>
+  If a user connects a Google account, Noo Tab requests the following read-only scopes via Google OAuth:
+  <ul>
+    <li><code>https://www.googleapis.com/auth/calendar.readonly</code> – access to calendar event metadata (e.g., title, time, location)</li>
+    <li><code>https://www.googleapis.com/auth/gmail.readonly</code> – access to unread email metadata and full message bodies</li>
+  </ul>
+  This access is used solely to display the user’s Google Calendar and Gmail content within the Noo Tab interface. Noo Tab does not send, transmit, or store this data externally.</p>
+
+  <p><strong><u>Use of Google User Data</u></strong><br>
+  Accessed data is used only to render calendar events and Gmail content in the browser UI. No data is analyzed, processed, or shared for any other purpose. Noo Tab does not modify, create, or delete any Google user data.</p>
+
+  <p><strong><u>Data Protection</u></strong><br>
+  All Google user data is accessed securely via OAuth 2.0. Credentials are never stored or accessible to Noo Tab. Access tokens are held only in the user's browser environment and may be stored in cookies to maintain session state. These cookies do not contain passwords and can be cleared at any time via browser settings or the application's Clear Data function. All data transmission occurs over HTTPS.</p>
+
+  <p><strong><u>Data Retention and Deletion</u></strong><br>
+  Google user data is stored only in the user’s browser memory or local storage during use. No data is retained on any server. Users can remove all locally stored data by:
+  <ul>
+    <li>Using the <b>Clear Data</b> button in the application</li>
+    <li>Manually clearing browser storage and cookies</li>
+    <li>Revoking Noo Tab’s access from their Google Account settings</li>
+  </ul>
+  Noo Tab performs no persistent logging, caching, or backup of Google user data.</p>
 
   <p><strong><u>Analytics</u></strong><br>
-  We use Google Analytics to understand how users interact with Noo Tab. This includes anonymized information such as pages visited, time spent, browser type, and general location (based on IP). This data helps us improve the product and is never used for advertising.</p>
-
-  <p>You can opt out of Google Analytics tracking by using browser settings or <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google's opt-out tool.</a></p>
+  Google Analytics is used to collect anonymized usage data such as page views, browser type, and approximate location. This data is not linked to any Google account or personal identity and is used solely to improve the product. Users may opt out via browser settings or <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google’s opt-out tool</a>.</p>
 
   <p><strong><u>Data Sharing</u></strong><br>
-  We do not sell or share any personal data. Analytics data is handled by Google under their <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy.</a></p>
+  Noo Tab does not share, sell, or transmit any user or Google data to third parties. Google user data is accessed and processed locally only.</p>
 
-  <p><strong><u>Your Control</u></strong><br>
-  You may clear all local data stored by Noo Tab via the <b>Clear Data</b> button in the Data menu or through your browser settings at any time.</p>
+  <p><strong><u>User Controls</u></strong><br>
+  Users can disconnect their Google account at any time via their Google Account permissions. All locally stored data can be removed through the browser or by using the Clear Data option within the application.</p>
 
   <p><strong><u>Contact</u></strong><br>
   For questions, contact:<br>
