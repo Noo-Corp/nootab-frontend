@@ -86,11 +86,11 @@
     display: none;
     position: fixed;
     left: 50%;
-    bottom: 52%;
+    bottom: 58%;
     transform: translate(-50%, 50%);
     background-color: var(--modeback);
     color: var(--modetext);
-    padding: 25px 0px;
+    padding: 20px 0px;
     width: 90%;
     max-width: 375px;
     border-radius: 4px;

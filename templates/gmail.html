@@ -7,10 +7,15 @@
 
 <div id="auth-buttons">
   <a href="https://mail.google.com/mail/u/0/" target="_blank" id="gmail-link" style="display:none;">
-    <img src="../static/images/gmail.png"> 
+    <img src="../static/images/gmail.png">
     <span id="user-email"></span>
   </a>
-  <button id="authorize-button" style="display:none;" onclick="refresh('0', 'passive')">AUTHORIZE</button>
+  <div id="oauth-warning" style="display:none;">
+    <button id="authorize-button" onclick="refresh('0', 'passive')">AUTHORIZE</button>
+    <p>Google will warn this app isn't verified. Though it passed review, verified status is expensive.</p>
+    <p>To proceed, click <span>Advanced</span> → <span>Go to Noo Tab (unsafe)</span> on the warning page.</p>
+    <p>We use your Google data only as needed<br>See our <a href="/privacy.html" target="_blank">Privacy Policy</a></p>
+  </div>
   <button id="signout-button" style="display:none;" onclick="googleSignout()">SIGN OUT</button>
 </div>
 

@@ -48,7 +48,7 @@
 			<div id="urlButtonContainer">
 				<div id="urlButtons"></div>
 				<div id="urlDivider"></div>
-				<button id="editUrlButton">&#x270E;</button>
+				<button class="bookmark-icon init" id="editUrlButton"></button>
 				<button id="openAllUrlsButton" onclick="openAllUrls()">LAUNCH</button>
 			</div>
 
@@ -93,34 +93,88 @@
 			</div>
 
 			<div id="tutorialModal" class="modal-content">
-				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
-				<div class="modal-title">Welcome to Noo Tab</div>
+				<span class="close" onclick="closeModal()">&times;</span>
+				<div id="mainTutorialContent">
+					<div class="modal-title">Welcome to Noo Tab</div>
 
-				<div class="tutorial-section">
-					<p>Noo Tab is a customizable new tab page designed for productivity. Add the tools you need — notes, checklists, trackers, and more — in modular panels that run independently.</p>
+					<div class="tutorial-section first">
+						<p>Noo Tab is a customizable new tab page designed for productivity. Add the tools you need — notes, checklists, trackers, and more — in modular panels that run independently.</p>
+					</div>
+
+					<div class="tutorial-section">
+						<h3>Getting started</h3>
+						<p>To add your first panel, click the red square with a plus (+), or use the "Panels" button in the top right. You can add, remove, and rearrange panels at any time.</p>
+					</div>
+
+					<div class="tutorial-section">
+						<h3>Panel buttons</h3>
+						<p>There are two buttons at the bottom of each panel:</p>
+						<p><span style="color: var(--secondary); font-weight: bold;">⤷</span> Privacy button to toggle the panel's visibility</p>
+						<p><span style="color: var(--main); font-weight: bold;">❏</span> Opens an expanded view of the panel with additional features</p>
+					</div>
+
+					<div class="tutorial-section">
+						<h3>Managing your data</h3>
+						<p>All data is stored locally in your browser — nothing is sent or synced externally. Use the "Data" button in the top right to download, upload, or clear your data whenever you like.<br><br><strong>Warning:</strong> Clearing your cookies or history will erase your Noo Tab data. Download your data first.</p>
+					</div>
+
+					<div class="tutorial-section how-to-toggle" onclick="showHowToSection()">
+						<span>How to set Noo Tab as your new tab page</span>
+						<span class="arrow">⟶</span>
+					</div>
 				</div>
 
-				<div class="tutorial-section">
-					<h3>Getting Started</h3>
-					<p>To add your first panel, click the red square with a plus (+), or use the "Panels" button in the top right. You can add, remove, and rearrange panels at any time.</p>
-				</div>
+				<div id="howToContent" style="display: none;">
+					<div class="back-button" onclick="showMainTutorial()"><span></span> Back</div>
+					<div class="modal-title how-to">Set Noo Tab as your new tab page</div>
 
-				<div class="tutorial-section">
-					<h3>Managing Your Data</h3>
-					<p>All data is stored locally in your browser — nothing is sent or synced externally. Use the "Data" button to download, upload, or clear your data whenever you like.<br><br><strong>Warning:</strong> Clearing your cookies or history may erase Noo Tab data. Download your data first.</p>
-				</div>
+					<div class="tutorial-section">
+						<div class="browser-full-grid">
+							<div class="browser-wide-card">
+								<div class="browser-icon-wrap">
+									<img class="browser-icon-img" src="/static/images/firefox.png">
+								</div>
+								<div class="browser-content">
+									<div class="browser-title">Firefox</div>
+									<div class="browser-text">
+										Install the 
+										<a href="https://addons.mozilla.org/en-CA/firefox/addon/noo-tab/" target="_blank">Noo Tab Add-on</a>
+									</div>
+								</div>
+							</div>
 
-				<div class="tutorial-section">
-					<h3>Setting Noo Tab as Your New Tab Page</h3>
-					<p><strong>Firefox:</strong> Install the <a href="https://addons.mozilla.org/en-CA/firefox/addon/noo-tab/" target="_blank">Noo Tab Add-on</a></p>
-					<p><strong>Chrome:</strong> Use an extension like <a href="https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna" target="_blank">New Tab Redirect</a></p>
-					<p><strong>Safari:</strong> Go to Settings → General and set your Homepage to nootab.com, then set "New tabs open with" to "Homepage"</p>
+							<div class="browser-wide-card">
+								<div class="browser-icon-wrap">
+									<img class="browser-icon-img" src="/static/images/chrome.png">
+								</div>
+								<div class="browser-content">
+									<div class="browser-title">Chrome</div>
+									<div class="browser-text">
+										Use an extension like 
+										<a href="https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna" target="_blank">New Tab Redirect</a>
+									</div>
+								</div>
+							</div>
+
+							<div class="browser-wide-card full-width">
+								<div class="browser-icon-wrap">
+									<img class="browser-icon-img" src="/static/images/safari.png">
+								</div>
+								<div class="browser-content">
+									<div class="browser-title">Safari</div>
+									<div class="browser-text">
+									Set your homepage to <strong>nootab.com</strong>, then choose "Homepage" under “New tabs open with”
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
 
 			<div id="dataModal" class="modal-content">
-				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
+				<span class="close" onclick="closeModal()">&times;</span>
 				<div class="modal-title">Manage Data</div>
 				<button onclick="saveData()">Save Data</button>
 				<button onclick="uploadData()">Upload Data</button>
@@ -129,9 +183,9 @@
 			</div>
 
 			<div id="supportModal" class="modal-content">
-				<span class="close" id="close-colour" onclick="closeModal()">&times;</span>
+				<span class="close" onclick="closeModal()">&times;</span>
 				<div class="modal-title">Support Noo Tab ❤️</div>
-				<p>Noo Tab is made possible through the community's support, helping it grow and stay free for everyone.</p>
+				<p>Your support keeps Noo Tab free for everyone and always improving.</p>
 				<p>If you've been finding it useful, consider backing its ongoing development.</p>
 
 				<div id="crypto-key-box-container">
@@ -165,7 +219,7 @@
 		</div>
 
 		<div id="sidePanel">
-			<span class="close" id="close-colour" onclick="closePanel(event)">&times;</span>
+			<span class="close" onclick="closePanel(event)">&times;</span>
 			<table id="panelOrderList"></table>
 			<div id="panelControls">
 				<button id="notesButton" onclick="addToPanelOrder('notes')">Notes<span class="inf">&#8734;</span></button>

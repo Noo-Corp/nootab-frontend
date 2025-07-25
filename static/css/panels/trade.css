@@ -127,12 +127,23 @@ body {
     color: var(--secondarytext);
 }
 
-#api-key-input {
-    display: flex;
+#wip-warning {
+    flex-direction: column;
     height: calc(100% - 60px);
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+}
+
+#wip-warning p {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--modetext2);
+    font-size: 12px;
+}
+
+#api-key-input {
+    display: flex;
 }
 
 #api-key-input input {
