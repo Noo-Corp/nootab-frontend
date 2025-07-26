@@ -285,6 +285,21 @@ iframe {
     z-index: 5;
 }
 
+@media (max-width: 900px) {
+    #panelContainer {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .panel:nth-child(n+5) {
+        display: none;
+    }
+
+    .panel.popout {
+        width: 96vw;
+    }
+}
+
 @-moz-document url-prefix() {
     .panel-popout {
         font-size: 24px;
