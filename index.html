@@ -36,43 +36,60 @@
 	</head>
 	<body>
 		<div id="header">
-			<div id="logo">
-				<img src="static/images/logo-awake.png">
-				<div class="zzz-container">
-					<div class="zzz-zzz"></div>
-					<div class="zzz-zz"></div>
-					<div class="zzz-z"></div>
+			<div class="header-left">
+				<div id="logo">
+					<img src="static/images/logo-awake.png">
+					<div class="zzz-container">
+						<div class="zzz-zzz"></div>
+						<div class="zzz-zz"></div>
+						<div class="zzz-z"></div>
+					</div>
+				</div>
+
+				<form onsubmit="webSearch(event)" id="searchContainer">
+					<div class="search-box">
+						<span class="search-icon">
+							<svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="">
+								<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+							</svg>
+						</span>
+						<input type="text" id="searchInput" autofocus autocomplete="off" />
+					</div>
+				</form>
+			</div>
+
+			<div class="header-center">
+				<div id="urlButtonContainer">
+					<div id="urlButtons"></div>
+					<div id="urlDivider"></div>
+					<button class="bookmark-icon init" id="editUrlButton"></button>
+					<button id="openAllUrlsButton" onclick="openAllUrls()">LAUNCH</button>
 				</div>
 			</div>
 
-			<div id="urlButtonContainer">
-				<div id="urlButtons"></div>
-				<div id="urlDivider"></div>
-				<button class="bookmark-icon init" id="editUrlButton"></button>
-				<button id="openAllUrlsButton" onclick="openAllUrls()">LAUNCH</button>
-			</div>
+			<div class="header-right">
+				<button id="darkmode-button"><img src="static/images/dark-mode.png"></button><button class="colour-picker-button"><img id="colour-picker-image" src="static/images/colour-wheel.png"></button>
 
-			<button id="darkmode-button"><img src="static/images/dark-mode.png"></button><button class="colour-picker-button"><img id="colour-picker-image" src="static/images/colour-wheel.png"></button>
-
-			<div id="colourPickerContent">
-				<span class="close" id="close-colour">&times;</span>
-				<h1>COLOUR THEME</h1>
-				<div class="colour-picker-container">
-					<div class="colour-picker-tab">
-						<theme-colour-picker id='primary-colour-picker'></theme-colour-picker>
-						<p>Main</p>
-						<input type="hidden" id="primary-colour-picker-hidden" name="primary-colour-picker" />
+				<div id="colourPickerContent">
+					<span class="close" id="close-colour">&times;</span>
+					<h1>COLOUR THEME</h1>
+					<div class="colour-picker-container">
+						<div class="colour-picker-tab">
+							<theme-colour-picker id='primary-colour-picker'></theme-colour-picker>
+							<p>Main</p>
+							<input type="hidden" id="primary-colour-picker-hidden" name="primary-colour-picker" />
+						</div>
+						<div class="colour-picker-tab">
+							<theme-colour-picker id='secondary-colour-picker'></theme-colour-picker>
+							<p>Accent</p>
+							<input type="hidden" id="secondary-colour-picker-hidden" name="secondary-colour-picker" />
+						</div>
 					</div>
-					<div class="colour-picker-tab">
-						<theme-colour-picker id='secondary-colour-picker'></theme-colour-picker>
-						<p>Accent</p>
-						<input type="hidden" id="secondary-colour-picker-hidden" name="secondary-colour-picker" />
-					</div>
+					<button id="colourRandomSelect">
+						<p class="rainbowText">Randomize</p>
+					</button>
+					<button id="colourPickerSubmit">Apply</button>
 				</div>
-				<button id="colourRandomSelect">
-					<p class="rainbowText">Randomize</p>
-				</button>
-				<button id="colourPickerSubmit">Apply</button>
 			</div>
 		</div>
 
