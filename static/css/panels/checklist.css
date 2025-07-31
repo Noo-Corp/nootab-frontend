@@ -148,10 +148,13 @@ html {
   opacity: 0.5;
 }
 
-.drag-over {
-  border-bottom: 4px solid var(--main);
+.drag-over-from-below, #checklist-list li.focused.drag-over-from-below {
+  border-top: 4px solid var(--main);
 }
 
+.drag-over-from-above, #checklist-list li.focused.drag-over-from-above {
+  border-bottom: 4px solid var(--main);
+}
 
 @-moz-document url-prefix() {
     #checklist-list li input[type="checkbox"]:checked::before {
