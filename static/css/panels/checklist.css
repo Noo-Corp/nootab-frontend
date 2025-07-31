@@ -144,6 +144,15 @@ html {
     color: #e71313;
 }
 
+.dragging {
+  opacity: 0.5;
+}
+
+.drag-over {
+  border-bottom: 4px solid var(--main);
+}
+
+
 @-moz-document url-prefix() {
     #checklist-list li input[type="checkbox"]:checked::before {
         top: -1px;
