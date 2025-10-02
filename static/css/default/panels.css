@@ -84,6 +84,11 @@ iframe {
     font-size: 14px;
     min-width: initial;
     height: 40px;
+    color: initial;
+}
+
+.bmc-btn:hover {
+  background-color: #f7d604 !important;
 }
 
 #panelControls {
