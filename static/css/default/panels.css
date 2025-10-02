@@ -80,19 +80,10 @@ iframe {
     border-top: 1px solid var(--backtext);
 }
 
-#supportNT {
-    color: var(--modetext2);
-    background-color: var(--modeback);
-    border-radius: 6px;
-    padding: 5px;
-    font-weight: bold;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-#supportNT:hover {
-    cursor: pointer;
-    background-color: var(--main);
-    color: var(--text);
+.sidepanel-footer .bmc-btn-container .bmc-btn {
+    font-size: 14px;
+    min-width: initial;
+    height: 40px;
 }
 
 #panelControls {

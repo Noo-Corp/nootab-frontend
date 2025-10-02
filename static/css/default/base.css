@@ -222,7 +222,7 @@ body {
 	color: #e71313;
 }
 
-#dataModal, #supportModal, #tutorialModal {
+#dataModal, #tutorialModal {
     display: none;
 }
 
@@ -422,43 +422,6 @@ body {
 
 .modal-content button:hover {
     background: var(--bodyback);
-}
-
-#supportModal p {
-    color: var(--modetext2);
-    margin:0;
-    padding: 0 30px;
-    text-align: justify;
-}
-
-#crypto-key-box-container {
-    max-width: 95%;
-}
-
-.crypto-key-box {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 14px 0;
-    justify-content: center;
-    color: var(--modetext);
-    overflow: auto;
-}
-
-.crypto-icon {
-    height: 32px;
-    width: 32px;
-}
-
-.coin-address {
-    flex: 1;
-    width: 210px;
-    font-size: 14px;
-    padding: 8px;
-    border: 2px solid var(--backtext);
-    border-radius: 6px;
-    background-color: var(--modeback);
-    color: var(--modetext);
 }
 
 @-moz-document url-prefix() {

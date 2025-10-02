@@ -198,41 +198,6 @@
 				<button onclick="clearData()">Clear Data</button>
 				<input type="file" id="fileInput" style="display: none;" accept="application/json" onchange="handleFileUpload(event)">
 			</div>
-
-			<div id="supportModal" class="modal-content">
-				<span class="close" onclick="closeModal()">&times;</span>
-				<div class="modal-title">Support Noo Tab ❤️</div>
-				<p>Your support helps keep Noo Tab free and makes continued updates possible.</p>
-				<p>If you've been finding it useful, consider backing its ongoing development.</p>
-
-				<div id="crypto-key-box-container">
-					<div class="crypto-key-box">
-						<img src="static/images/bitcoin.svg" alt="Bitcoin" class="crypto-icon">BTC
-						<input
-						class="coin-address"
-						onclick="this.select()"
-						readonly
-						spellcheck="false"
-						type="text"
-						value="bc1q0kthv9j5ahekgvqx0pxuyp8xjjlptz3nmvd4lf"
-						/>
-					</div>
-
-					<div class="crypto-key-box">
-						<img src="static/images/ethereum.svg" alt="Ethereum" class="crypto-icon">ETH
-						<input
-						class="coin-address"
-						onclick="this.select()"
-						readonly
-						spellcheck="false"
-						type="text"
-						value="0xb230CdfD067b5bb950eECEDC448761829f57493c"
-						/>
-					</div>
-				</div>
-
-				<p>Thank you for your support!</p>
-			</div>
 		</div>
 
 		<div id="sidePanel">
@@ -250,7 +215,7 @@
 				<button id="clearButton" onclick="clearPanelOrder()">Clear</button>
 			</div>
 			<div class="sidepanel-footer">
-				<span id="supportNT" onclick="openModal('supportModal')">Support Noo Tab ❤️</span>
+				<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="nooapps" data-color="#FFDD00" data-emoji="☕"  data-font="Arial" data-text="Support Noo Tab" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
 				<div id="sidepanel-footer-links">
 					<a href="/terms.html" target="_blank">Terms & Conditions</a> | <a href="/privacy.html" target="_blank">Privacy Policy</a>
 				</div>
