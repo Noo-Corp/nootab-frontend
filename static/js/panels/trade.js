@@ -1,22 +1,162 @@
-const STATS_ENDPOINT="https://trade.nootab.com/stats",GRAPH_ENDPOINT="https://trade.nootab.com/graph";let chartInstance=null;function fetchStats(t){fetch(STATS_ENDPOINT,{method:"GET",headers:{Authorization:`Bearer ${t}`}}).then(t=>{let e=document.getElementById("server-status");if(t.ok)return e.style.display="none",t.json();throw e.style.display="block",Error("Failed to fetch stats")}).then(t=>{t&&updateStatsTable(t)}).catch(()=>{let t=document.getElementById("server-status");t.style.display="block"})}function fetchGraph(t){fetch("https://trade.nootab.com/graph",{method:"GET",headers:{Authorization:`Bearer ${t}`}}).then(t=>{if(t.ok)return t.json()}).then(t=>renderGraph(t)).catch(()=>{})}function updateStatsTable(t){let e=document.getElementById("stats-container"),a=document.getElementById("stats-body");if(a.innerHTML="",!t)return;t.sort((t,e)=>{let a=parseFloat(t["Percent Gain"]),n=parseFloat(e["Percent Gain"]);return n-a});let n="true"===getUrlParams().isPopped,r=t[0],l=document.getElementById("best-algorithm-panel"),i=document.getElementById("best-algorithm-name"),o=document.getElementById("best-algorithm-gain"),s=document.getElementById("best-algorithm-avg-sell"),d=document.getElementById("best-algorithm-win-rate"),m=document.getElementById("best-algorithm-profit-factor");n?(e.style.display="block",l.style.display="none",t.forEach(t=>{let e=document.createElement("tr");e.innerHTML=`
-                <td class="holdings-cell">&#9776;</td>
-                <td>${t.Algorithm}</td>
-                <td>${formatValue(t.Gain,"money")}</td>
-                <td>${formatValue(t["Trade Gain"],"money")}</td>
-                <td>${formatValue(t["Investment Gain"],"money")}</td>
-                <td>${formatValue(t["Percent Gain"],"percent")}</td>
-                <td>${parseInt(t.Sells)}</td>
-                <td>${formatValue(t["Average Sell Gain"],"money")}</td>
-                <td>${formatValue(t["Win Rate"],"win_rate")}</td>
-                <td>${formatValue(t["Profit Factor"],"number","profit_factor")}</td>
-            `;let n=e.querySelector(".holdings-cell");n.addEventListener("click",()=>{let e=JSON.parse(t.Holdings.replace(/'/g,'"')),a="";e.forEach(t=>{a+=`
-                        Symbol: ${t[0]}
-                        Units: ${t[1]}
-                        Value: ${formatValue(t[4],"money","no-css")}
-                        Avg Buy: ${formatValue(t[2],"money","no-css")}
-                        Gain: ${formatValue(t[5],"money","no-css")}
-                        Percent Gain: ${formatValue(t[6],"percent","no-css")}
-                        
-                    `}),alert(`HOLDINGS
+let refreshInterval = null;
 
-${a}`)}),a.appendChild(e)})):(e.style.display="none",l.style.display="block",i.textContent=r.Algorithm,o.innerHTML=`${formatValue(r.Gain,"money")} <span id="best-algorithm-percent-gain">(${formatValue(r["Percent Gain"],"percent")})</span>`,s.innerHTML=formatValue(r["Average Sell Gain"],"money"),d.innerHTML=formatValue(r["Win Rate"],"win_rate"),m.innerHTML=formatValue(r["Profit Factor"],"number","profit_factor"))}function formatValue(t,e,a=null){if("N/A"===t)return t;if("money"===e){let n=parseFloat(t);return n<0?"no-css"==a?`-$${Math.abs(n).toFixed(2)}`:`<span class="negative">-$${Math.abs(n).toFixed(2)}</span>`:`$${n.toFixed(2)}`}if("percent"===e){let r=parseFloat(t);return r<0?"no-css"==a?`${(100*parseFloat(t)).toFixed(2)}%`:`<span class="negative">${(100*parseFloat(t)).toFixed(2)}%</span>`:`${(100*parseFloat(t)).toFixed(2)}%`}if("win_rate"===e){let l=parseFloat(t);return l<.5?`<span class="negative">${(100*parseFloat(t)).toFixed(2)}%</span>`:`${(100*parseFloat(t)).toFixed(2)}%`}if("number"===e){let i=parseFloat(t);return"profit_factor"==a?i<1?`<span class="negative">${parseFloat(t).toFixed(2)}</span>`:`${parseFloat(t).toFixed(2)}`:i<0?"no-css"==a?`${parseFloat(t).toFixed(2)}`:`<span class="negative">${parseFloat(t).toFixed(2)}</span>`:`${parseFloat(t).toFixed(2)}`}return t}function saveApiKey(){let t=document.getElementById("apiKey").value;t&&fetch(STATS_ENDPOINT,{method:"GET",headers:{Authorization:`Bearer ${t}`}}).then(e=>{e.ok&&(localStorage.setItem("trade-api-key",t),document.getElementById("wip-warning").style.display="none",document.getElementById("best-algorithm-panel").style.display="block",document.getElementById("graph-container").style.display="block",document.getElementById("stats-container").style.display="block",startFetchingStats(),startFetchingGraph())})}function startFetchingStats(){let t=localStorage.getItem("trade-api-key");fetchStats(t),setInterval(()=>fetchStats(t),5e3)}function startFetchingGraph(){let t=localStorage.getItem("trade-api-key");fetchGraph(t),setInterval(()=>fetchGraph(t),15e4)}function renderGraph(t){let e=document.getElementById("algorithm-graph").getContext("2d");chartInstance&&chartInstance.destroy();let a=[...new Set(t.map(t=>t.Algorithm))],n=["#4CAF50","#2196F3","#FFC107","#E91E63","#9C27B0","#FF5722","#009688","#3F51B5","#CDDC39","#FF9800","#673AB7","#00BCD4","#8BC34A","#607D8B","#795548","#FFEB3B","#03A9F4","#F44336","#8E24AA","#FFB74D","#1B5E20","#00ACC1","#C2185B","#5D4037","#DCE775"],{isPopped:r}=getUrlParams(),l="true"==r,i=a.map((e,a)=>{let r=t.filter(t=>t.Algorithm===e).sort((t,e)=>new Date(t.Timestamp)-new Date(e.Timestamp));return{label:e,data:r.map(t=>({x:new Date(t.Timestamp),y:parseFloat(t.Gain)})),borderColor:n[a],fill:!1,pointRadius:l?3:0}}),o=getComputedStyle(document.documentElement),s=o.getPropertyValue("--modetext").trim(),d=o.getPropertyValue("--modetext2").trim();chartInstance=new Chart(e,{type:"line",data:{datasets:i},options:{responsive:!0,maintainAspectRatio:!1,scales:{x:{type:"time",time:{unit:"minute",tooltipFormat:"MMM D, h:mm a"},title:{display:!1},grid:{color:"rgba(111, 111, 111, 0.4)"},ticks:{maxTicksLimit:l?24:4,color:s}},y:{title:{display:!1},grid:{color:"rgba(111, 111, 111, 0.4)"},ticks:{color:function(t){return t.tick.value<0?"#ff5353":s},font:{size:l?12:10},callback:function(t){return t<0?`-$${Math.abs(t).toFixed(2)}`:`$${t.toFixed(2)}`}}}},plugins:{legend:{position:"bottom",display:l,labels:{color:d,font:{weight:"bold"}}}}}})}function expandView(){let t=document.getElementById("graph-container");t.style.height="60%",t.style.marginLeft="4px",t.style.marginRight="4px"}function getUrlParams(){let t=new URLSearchParams(window.location.search);return{isPopped:t.get("popped")}}window.onload=()=>{let t=localStorage.getItem("trade-api-key");if(!t){document.getElementById("wip-warning").style.display="flex",document.getElementById("best-algorithm-panel").style.display="none",document.getElementById("graph-container").style.display="none",document.getElementById("stats-container").style.display="none";return}startFetchingStats(),startFetchingGraph();let{isPopped:e}=getUrlParams();"true"==e&&expandView()};
+window.addEventListener("load", function () {
+	const input = document.getElementById('stock-input');
+
+	input.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter') {
+			addStock();
+		}
+	});
+
+	document.getElementById("refresh").addEventListener("click", () => {
+		refreshStocks("active");
+	});
+
+	refreshStocks("load");
+
+	refreshInterval = setInterval(() => {
+		refreshStocks("passive");
+	}, 5 * 60 * 1000); // 5 minutes
+});
+
+function refreshStocks(behaviour) {
+	if (behaviour === "active") {
+		document.getElementById("stocks-container").innerHTML = "";
+	}
+
+	const stocks = JSON.parse(localStorage.getItem("stocks") || "[]");
+
+	if (stocks.length === 0) {
+		document.getElementById("main-title").textContent = "NOO TRADE";
+		document.getElementById("refresh").style.display = "none";
+		return;
+	}
+
+	stocks.forEach(fetchAndRenderStockPanel);
+
+	updateRefreshedAtTime();
+	document.getElementById("refresh").style.display = "inline";
+}
+
+function updateRefreshedAtTime() {
+	const refreshedAtElement = document.getElementById("main-title");
+	const currentTime = new Date().toLocaleTimeString([], {
+		hour: "2-digit",
+		minute: "2-digit"
+	});
+	refreshedAtElement.textContent = `Refreshed at ${currentTime}`;
+}
+
+function addStock() {
+	const input = document.getElementById("stock-input");
+	const symbol = input.value.trim().toUpperCase();
+	if (!symbol) return;
+
+	let stocks = JSON.parse(localStorage.getItem("stocks") || "[]");
+	if (stocks.includes(symbol)) return;
+
+	stocks.push(symbol);
+	localStorage.setItem("stocks", JSON.stringify(stocks));
+
+	fetchAndRenderStockPanel(symbol);
+	input.value = "";
+
+	updateRefreshedAtTime();
+	document.getElementById("refresh").style.display = "inline";
+}
+
+function fetchAndRenderStockPanel(symbol) {
+	fetch(`https://api.nootab.com/stock?symbol=${encodeURIComponent(symbol)}`, {
+		method: "GET",
+		credentials: "include"
+	})
+	.then(response => response.json())
+	.then(data => {
+		renderStockPanel(symbol, data);
+	})
+	.catch(() => {
+		console.error(`Failed to load data for ${symbol}`);
+	});
+}
+
+function renderStockPanel(symbol, data) {
+	const container = document.getElementById("stocks-container");
+
+	const panel = document.createElement("div");
+	panel.className = "stock-panel";
+
+	const price = data.price;
+	const change = data.change;
+	const percent = data.percent_change;
+	const high = data.high;
+	const low = data.low;
+	const dividends = data.dividends || [];
+
+	let changeClass = "neutral";
+	if (change > 0) changeClass = "positive";
+	else if (change < 0) changeClass = "negative";
+
+	let dividendHtml = `
+		<div class="dividend-content" style="display: none;">
+			<div class="dividend-title">Dividend History</div>
+			${dividends.map(d => `
+				<div class="dividend-row">
+					<span>${d[0]}</span>
+					<span>$${d[1].toFixed(2)}</span>
+				</div>
+			`).join("")}
+		</div>
+	`;
+
+	let infoHtml = `
+		<div class="stock-symbol">${symbol}</div>
+		<div class="stock-info">
+			<span class="label">$${price.toFixed(2)}</span>
+			<span class="${changeClass}">${change.toFixed(2)} (${percent.toFixed(2)}%)</span>
+		</div>
+		<div class="stock-divider"></div>
+		<div class="stock-extra"><span class="label">Daily High:</span> $${high.toFixed(2)}</div>
+		<div class="stock-extra"><span class="label">Daily Low:</span> $${low.toFixed(2)}</div>
+	`;
+
+	panel.innerHTML = `
+		<button class="delete-btn" onclick="deleteStock('${symbol}', this)">✖</button>
+		<button class="div-btn" onclick="toggleDiv(this)">DIV</button>
+		<div class="stock-content">${infoHtml}${dividendHtml}</div>
+	`;
+
+	container.appendChild(panel);
+}
+
+function deleteStock(symbol, btn) {
+	let stocks = JSON.parse(localStorage.getItem("stocks") || "[]");
+	stocks = stocks.filter(s => s !== symbol);
+	localStorage.setItem("stocks", JSON.stringify(stocks));
+
+	const panel = btn.closest(".stock-panel");
+	if (panel) panel.remove();
+
+	if (stocks.length === 0) {
+		document.getElementById("main-title").textContent = "NOO TRADE";
+		document.getElementById("refresh").style.display = "none";
+	}
+}
+
+function toggleDiv(btn) {
+	btn.classList.toggle("active");
+	const content = btn.closest(".stock-panel").querySelector(".stock-content");
+	const dividendSection = content.querySelector(".dividend-content");
+	const isActive = btn.classList.contains("active");
+
+	const allStockInfo = Array.from(content.children).filter(el =>
+		!el.classList.contains("dividend-content")
+	);
+
+	allStockInfo.forEach(el => {
+		if (el.classList.contains("dividend-title") || el.closest(".dividend-content")) return;
+		el.style.display = isActive ? "none" : "";
+	});
+
+	dividendSection.style.display = isActive ? "flex" : "none";
+}
