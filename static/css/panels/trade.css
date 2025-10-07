@@ -1,26 +1,19 @@
 body {
-	height: 100%;
-	margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 #main-container {
-	padding-bottom: 0;
-	height: calc(100% - 60px);
-	overflow: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #title-container {
-    position: absolute;
-    display: flex;
+	display: flex;
     align-items: center;
-    bottom: 0;
     height: 44px;
     background: var(--bodyback);
-    left: 0;
-    width: calc(100% - 52px);
-    padding-right: 51px;
-    overflow: auto;
-    border-top: 2px solid var(--modeback);
 }
 
 #main-title {
@@ -48,47 +41,56 @@ body {
 }
 
 #trade-container {
-	overflow: auto;
-	height: 100%;
-	padding: 0px 8px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0px 8px;
+    overflow: hidden;
 }
 
 #input-container {
-	display: flex;
-	margin-top: 10px;
+    display: flex;
+    position: absolute;
+    bottom: 44px;
+    left: 0;
+    right: 0;
+    background-color: var(--bodyback);
+    padding: 8px;
+	padding-bottom: 0;
 }
 
 #stock-input {
-	box-sizing: border-box;
-	background: var(--modeback);
-	color: var(--modetext);
-	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
-	border: 1px solid var(--bodyback);
-	border-radius: 4px;
-	padding: 10px;
-	width: 100%;
-	text-align: left;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
+    box-sizing: border-box;
+    background: var(--modeback);
+    color: var(--modetext);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    border: 1px solid var(--bodyback);
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 #add-btn {
-	align-self: center;
-	padding: 10px 16px;
-	background-color: var(--secondary);
-	border: none;
-	border-radius: 4px;
-	color: var(--secondarytext);
-	font-size: 16px;
-	font-weight: bold;
-	cursor: pointer;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
+    align-self: center;
+    padding: 10px 16px;
+    background-color: var(--secondary);
+    border: none;
+    border-radius: 4px;
+    color: var(--secondarytext);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 #add-btn:hover {
-	background-color: var(--secondaryhover);
+    background-color: var(--secondaryhover);
 }
 
 .loader {
@@ -107,103 +109,104 @@ body {
 }
 
 #stocks-container {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 12px;
-	margin-top: 16px;
-	overflow-y: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+    padding-bottom: 54px;
 }
 
 .stock-panel {
-	background-color: var(--modeback);
-	color: var(--modetext);
-	border-radius: 6px;
-	padding: 8px 14px;
-	position: relative;
-	flex: 1;
-	min-width: 200px;
+    background-color: var(--modeback);
+    color: var(--modetext);
+    border-radius: 6px;
+    padding: 8px 14px;
+    position: relative;
+    flex: 1;
+    min-width: 200px;
     height: 120px;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
-	border: 1px solid var(--bodyback);
-	font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid var(--bodyback);
+    font-family: 'Open Sans', sans-serif;
 }
 
 .stock-panel:hover {
-	filter: contrast(84%);
+    filter: contrast(84%);
 }
 
 .stock-symbol {
-	font-weight: bold;
-	font-size: 18px;
-	color: var(--main);
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--main);
 }
 
 .stock-info {
-	display: flex;
-	justify-content: space-between;
-	font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
     margin-top: 8px;
 }
 
 .stock-info .label {
-	font-weight: bold;
-	color: var(--modetext2);
-	margin-right: 4px;
+    font-weight: bold;
+    color: var(--modetext2);
+    margin-right: 4px;
 }
 
 .stock-divider {
-	border-top: 1px solid var(--modetext2);
-	margin: 4px 0;
+    border-top: 1px solid var(--modetext2);
+    margin: 4px 0;
 }
 
 .stock-extra {
-	font-size: 13px;
-	color: var(--modetext2);
-	display: flex;
-	justify-content: space-between;
+    font-size: 13px;
+    color: var(--modetext2);
+    display: flex;
+    justify-content: space-between;
 }
 
 .positive {
-	color: #1dd81d;
+    color: #1dd81d;
 }
 
 .negative {
-	color: #ec4c4c;
+    color: #ec4c4c;
 }
 
 .neutral {
-	color: var(--modetext);
+    color: var(--modetext);
 }
 
 .delete-btn {
-	position: absolute;
-	top: 6px;
-	right: 8px;
-	background: none;
-	border: none;
-	font-size: 18px;
-	color: #ff5353;
-	cursor: pointer;
-	font-weight: bold;
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #ff5353;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .delete-btn:hover {
-	color: #e71313;
+    color: #e71313;
 }
 
 .div-btn {
-	position: absolute;
-	top: 11px;
-	right: 30px;
-	background: none;
-	border: none;
-	font-size: 12px;
-	color: var(--modetext2);
-	cursor: pointer;
-	font-weight: bold;
+    position: absolute;
+    top: 11px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: var(--modetext2);
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .div-btn:hover {
@@ -211,7 +214,7 @@ body {
 }
 
 .div-btn.active {
-	color: var(--secondary);
+    color: var(--secondary);
 }
 
 .div-btn.active:hover {
@@ -219,30 +222,24 @@ body {
 }
 
 .dividend-content {
-	display: none;
-	flex-direction: column;
-	gap: 4px;
-	font-size: 14px;
-	color: var(--modetext2);
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+    color: var(--modetext2);
 }
 
 .dividend-row {
-	display: flex;
-	justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .dividend-title {
-	font-weight: bold;
+    font-weight: bold;
     margin-top: 4px;
     margin-bottom: 6px;
-	color: var(--modetext2);
-	font-size: 14px;
-}
-
-@media (min-width: 570px) {
-	.stock-panel {
-		min-width: initial;
-	}
+    color: var(--modetext2);
+    font-size: 14px;
 }
 
 @-moz-document url-prefix() {
