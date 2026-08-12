@@ -204,14 +204,14 @@
 			<span class="close" onclick="closePanel(event)">&times;</span>
 			<table id="panelOrderList"></table>
 			<div id="panelControls">
-				<button id="notesButton" onclick="addToPanelOrder('notes')">Notes<span class="inf">&#8734;</span></button>
-				<button id="checklistButton" onclick="addToPanelOrder('checklist')">Checklist<span class="inf">&#8734;</span></button>
-				<button id="checklistButton" onclick="addToPanelOrder('gmail')">Gmail<span>1</span></button>
-				<button id="checklistButton" onclick="addToPanelOrder('calendar')">Calendar<span>1</span></button>
-				<button id="blankButton" onclick="addToPanelOrder('assets')">Assets<span>1</span></button>
-				<button id="blankButton" onclick="addToPanelOrder('pathway')">Pathway<span>1</span></button>
-				<button id="blankButton" onclick="addToPanelOrder('trade')">Noo Trade<span>1</span></button>
-				<button id="blankButton" onclick="addToPanelOrder('blank')">Blank<span class="inf">&#8734;</span></button>
+				<button data-panel="notes" onclick="addToPanelOrder('notes')">Notes<span class="inf">&#8734;</span></button>
+				<button data-panel="checklist" onclick="addToPanelOrder('checklist')">Checklist<span class="inf">&#8734;</span></button>
+				<button data-panel="gmail" onclick="addToPanelOrder('gmail')">Gmail<span>1</span></button>
+				<button data-panel="calendar" onclick="addToPanelOrder('calendar')">Calendar<span>1</span></button>
+				<button data-panel="assets" onclick="addToPanelOrder('assets')">Assets<span>1</span></button>
+				<button data-panel="pathway" onclick="addToPanelOrder('pathway')">Pathway/Bingo<span>1</span></button>
+				<button data-panel="trade" onclick="addToPanelOrder('trade')">Stocks<span>1</span></button>
+				<button data-panel="blank" onclick="addToPanelOrder('blank')">Blank<span class="inf">&#8734;</span></button>
 				<button id="clearButton" onclick="clearPanelOrder()">Clear</button>
 			</div>
 			<div class="sidepanel-footer">
