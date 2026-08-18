@@ -374,5 +374,6 @@ iframe {
 
     .panel-popout.popped {
         right: 2px;
+        transform: scaleX(2.8) rotate(90deg);
     }
 }
