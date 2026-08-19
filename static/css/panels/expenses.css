@@ -1,13 +1,3 @@
-:root {
-	--ongoing: #e8d079;
-	--current: #ffffff;
-	--next: #9dce76;
-	--short: #94b6db;
-	--medium: #9d93ca;
-	--long: #fda751;
-	--past: #999999;
-}
-
 #main-container {
 	padding-top: 8px;
 	padding-bottom: 0;
