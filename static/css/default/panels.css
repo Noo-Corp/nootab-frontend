@@ -80,6 +80,13 @@ iframe {
     border-top: 1px solid var(--backtext);
 }
 
+#nootab-version {
+	margin-bottom: 8px;
+	color: var(--modetext2);
+	font-size: 11px;
+	text-align: center;
+}
+
 .sidepanel-footer .bmc-btn-container .bmc-btn {
     font-size: 14px;
     min-width: initial;
