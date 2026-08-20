@@ -29,6 +29,7 @@ body {
 	padding-right: 51px;
 	overflow: auto;
 	border-top: none;
+	border-radius: 0 0 4px 4px;
 }
 
 #main-title {

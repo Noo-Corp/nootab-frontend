@@ -504,6 +504,7 @@
 	padding-right: 51px;
 	overflow: auto;
 	border-top: 2px solid var(--modeback);
+    border-radius: 0 0 4px 4px;
 }
 
 #main-title {
