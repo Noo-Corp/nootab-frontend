@@ -12,6 +12,7 @@ iframe {
     display: flex;
     float: right;
     gap: 4px;
+    position: relative;
 }
 
 #arrangeSpacer button {
