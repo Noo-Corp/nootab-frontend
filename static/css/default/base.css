@@ -437,11 +437,3 @@ body {
         content: "←";
     }
 }
-
-@media (max-width: 750px) {
-    .header-center {
-        position: initial;
-        transform: none;
-        padding: 0 10px;
-    }
-} 

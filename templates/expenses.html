@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../static/css/panels/common.css">
+<link rel="stylesheet" href="../static/css/panels/expenses.css">
+<script type="text/javascript" src="../static/js/panels/common.js"></script>
+<script type="text/javascript" src="../static/js/panels/expenses.js"></script>
+
+<div id="main-container">
+	<div id="expenses-container">
+		<div id="presets-container">
+			<ul id="preset-list">
+				<li id="preset-add-item" class="popped-element">
+					<button id="add-preset-button" class="add-button" onclick="createPreset()">+</button>
+				</li>
+			</ul>
+
+			<button id="create-preset-button" onclick="createPreset()">Create Preset</button>
+		</div>
+
+		<div id="categories-container" class="popped-element">
+			<div id="categories-content">
+				<div id="category-editor">
+					<div id="category-header">
+						<span>Expense Categories</span>
+					</div>
+
+					<ul id="category-list"></ul>
+				</div>
+
+				<div id="category-rows-container">
+					<table id="category-table">
+						<thead>
+							<tr>
+								<th>CSV Row</th>
+								<th>Category</th>
+							</tr>
+						</thead>
+
+						<tbody id="category-table-body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div id="expense-summary-container">
+			<div id="expense-range-buttons">
+				<button class="expense-range-button active" data-range="1mo" onclick="setExpenseRange('1mo')">1mo</button>
+				<button class="expense-range-button" data-range="3mo" onclick="setExpenseRange('3mo')">3mo</button>
+				<button class="expense-range-button" data-range="6mo" onclick="setExpenseRange('6mo')">6mo</button>
+				<button class="expense-range-button" data-range="1yr" onclick="setExpenseRange('1yr')">1yr</button>
+				<button class="expense-range-button" data-range="all" onclick="setExpenseRange('all')">All</button>
+			</div>
+
+			<div id="expense-chart-wrap">
+				<canvas id="expense-pie-chart" width="360" height="360"></canvas>
+
+				<div id="expense-chart-empty"></div>
+
+				<div id="expense-chart-details">
+					<div id="expense-chart-legend"></div>
+
+					<div id="expense-range-total">
+						<span>Total</span>
+						<span id="expense-range-total-value">$0.00</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="expense-merchants-container">
+				<table id="expense-merchants-table">
+					<thead>
+						<tr>
+							<th>Category</th>
+                    		<th id="expense-merchant-heading">Highest Spend Merchant</th>
+							<th>Spend</th>
+						</tr>
+					</thead>
+
+					<tbody id="expense-merchants-body"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div id="title-container">
+		<div id="main-title">EXPENSES</div>
+	</div>
+</div>

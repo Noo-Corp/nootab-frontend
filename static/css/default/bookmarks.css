@@ -269,15 +269,3 @@
         padding: 6px 8px;
     }
 }
-
-@media (max-width: 800px) {
-    #urlButtons {
-        max-width: 30vw;
-    }
-}
-
-@media (max-width: 570px) {
-    #urlButtons {
-        max-width: 18vw;
-    }
-}
