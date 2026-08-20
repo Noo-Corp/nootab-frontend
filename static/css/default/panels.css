@@ -312,9 +312,13 @@ iframe {
         height: initial;
     }
 
+    #logo {
+        margin-left: 0;
+        padding-left: 0;
+    }
+
     .header-left {
-        width: 90%;
-        padding-right: 15px;
+        gap: 0;
     }
 
     .header-center {
@@ -334,6 +338,10 @@ iframe {
 
     #urlButtons {
         max-width: initial;
+    }
+
+    #urlButtons button:first-child {
+        margin-left: 0;
     }
 
     #searchContainer {
