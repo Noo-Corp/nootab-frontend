@@ -38,6 +38,12 @@ body {
 	white-space: nowrap;
 }
 
+#single-year {
+	color: var(--modetext2);
+	font-weight: bold;
+	padding: 4px;
+}
+
 #bingo-dropdown {
 	color: var(--modetext2);
 	background-color: transparent;
