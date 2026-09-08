@@ -105,5 +105,12 @@
 
 	<div id="title-container">
 		<div id="main-title">EXPENSES</div>
+		<div id="expense-mode-controls">
+			<label class="expense-mode-switch" for="expense-merchants-only">
+				<input type="checkbox" role="switch" id="expense-merchants-only" onchange="setMerchantsOnly(this.checked)">
+				<span class="expense-mode-track" aria-hidden="true"></span>
+				<span>Merchants only</span>
+			</label>
+		</div>
 	</div>
 </div>

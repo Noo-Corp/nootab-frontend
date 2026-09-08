@@ -205,7 +205,7 @@
 }
 
 .preset-remove-button {
-    border-left: 1px solid var(--main);
+    border-left: 1px solid var(--backtext);
     padding-left: 8px;
     padding-right: 8px;
     height: 100%;
@@ -342,7 +342,7 @@
 }
 
 #main-container.popped #expense-chart-wrap {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 #expense-pie-chart {
@@ -454,13 +454,20 @@
 }
 
 #expense-range-total,
+#expense-monthly-average-total,
+#expense-all-average-total {
+    padding-right: 8px;
+}
+
+
+#expense-range-total,
 #expense-monthly-average-total {
     display: grid;
     grid-template-columns: minmax(0,1fr) auto;
     align-items: center;
     gap: 7px;
     padding-top: 5px;
-    padding-left: 18px;
+    padding-left: 26px;
     border-top: 1px solid var(--modetext2);
     color: var(--modetext);
     font-size: 11px;
@@ -611,6 +618,13 @@
     display: flex;
 }
 
+#expense-monthly-average-list,
+#expense-all-average-list,
+#expense-chart-legend {
+    padding: 0 8px;
+    padding-top: 2px;
+}
+
 #expense-all-average-heading {
     position: absolute;
     left: 0;
@@ -635,7 +649,7 @@
     align-items: center;
     gap: 7px;
     padding-top: 5px;
-    padding-left: 18px;
+    padding-left: 26px;
     border-top: 1px solid var(--modetext2);
     color: var(--modetext);
     font-size: 11px;
@@ -663,4 +677,95 @@
     text-transform: uppercase;
     font-weight: bold;
     white-space: nowrap;
+}
+
+#expense-mode-controls {
+    display: flex;
+    align-items: center;
+    margin: 0 8px 0 auto;
+    flex-shrink: 0;
+}
+
+.expense-mode-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--modetext2);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.expense-mode-switch input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.expense-mode-track {
+    box-sizing: border-box;
+    width: 36px;
+    height: 22px;
+    border: 1px solid var(--modetext2);
+    border-radius: 12px;
+    background: var(--modeback);
+}
+
+.expense-mode-track::after {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 2px;
+    border-radius: 50%;
+    background: var(--modetext2);
+    transition: transform 150ms ease;
+}
+
+.expense-mode-switch input:checked + .expense-mode-track {
+    background: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.expense-mode-switch input:checked + .expense-mode-track::after {
+    transform: translateX(14px);
+    background: var(--secondarytext);
+}
+
+.expense-mode-switch input:focus-visible + .expense-mode-track {
+    outline: 2px solid var(--secondary);
+    outline-offset: 3px;
+}
+
+#main-container.merchants-only #categories-container,
+#main-container.merchants-only #expense-merchants-table th:first-child,
+#main-container.merchants-only .expense-merchant-category {
+    display: none;
+}
+
+#main-container.merchants-only #expense-merchants-table th:nth-child(2),
+#main-container.merchants-only #expense-merchants-table td:nth-child(2) {
+    width: 75%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .expense-mode-track::after { transition: none; }
+}
+
+#main-container #expense-chart-legend,
+#main-container #expense-monthly-average-list,
+#main-container #expense-all-average-list {
+    min-height: 0;
+    max-height: 240px;
+    overflow-y: auto;
+    align-self: stretch;
+    border: none;
+    border-radius: 0;
+}
+
+#expense-chart-legend .expense-legend-item,
+#expense-monthly-average-list .expense-average-item,
+#expense-all-average-list .expense-average-item {
+    flex-shrink: 0;
 }
